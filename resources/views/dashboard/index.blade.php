@@ -28,7 +28,7 @@ $colors = colo();//$generateColor($c_types);
   <div id="page-head">
     <hr class="new-section-sm bord-no">
     <div class="text-center">
-      <h3>Welcome to NATIONAL WORSHIP TEAM ADMINISTRATION</strong> Dashboard.</h3>
+      <h3>Welcome to <strong>{{env('APP_NAME')}}</strong> Dashboard.</h3>
       <!--<p>Check out your past searches and the content you’ve browsed in. <a href="dashboard" class="btn-link">View last results</a></p>-->
     </div>
     <!-- <hr class="new-section-md bord-no"> -->
@@ -133,478 +133,478 @@ $colors = colo();//$generateColor($c_types);
       </div>
   </div>
 
-  <div class="panel">
-    <div id="manual-analysis-hd" class="text-center bg-primary">
-    </div>
-      <!--Chart information-->
-      <div class="panel-body">
-          <div class="row mar-top">
-              <div class="col-md-4">
-                  <h3 class="text-main text-normal text-2x mar-no">Collection Stats</h3>
-                  <!-- <h5 class="text-uppercase text-muted text-normal">Report for last 12 Months</h5> -->
-                  <div class="row mar-top">
-                      <div class="col">
-                          <table class="table table-condensed table-trans">
-                            <?php $i = 0; ?>
-                            @foreach($c_types as $type)
-                            <tr>
-                                <td class="text-lg" style="width: 40px"><span style="background-color: {{$colors[$i]}}"
-                                  class="badge badge-purple" id="collection-{{$type->name}}">N0</span></td>
-                                <td>{{$type->disFormatString()}}</td>
-                            </tr>
-                            <?php $i++; ?>
-                            @endforeach
-                            <hr>
-                            <tr>
-                              <td>
-                                <div class="text-sm"><p class="text-5x text-thin text-main mar-no">
-                                  <span class="badge badge-primary" id="collection-total">N0</span></p>
-                                </div>
-                              </td>
-                            </tr>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-              <?php $isAdmin = auth()->user()->isAdmin(); ?>
-              <div class="col-md-8">
-                <div class="row">
-                  @if($isAdmin)
-                  <div class="col-xs-{{$isAdmin ? '4' : '6'}}">
-                    <label for="show" class="">Show</label>
-                    <select id="show" required style="outline:none;" name="sort" class="selectpicker col-md-12" data-style="btn-primary">
-                      <option selected value="false">This Block</option>
-                      <option value="true">All Blocks</option>
-                    </select>
-                  </div>
-                  @endif
-                  <div class="col-xs-{{$isAdmin ? '4' : '6'}}">
-                    <label for="group" class="">Group By</label>
-                    <select id="group" required style="outline:none;" name="sort" class="selectpicker col-md-12" data-style="btn-primary">
-                      <option value="1">Days</option>
-                      <option value="2">Weeks</option>
-                      <option selected value="3">Months</option>
-                      <option value="4">Years</option>
-                    </select>
-                  </div>
-                  <div class="col-xs-{{$isAdmin ? '4' : '6'}}">
-                    <label for="range" class="">Select Range</label>
-                    <select id="m-i" required style="outline:none;" name="range" class="selectpicker col-md-12 nav nav-pills ranges" data-style="btn-primary">
-                      <option selected disabled value="">Choose Number of Months</option>
-                      @for($i = 1; $i < 13; $i++)
-                      <option value="{{$i}}">Last{{$i}} Months</option>
-                      @endfor
-                    </select>
-                  </div>
-                </div>
-                <div id="stats-container" class="legendInline" style="height: 250px;"></div>
-                  <!-- <div id="collection-chart" style="height:230px"></div> -->
-              </div>
-          </div>
-      </div>
-  </div>
+{{--  <div class="panel">--}}
+{{--    <div id="manual-analysis-hd" class="text-center bg-primary">--}}
+{{--    </div>--}}
+{{--      <!--Chart information-->--}}
+{{--      <div class="panel-body">--}}
+{{--          <div class="row mar-top">--}}
+{{--              <div class="col-md-4">--}}
+{{--                  <h3 class="text-main text-normal text-2x mar-no">Collection Stats</h3>--}}
+{{--                  <!-- <h5 class="text-uppercase text-muted text-normal">Report for last 12 Months</h5> -->--}}
+{{--                  <div class="row mar-top">--}}
+{{--                      <div class="col">--}}
+{{--                          <table class="table table-condensed table-trans">--}}
+{{--                            <?php $i = 0; ?>--}}
+{{--                            @foreach($c_types as $type)--}}
+{{--                            <tr>--}}
+{{--                                <td class="text-lg" style="width: 40px"><span style="background-color: {{$colors[$i]}}"--}}
+{{--                                  class="badge badge-purple" id="collection-{{$type->name}}">N0</span></td>--}}
+{{--                                <td>{{$type->disFormatString()}}</td>--}}
+{{--                            </tr>--}}
+{{--                            <?php $i++; ?>--}}
+{{--                            @endforeach--}}
+{{--                            <hr>--}}
+{{--                            <tr>--}}
+{{--                              <td>--}}
+{{--                                <div class="text-sm"><p class="text-5x text-thin text-main mar-no">--}}
+{{--                                  <span class="badge badge-primary" id="collection-total">N0</span></p>--}}
+{{--                                </div>--}}
+{{--                              </td>--}}
+{{--                            </tr>--}}
+{{--                          </table>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <?php $isAdmin = auth()->user()->isAdmin(); ?>--}}
+{{--              <div class="col-md-8">--}}
+{{--                <div class="row">--}}
+{{--                  @if($isAdmin)--}}
+{{--                  <div class="col-xs-{{$isAdmin ? '4' : '6'}}">--}}
+{{--                    <label for="show" class="">Show</label>--}}
+{{--                    <select id="show" required style="outline:none;" name="sort" class="selectpicker col-md-12" data-style="btn-primary">--}}
+{{--                      <option selected value="false">This Block</option>--}}
+{{--                      <option value="true">All Blocks</option>--}}
+{{--                    </select>--}}
+{{--                  </div>--}}
+{{--                  @endif--}}
+{{--                  <div class="col-xs-{{$isAdmin ? '4' : '6'}}">--}}
+{{--                    <label for="group" class="">Group By</label>--}}
+{{--                    <select id="group" required style="outline:none;" name="sort" class="selectpicker col-md-12" data-style="btn-primary">--}}
+{{--                      <option value="1">Days</option>--}}
+{{--                      <option value="2">Weeks</option>--}}
+{{--                      <option selected value="3">Months</option>--}}
+{{--                      <option value="4">Years</option>--}}
+{{--                    </select>--}}
+{{--                  </div>--}}
+{{--                  <div class="col-xs-{{$isAdmin ? '4' : '6'}}">--}}
+{{--                    <label for="range" class="">Select Range</label>--}}
+{{--                    <select id="m-i" required style="outline:none;" name="range" class="selectpicker col-md-12 nav nav-pills ranges" data-style="btn-primary">--}}
+{{--                      <option selected disabled value="">Choose Number of Months</option>--}}
+{{--                      @for($i = 1; $i < 13; $i++)--}}
+{{--                      <option value="{{$i}}">Last{{$i}} Months</option>--}}
+{{--                      @endfor--}}
+{{--                    </select>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+{{--                <div id="stats-container" class="legendInline" style="height: 250px;"></div>--}}
+{{--                  <!-- <div id="collection-chart" style="height:230px"></div> -->--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--  </div>--}}
 
-  <div class="panel">
+{{--  <div class="panel">--}}
 
-      <!--Chart information-->
-      <div class="panel-body">
-          <div class="row mar-top">
-              <div class="col-md-4">
-                  <h3 class="text-main text-normal text-2x mar-no">Attendance Stats</h3>
-                  <!-- <h5 class="text-uppercase text-muted text-normal">Report for last 12 Months</h5> -->
-                  <div class="row mar-top">
-                      <div class="col">
-                          <table class="table table-condensed table-trans">
-                              <tr>
-                                  <td class="text-lg" style="width: 40px">
-                                    <span class="badge badge-purple" style="background-color: {{$colors[0]}}" id="attendance-male">0</span></td>
-                                  <td>Male</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-lg">
-                                    <span class="badge badge-dark" style="background-color: {{$colors[1]}}" id="attendance-female">0</span></td>
-                                  <td>Female</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-lg">
-                                    <span class="badge badge-danger" style="background-color: {{$colors[2]}}" id="attendance-children">0</span></td>
-                                  <td>Children</td>
-                              </tr>
-                              <hr>
-                              <tr>
-                                <td>
-                                  <div class="text-sm"><p class="text-5x text-thin text-main mar-no"><span class="badge badge-primary" id="attendance-total">N0</span></p></div>
-                                </td>
-                              </tr>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-8">
-                  <div id="attendance-chart" style="height:230px"></div>
-              </div>
-          </div>
-      </div>
-  </div>
+{{--      <!--Chart information-->--}}
+{{--      <div class="panel-body">--}}
+{{--          <div class="row mar-top">--}}
+{{--              <div class="col-md-4">--}}
+{{--                  <h3 class="text-main text-normal text-2x mar-no">Attendance Stats</h3>--}}
+{{--                  <!-- <h5 class="text-uppercase text-muted text-normal">Report for last 12 Months</h5> -->--}}
+{{--                  <div class="row mar-top">--}}
+{{--                      <div class="col">--}}
+{{--                          <table class="table table-condensed table-trans">--}}
+{{--                              <tr>--}}
+{{--                                  <td class="text-lg" style="width: 40px">--}}
+{{--                                    <span class="badge badge-purple" style="background-color: {{$colors[0]}}" id="attendance-male">0</span></td>--}}
+{{--                                  <td>Male</td>--}}
+{{--                              </tr>--}}
+{{--                              <tr>--}}
+{{--                                  <td class="text-lg">--}}
+{{--                                    <span class="badge badge-dark" style="background-color: {{$colors[1]}}" id="attendance-female">0</span></td>--}}
+{{--                                  <td>Female</td>--}}
+{{--                              </tr>--}}
+{{--                              <tr>--}}
+{{--                                  <td class="text-lg">--}}
+{{--                                    <span class="badge badge-danger" style="background-color: {{$colors[2]}}" id="attendance-children">0</span></td>--}}
+{{--                                  <td>Children</td>--}}
+{{--                              </tr>--}}
+{{--                              <hr>--}}
+{{--                              <tr>--}}
+{{--                                <td>--}}
+{{--                                  <div class="text-sm"><p class="text-5x text-thin text-main mar-no"><span class="badge badge-primary" id="attendance-total">N0</span></p></div>--}}
+{{--                                </td>--}}
+{{--                              </tr>--}}
+{{--                          </table>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="col-md-8">--}}
+{{--                  <div id="attendance-chart" style="height:230px"></div>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--  </div>--}}
 
-  <div class="row">
-    <?php
-    $celebs = []; $i = 1;
-    foreach ($members as $key => $member) {
-      // code...
-      if (date('Y', (strtotime($member->dob))) == date('Y') || date('Y', (strtotime($member->wedding_anniversary))) == date('Y')  ) {
-        array_push($celebs, $member); }
-    }
-    ?>
-    <div class="col-md-6">
-        <div class="panel">
-          <div class="panel-heading"> <!--body text-center"-->
-              <h3 class="panel-title"><strong>Upcoming Wedding(s) For <?php echo date('Y'); $i = 1; ?></strong> </h3>
-              <!--i class="demo-pli-coin icon-4x"></i-->
-          </div>
-            <div class="panel-body text-center clearfix">
-              @if(count($celebs) > 0)
-                <div class="table-responsive">
-                    <table id="anniversaries" class="table table-vcenter mar-top">
-                        <thead>
-                            <tr>
-                                <th class="min-w-td">#</th>
-                                <th class="min-w-td">User</th>
-                                <th class="text-center">Full Name</th>
-                                <th class="text-center">Phone</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Department</th>
-                                <th class="text-center">Date</th>
+{{--  <div class="row">--}}
+{{--    <?php--}}
+{{--    $celebs = []; $i = 1;--}}
+{{--    foreach ($members as $key => $member) {--}}
+{{--      // code...--}}
+{{--      if (date('Y', (strtotime($member->dob))) == date('Y') || date('Y', (strtotime($member->wedding_anniversary))) == date('Y')  ) {--}}
+{{--        array_push($celebs, $member); }--}}
+{{--    }--}}
+{{--    ?>--}}
+{{--    <div class="col-md-6">--}}
+{{--        <div class="panel">--}}
+{{--          <div class="panel-heading"> <!--body text-center"-->--}}
+{{--              <h3 class="panel-title"><strong>Upcoming Wedding(s) For <?php echo date('Y'); $i = 1; ?></strong> </h3>--}}
+{{--              <!--i class="demo-pli-coin icon-4x"></i-->--}}
+{{--          </div>--}}
+{{--            <div class="panel-body text-center clearfix">--}}
+{{--              @if(count($celebs) > 0)--}}
+{{--                <div class="table-responsive">--}}
+{{--                    <table id="anniversaries" class="table table-vcenter mar-top">--}}
+{{--                        <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th class="min-w-td">#</th>--}}
+{{--                                <th class="min-w-td">User</th>--}}
+{{--                                <th class="text-center">Full Name</th>--}}
+{{--                                <th class="text-center">Phone</th>--}}
+{{--                                <th class="text-center">Status</th>--}}
+{{--                                <th class="text-center">Department</th>--}}
+{{--                                <th class="text-center">Date</th>--}}
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($celebs as $member)
-                          @if(date('Y', (strtotime($member->wedding_anniversary))) == date('Y'))
-                            <tr>
-                                <td class="min-w-td">{{$i}}</td>
-                                <td class="text-center"><img src="{{url('images/')}}/{{$member->photo}}" alt="{{$member->firstname}} image" class="img-circle img-sm"></td>
-                                <td class="text-center"><a class="btn-link" href="{{$member->profile()}}">{{ucwords($member->getFullname())}}</a></td>
-                                <td class="text-center">{{$member->phone}}</td>
-                                <td class="text-center">
-                                  @if((int)substr(date('Y'),0,1) <= (int)substr(date('y', strtotime($member->wedding_anniversary)), 0,1))
-                                <span class="label label-table label-success">Upcoming</span>
-                                @else
-                                <span class="label label-table label-purple">Past</span>
-                                @endif
-                                </td>
-                                <td class="text-center"><span class="label label-table label-info">{{ucwords($member->position)}}</span></td>
-                                <td style="color:red" class="text-center">
-                                    <div class="btn-group">
-                                      {{date('jS, F', strtotime($member->wedding_anniversary))}}
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-                            @endif
-                            @endforeach
+{{--                            </tr>--}}
+{{--                        </thead>--}}
+{{--                        <tbody>--}}
+{{--                          @foreach ($celebs as $member)--}}
+{{--                          @if(date('Y', (strtotime($member->wedding_anniversary))) == date('Y'))--}}
+{{--                            <tr>--}}
+{{--                                <td class="min-w-td">{{$i}}</td>--}}
+{{--                                <td class="text-center"><img src="{{url('images/')}}/{{$member->photo}}" alt="{{$member->firstname}} image" class="img-circle img-sm"></td>--}}
+{{--                                <td class="text-center"><a class="btn-link" href="{{$member->profile()}}">{{ucwords($member->getFullname())}}</a></td>--}}
+{{--                                <td class="text-center">{{$member->phone}}</td>--}}
+{{--                                <td class="text-center">--}}
+{{--                                  @if((int)substr(date('Y'),0,1) <= (int)substr(date('y', strtotime($member->wedding_anniversary)), 0,1))--}}
+{{--                                <span class="label label-table label-success">Upcoming</span>--}}
+{{--                                @else--}}
+{{--                                <span class="label label-table label-purple">Past</span>--}}
+{{--                                @endif--}}
+{{--                                </td>--}}
+{{--                                <td class="text-center"><span class="label label-table label-info">{{ucwords($member->position)}}</span></td>--}}
+{{--                                <td style="color:red" class="text-center">--}}
+{{--                                    <div class="btn-group">--}}
+{{--                                      {{date('jS, F', strtotime($member->wedding_anniversary))}}--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                            <?php $i++; ?>--}}
+{{--                            @endif--}}
+{{--                            @endforeach--}}
 
-                        </tbody>
-                    </table>
-                    <hr>
-                    <!--Pagination-->
-                </div>
-                @else
-                <p class="text-danger"> No Wedding </p>
-                @endif
-            </div>
-        </div>
-    </div>
-
-
-      <div class="col-md-6">
-          <div class="panel">
-            <div class="panel-heading"> <!--body text-center"-->
-                <h3 class="panel-title"><strong>Funeral(s) For <?php echo date('F Y'); ?></strong> </h3>
-                <!--i class="demo-pli-coin icon-4x"></i-->
-            </div>
-              <div class="panel-body text-center clearfix">
-                @if(count($celebs) > 2)
-                  <div class="table-responsive">
-                      <table id="dobs" class="table table-vcenter mar-top">
-                          <thead>
-                              <tr>
-                                  <th class="min-w-td">#</th>
-                                  <th class="min-w-td">User</th>
-                                  <th class="text-center">Full Name</th>
-                                  <th class="text-center">Email</th>
-                                  <th class="text-center">Status</th>
-                                  <th class="text-center">Role</th>
-                                  <th class="text-center">Date</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($celebs as $member)
-                            @if(date('F', (strtotime($member->dob))) == date('F'))
-                              <tr>
-                                  <td class="min-w-td">{{$i}}</td>
-                                  <td class="text-center"><img src="{{url('images/')}}/{{$member->photo}}" alt="{{$member->firstname}} image" class="img-circle img-sm"></td>
-                                  <td class="text-center"><a class="btn-link" href="{{$member->profile()}}">{{ucwords($member->getFullname())}}</a></td>
-                                  <td class="text-center">{{$member->email}}</td>
-                                  <td class="text-center">
-                                    @if((int)substr(date('jS'),0,2) <= (int)substr(date('jS', strtotime($member->dob)), 0,2))
-                                  <span class="label label-table label-success">Upcoming</span>
-                                  @else
-                                  <span class="label label-table label-purple">Past</span>
-                                  @endif
-                                  </td>
-                                  <td class="text-center"><span class="label label-table label-info">{{ucwords($member->position)}}</span></td>
-                                  <td class="text-center">
-                                      <div class="btn-group">
-                                        {{date('jS', strtotime($member->dob))}}
-                                      </div>
-                                  </td>
-                              </tr>
-                              <?php $i++; ?>
-                              @endif
-                              @endforeach
-
-                          </tbody>
-                      </table>
-                      <hr>
-                      <!--Pagination-->
-                  </div>
-                  @else
-                  <p class="text-danger"> No Funeral(s) </p>
-                  @endif
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <div class="panel">
-    <div class="panel-body">
-      <div class="row mar-top">
-        <div class="col-md-3">
-          <div class="pad-all text-center">
-              <span class="pad-ver text-main text-sm text-uppercase text-bold">Total Due Collections Commission</span>
-              <p class="text-sm">{{date('dS F Y', strtotime( NOW() ) )}}</p>
-              <p class="text-2x text-main"><span id="due-commission">0</span> </p>
-              <a href="{{route('branch.invoice')}}" class="btn btn-block btn-success mar-top">Pay Now</a>
-          </div>
-          <hr class="new-section-xs">
+{{--                        </tbody>--}}
+{{--                    </table>--}}
+{{--                    <hr>--}}
+{{--                    <!--Pagination-->--}}
+{{--                </div>--}}
+{{--                @else--}}
+{{--                <p class="text-danger"> No Wedding </p>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 
-        </div>
+{{--      <div class="col-md-6">--}}
+{{--          <div class="panel">--}}
+{{--            <div class="panel-heading"> <!--body text-center"-->--}}
+{{--                <h3 class="panel-title"><strong>Funeral(s) For <?php echo date('F Y'); ?></strong> </h3>--}}
+{{--                <!--i class="demo-pli-coin icon-4x"></i-->--}}
+{{--            </div>--}}
+{{--              <div class="panel-body text-center clearfix">--}}
+{{--                @if(count($celebs) > 2)--}}
+{{--                  <div class="table-responsive">--}}
+{{--                      <table id="dobs" class="table table-vcenter mar-top">--}}
+{{--                          <thead>--}}
+{{--                              <tr>--}}
+{{--                                  <th class="min-w-td">#</th>--}}
+{{--                                  <th class="min-w-td">User</th>--}}
+{{--                                  <th class="text-center">Full Name</th>--}}
+{{--                                  <th class="text-center">Email</th>--}}
+{{--                                  <th class="text-center">Status</th>--}}
+{{--                                  <th class="text-center">Role</th>--}}
+{{--                                  <th class="text-center">Date</th>--}}
+{{--                              </tr>--}}
+{{--                          </thead>--}}
+{{--                          <tbody>--}}
+{{--                            @foreach ($celebs as $member)--}}
+{{--                            @if(date('F', (strtotime($member->dob))) == date('F'))--}}
+{{--                              <tr>--}}
+{{--                                  <td class="min-w-td">{{$i}}</td>--}}
+{{--                                  <td class="text-center"><img src="{{url('images/')}}/{{$member->photo}}" alt="{{$member->firstname}} image" class="img-circle img-sm"></td>--}}
+{{--                                  <td class="text-center"><a class="btn-link" href="{{$member->profile()}}">{{ucwords($member->getFullname())}}</a></td>--}}
+{{--                                  <td class="text-center">{{$member->email}}</td>--}}
+{{--                                  <td class="text-center">--}}
+{{--                                    @if((int)substr(date('jS'),0,2) <= (int)substr(date('jS', strtotime($member->dob)), 0,2))--}}
+{{--                                  <span class="label label-table label-success">Upcoming</span>--}}
+{{--                                  @else--}}
+{{--                                  <span class="label label-table label-purple">Past</span>--}}
+{{--                                  @endif--}}
+{{--                                  </td>--}}
+{{--                                  <td class="text-center"><span class="label label-table label-info">{{ucwords($member->position)}}</span></td>--}}
+{{--                                  <td class="text-center">--}}
+{{--                                      <div class="btn-group">--}}
+{{--                                        {{date('jS', strtotime($member->dob))}}--}}
+{{--                                      </div>--}}
+{{--                                  </td>--}}
+{{--                              </tr>--}}
+{{--                              <?php $i++; ?>--}}
+{{--                              @endif--}}
+{{--                              @endforeach--}}
 
-        <div class="col-md-{{($user->isAdmin()) ? 5 : 9}}">
-          <h3 class="text-center">Due Collections</h3>
-          <div class="table-responsive">
-            <table id="due-collection" class="table table-sm table-striped table-bordered nowrap">
-              <thead>
-                <tr class="bg-success">
-                  <th>Date</th>
-                  <th>Service Type</th>
-                  <th>Amount</th>
-                  <th>Commission {{$percentage}}%</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $i = 0; $totalCommission = 0; $amount = 0; $branch_id = $user->id; ?>
-                @if(isset($dueSavings[$branch_id]))
-                @foreach($dueSavings[$branch_id] as $savings)
-                <tr>
-                  <td>{{$savings->date_collected}}</td>
-                  <td>{{$savings->service_types}}</td>
-                  <td>{{$money($savings->total)}}</td>
-                  <?php $i++; $commission = (float)($savings->total * ($percentage / 100)); $totalCommission += $commission; $amount += $savings->total; ?>
-                  <td>{{$money($commission)}}</td>
-                </tr>
-                @endforeach
-                @endif
-              </tbody>
-              <tfoot>
-                <tr class="bg-dark">
-                  <th>Total</th>
-                  <th></th>
-                  <th>{{$money($amount)}}</th>
-                  <th>{{$money($totalCommission)}}</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
+{{--                          </tbody>--}}
+{{--                      </table>--}}
+{{--                      <hr>--}}
+{{--                      <!--Pagination-->--}}
+{{--                  </div>--}}
+{{--                  @else--}}
+{{--                  <p class="text-danger"> No Funeral(s) </p>--}}
+{{--                  @endif--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--  </div>--}}
 
-        @if($user->isAdmin())
-        <div class="col-md-4">
-          <h3 class="text-center">Debts</h3>
-          <div class="table-responsive">
-            <table id="owning-table" class="table table-sm table-striped table-bordered nowrap">
-              <thead>
-                <tr class="bg-success">
-                  <th>Name</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $totalCommission = 0; ?>
-                @foreach($allDueSavings as $branch_id => $commission)
-                <tr>
-                  <td>{{ucwords($user->getUserById($branch_id)->branchname)}}</td>
-                  <?php $totalCommission += $commission; ?>
-                  <td>{{$money($commission)}}</td>
-                </tr>
-                @endforeach
-              </tbody>
-              <tfoot>
-                <tr class="bg-dark">
-                  <th>Total</th>
-                  <th>{{$money($totalCommission)}}</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-        @endif
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-      <?php $eventss = []; foreach ($events as $event)
-        if($event->date >= now())
-          array_push($eventss, $event)
-      ?>
-      <div class="col-md-6">
-          <div class="panel">
-              <div class="panel-heading">
-                <h1 class="text-bold text-center ji">Upcoming Events</h1>
-              </div>
-                    @foreach ($eventss as $event)
-                      <div class="panel-body bord-btm">
-                          <p class="text-bold text-main text-sm"># {{ucwords($event->title)}}</p>
-                          <p class="pad-btm">{{ucwords($event->details)}}</p>
-                          <a href="#" class="task-footer">
-                              <span class="box-inline">
-                                  <label class="label label-warning"><i class="icofont-location-arrow"></i> {{$event->location}}</label>
-                                  <label class="label label-danger"><i class="icofont-user"></i> {{ucwords($event->by_who)}}</label>
-                                  <label class="label label-primary"><i class="icofont-stop-watch"></i> {{$event->date}}</label>
-                                  <label class="label label-info"><i class="icofont-wall-clock icon-fw text-main"></i> {{$event->time}}</label>
-                                  <!-- <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span> -->
-                              </span>
-                              <span class="box-inline">
-                                <label class="label label-purple"><i class="icofont-ui-user-group"></i> </label>
-                                <?php
-                                if(isset($event->assign_to)){
-                                  $emails = explode(',',$event->assign_to);
-                                  foreach($emails as $email){
-                                    $name = App\Member::getNameByEmail($email);
-                                    if($name){
-                                      echo "<img class='img-xs img-circle' src='".url('images/')."/".App\Member::getPhotoByEmail($email)."' alt='".ucwords($name)."'> ".ucwords($name).", ";
-                                    }
-                                  }
-                              }else{
-                                echo '<td>None</td>';
-                              }
-                                ?>
-                              </span>
-                          </a>
-                      </div>
-                    @endforeach
-              <div class="panel-footer text-center">
-                  <!-- <button class="btn btn-sm btn-Default">Load mre</button> -->
-                  @if(count($eventss) < 1)
-                    <p class="text-danger" > No Event </p>
-                  @endif
-                  <button onclick="window.location.replace(`{{route('calendar')}}`)" class="btn btn-sm btn-primary"><i class="icofont icofont-plus m-r-0"></i></button>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-6">
-        @if(session()->has('message.level'))
-         <div class="alert alert-{{ session('message.level') }}">
-         {!! session('message.content') !!}
-         </div>
-         @endif
-          <div class="panel">
-              <div class="panel-heading">
-                  <h1 class="text-bold text-center ji">Announcement Board</h1>
-              </div>
-                    @if (count($eventsall) > 0)
-                    @foreach ($eventsall as $event)
-                    <?php $sql ="DELETE FROM announcements WHERE (start_date <= CURDATE())  "; \DB::delete($sql); ?>
-                    @if ($event->start_date >= now())
-                      <div class="panel-body bord-btm">
-                          <p class="text-bold text-main text-sm"># {{ucwords($event->branchname)}}</p>
-                          <p class="pad-btm">{{ucwords($event->details)}}</p>
-                          <a href="#" class="task-footer">
-                              <span class="box-inline">
-                                  <label class="label label-warning">From <i class="icofont-location-arrow"></i> {{$event->branchname}}</label>
-                                  <label class="label label-danger">By <i class="icofont-user"></i> {{ucwords($event->by_who)}}</label>
-                                  <!-- <label class="label label-primary">Start Date <i class="icofont-stop-watch"></i> {{$event->start_date}}</label>
-                                  <label class="label label-primary">Start Time <i class="icofont-stop-watch"></i> {{$event->start_time}}</label>
-                                  <label class="label label-info">End Date <i class="icofont-wall-clock icon-fw text-main"></i> {{$event->stop_date}}</label>
-                                  <label class="label label-info">End Time <i class="icofont-wall-clock icon-fw text-main"></i> {{$event->stop_time}}</label> -->
-                              </span>
-                          </a>
-                      </div>
-                      @endif
-                    @endforeach
-                    @endif
-              <div class="panel-footer text-center">
-                @if(count($eventsall) < 1)
-                  <p class="text-danger" > No New Announcement </p>
-                @endif
-                <button onclick="window.location.replace(`{{route('notification')}}`)" class="btn btn-sm btn-primary"><i class="icofont icofont-plus m-r-0"></i></button>
-              </div>
-          </div>
-      </div>
-  </div>
+{{--  <div class="panel">--}}
+{{--    <div class="panel-body">--}}
+{{--      <div class="row mar-top">--}}
+{{--        <div class="col-md-3">--}}
+{{--          <div class="pad-all text-center">--}}
+{{--              <span class="pad-ver text-main text-sm text-uppercase text-bold">Total Due Collections Commission</span>--}}
+{{--              <p class="text-sm">{{date('dS F Y', strtotime( NOW() ) )}}</p>--}}
+{{--              <p class="text-2x text-main"><span id="due-commission">0</span> </p>--}}
+{{--              <a href="{{route('branch.invoice')}}" class="btn btn-block btn-success mar-top">Pay Now</a>--}}
+{{--          </div>--}}
+{{--          <hr class="new-section-xs">--}}
 
 
-  <div class="row">
-    @if(auth()->user()->isAdmin())
-    <div class="col-xs-12">
-        <div class="panel">
-            <div class="panel-heading">
-              <h1 class="text-bold text-center ji">Payment Status</h1>
-            </div>
+{{--        </div>--}}
 
-            <!--Data Table-->
-            <!--===================================================-->
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table id="order-table" class="table table-striped">
-                        <thead>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!--===================================================-->
-            <!--End Data Table-->
+{{--        <div class="col-md-{{($user->isAdmin()) ? 5 : 9}}">--}}
+{{--          <h3 class="text-center">Due Collections</h3>--}}
+{{--          <div class="table-responsive">--}}
+{{--            <table id="due-collection" class="table table-sm table-striped table-bordered nowrap">--}}
+{{--              <thead>--}}
+{{--                <tr class="bg-success">--}}
+{{--                  <th>Date</th>--}}
+{{--                  <th>Service Type</th>--}}
+{{--                  <th>Amount</th>--}}
+{{--                  <th>Commission {{$percentage}}%</th>--}}
+{{--                </tr>--}}
+{{--              </thead>--}}
+{{--              <tbody>--}}
+{{--                <?php $i = 0; $totalCommission = 0; $amount = 0; $branch_id = $user->id; ?>--}}
+{{--                @if(isset($dueSavings[$branch_id]))--}}
+{{--                @foreach($dueSavings[$branch_id] as $savings)--}}
+{{--                <tr>--}}
+{{--                  <td>{{$savings->date_collected}}</td>--}}
+{{--                  <td>{{$savings->service_types}}</td>--}}
+{{--                  <td>{{$money($savings->total)}}</td>--}}
+{{--                  <?php $i++; $commission = (float)($savings->total * ($percentage / 100)); $totalCommission += $commission; $amount += $savings->total; ?>--}}
+{{--                  <td>{{$money($commission)}}</td>--}}
+{{--                </tr>--}}
+{{--                @endforeach--}}
+{{--                @endif--}}
+{{--              </tbody>--}}
+{{--              <tfoot>--}}
+{{--                <tr class="bg-dark">--}}
+{{--                  <th>Total</th>--}}
+{{--                  <th></th>--}}
+{{--                  <th>{{$money($amount)}}</th>--}}
+{{--                  <th>{{$money($totalCommission)}}</th>--}}
+{{--                </tr>--}}
+{{--              </tfoot>--}}
+{{--            </table>--}}
+{{--          </div>--}}
+{{--        </div>--}}
 
-        </div>
-    </div>
-    @endif
-    <div class="col-md-12">
+{{--        @if($user->isAdmin())--}}
+{{--        <div class="col-md-4">--}}
+{{--          <h3 class="text-center">Debts</h3>--}}
+{{--          <div class="table-responsive">--}}
+{{--            <table id="owning-table" class="table table-sm table-striped table-bordered nowrap">--}}
+{{--              <thead>--}}
+{{--                <tr class="bg-success">--}}
+{{--                  <th>Name</th>--}}
+{{--                  <th>Amount</th>--}}
+{{--                </tr>--}}
+{{--              </thead>--}}
+{{--              <tbody>--}}
+{{--                <?php $totalCommission = 0; ?>--}}
+{{--                @foreach($allDueSavings as $branch_id => $commission)--}}
+{{--                <tr>--}}
+{{--                  <td>{{ucwords($user->getUserById($branch_id)->branchname)}}</td>--}}
+{{--                  <?php $totalCommission += $commission; ?>--}}
+{{--                  <td>{{$money($commission)}}</td>--}}
+{{--                </tr>--}}
+{{--                @endforeach--}}
+{{--              </tbody>--}}
+{{--              <tfoot>--}}
+{{--                <tr class="bg-dark">--}}
+{{--                  <th>Total</th>--}}
+{{--                  <th>{{$money($totalCommission)}}</th>--}}
+{{--                </tr>--}}
+{{--              </tfoot>--}}
+{{--            </table>--}}
+{{--          </div>--}}
+{{--        </div>--}}
+{{--        @endif--}}
+{{--      </div>--}}
+{{--    </div>--}}
+{{--  </div>--}}
 
-         <div class="row">
-            <div class="col-sm-12">
-              <div class="panel" style="background-color: #e8ddd3;">
+{{--  <div class="row">--}}
+{{--      <?php $eventss = []; foreach ($events as $event)--}}
+{{--        if($event->date >= now())--}}
+{{--          array_push($eventss, $event)--}}
+{{--      ?>--}}
+{{--      <div class="col-md-6">--}}
+{{--          <div class="panel">--}}
+{{--              <div class="panel-heading">--}}
+{{--                <h1 class="text-bold text-center ji">Upcoming Events</h1>--}}
+{{--              </div>--}}
+{{--                    @foreach ($eventss as $event)--}}
+{{--                      <div class="panel-body bord-btm">--}}
+{{--                          <p class="text-bold text-main text-sm"># {{ucwords($event->title)}}</p>--}}
+{{--                          <p class="pad-btm">{{ucwords($event->details)}}</p>--}}
+{{--                          <a href="#" class="task-footer">--}}
+{{--                              <span class="box-inline">--}}
+{{--                                  <label class="label label-warning"><i class="icofont-location-arrow"></i> {{$event->location}}</label>--}}
+{{--                                  <label class="label label-danger"><i class="icofont-user"></i> {{ucwords($event->by_who)}}</label>--}}
+{{--                                  <label class="label label-primary"><i class="icofont-stop-watch"></i> {{$event->date}}</label>--}}
+{{--                                  <label class="label label-info"><i class="icofont-wall-clock icon-fw text-main"></i> {{$event->time}}</label>--}}
+{{--                                  <!-- <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span> -->--}}
+{{--                              </span>--}}
+{{--                              <span class="box-inline">--}}
+{{--                                <label class="label label-purple"><i class="icofont-ui-user-group"></i> </label>--}}
+{{--                                <?php--}}
+{{--                                if(isset($event->assign_to)){--}}
+{{--                                  $emails = explode(',',$event->assign_to);--}}
+{{--                                  foreach($emails as $email){--}}
+{{--                                    $name = App\Member::getNameByEmail($email);--}}
+{{--                                    if($name){--}}
+{{--                                      echo "<img class='img-xs img-circle' src='".url('images/')."/".App\Member::getPhotoByEmail($email)."' alt='".ucwords($name)."'> ".ucwords($name).", ";--}}
+{{--                                    }--}}
+{{--                                  }--}}
+{{--                              }else{--}}
+{{--                                echo '<td>None</td>';--}}
+{{--                              }--}}
+{{--                                ?>--}}
+{{--                              </span>--}}
+{{--                          </a>--}}
+{{--                      </div>--}}
+{{--                    @endforeach--}}
+{{--              <div class="panel-footer text-center">--}}
+{{--                  <!-- <button class="btn btn-sm btn-Default">Load mre</button> -->--}}
+{{--                  @if(count($eventss) < 1)--}}
+{{--                    <p class="text-danger" > No Event </p>--}}
+{{--                  @endif--}}
+{{--                  <button onclick="window.location.replace(`{{route('calendar')}}`)" class="btn btn-sm btn-primary"><i class="icofont icofont-plus m-r-0"></i></button>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
 
-                  <!-- Striped Table -->
-                  <!--===================================================-->
-                  <!-- <div class="panel-body">
-                    <div class="" style="width: 100%; height: 500px;" id="map-area">
-                      { !  ! Mapper::render() !!}
-                    </div>
-                  </div> -->
-                  <!--===================================================-->
-                  <!-- End Striped Table -->
-              </div>
-          </div>
-      </div>
-    </div>
+{{--      <div class="col-md-6">--}}
+{{--        @if(session()->has('message.level'))--}}
+{{--         <div class="alert alert-{{ session('message.level') }}">--}}
+{{--         {!! session('message.content') !!}--}}
+{{--         </div>--}}
+{{--         @endif--}}
+{{--          <div class="panel">--}}
+{{--              <div class="panel-heading">--}}
+{{--                  <h1 class="text-bold text-center ji">Announcement Board</h1>--}}
+{{--              </div>--}}
+{{--                    @if (count($eventsall) > 0)--}}
+{{--                    @foreach ($eventsall as $event)--}}
+{{--                    <?php $sql ="DELETE FROM announcements WHERE (start_date <= CURDATE())  "; \DB::delete($sql); ?>--}}
+{{--                    @if ($event->start_date >= now())--}}
+{{--                      <div class="panel-body bord-btm">--}}
+{{--                          <p class="text-bold text-main text-sm"># {{ucwords($event->branchname)}}</p>--}}
+{{--                          <p class="pad-btm">{{ucwords($event->details)}}</p>--}}
+{{--                          <a href="#" class="task-footer">--}}
+{{--                              <span class="box-inline">--}}
+{{--                                  <label class="label label-warning">From <i class="icofont-location-arrow"></i> {{$event->branchname}}</label>--}}
+{{--                                  <label class="label label-danger">By <i class="icofont-user"></i> {{ucwords($event->by_who)}}</label>--}}
+{{--                                  <!-- <label class="label label-primary">Start Date <i class="icofont-stop-watch"></i> {{$event->start_date}}</label>--}}
+{{--                                  <label class="label label-primary">Start Time <i class="icofont-stop-watch"></i> {{$event->start_time}}</label>--}}
+{{--                                  <label class="label label-info">End Date <i class="icofont-wall-clock icon-fw text-main"></i> {{$event->stop_date}}</label>--}}
+{{--                                  <label class="label label-info">End Time <i class="icofont-wall-clock icon-fw text-main"></i> {{$event->stop_time}}</label> -->--}}
+{{--                              </span>--}}
+{{--                          </a>--}}
+{{--                      </div>--}}
+{{--                      @endif--}}
+{{--                    @endforeach--}}
+{{--                    @endif--}}
+{{--              <div class="panel-footer text-center">--}}
+{{--                @if(count($eventsall) < 1)--}}
+{{--                  <p class="text-danger" > No New Announcement </p>--}}
+{{--                @endif--}}
+{{--                <button onclick="window.location.replace(`{{route('notification')}}`)" class="btn btn-sm btn-primary"><i class="icofont icofont-plus m-r-0"></i></button>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--  </div>--}}
 
-  </div>
+
+{{--  <div class="row">--}}
+{{--    @if(auth()->user()->isAdmin())--}}
+{{--    <div class="col-xs-12">--}}
+{{--        <div class="panel">--}}
+{{--            <div class="panel-heading">--}}
+{{--              <h1 class="text-bold text-center ji">Payment Status</h1>--}}
+{{--            </div>--}}
+
+{{--            <!--Data Table-->--}}
+{{--            <!--===================================================-->--}}
+{{--            <div class="panel-body">--}}
+{{--                <div class="table-responsive">--}}
+{{--                    <table id="order-table" class="table table-striped">--}}
+{{--                        <thead>--}}
+{{--                        </thead>--}}
+{{--                        <tbody>--}}
+{{--                        </tbody>--}}
+{{--                    </table>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <!--===================================================-->--}}
+{{--            <!--End Data Table-->--}}
+
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    @endif--}}
+{{--    <div class="col-md-12">--}}
+
+{{--         <div class="row">--}}
+{{--            <div class="col-sm-12">--}}
+{{--              <div class="panel" style="background-color: #e8ddd3;">--}}
+
+{{--                  <!-- Striped Table -->--}}
+{{--                  <!--===================================================-->--}}
+{{--                  <!-- <div class="panel-body">--}}
+{{--                    <div class="" style="width: 100%; height: 500px;" id="map-area">--}}
+{{--                      { !  ! Mapper::render() !!}--}}
+{{--                    </div>--}}
+{{--                  </div> -->--}}
+{{--                  <!--===================================================-->--}}
+{{--                  <!-- End Striped Table -->--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--    </div>--}}
+
+{{--  </div>--}}
 
 
 </div>

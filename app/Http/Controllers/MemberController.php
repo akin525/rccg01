@@ -38,7 +38,7 @@ class MemberController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -49,7 +49,7 @@ class MemberController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -260,9 +260,11 @@ class MemberController extends Controller
 
       $user = \Auth::user();
 
-      $sql = "SELECT * from members WHERE branch_id = '$user->id' AND  MATCH (firstname,lastname)
-      AGAINST ('$search_term')";
-      $members = \DB::select($sql);
+//      $sql = "SELECT * from members WHERE branch_id = '$user->id' AND  MATCH (firstname,lastname)
+//      AGAINST ('$search_term')";
+//      $members = \DB::select($sql);
+
+        $members=Member::where([['branch_id', $user->id], ['firstname', 'LIKE', '%'.$search_term.'%']])->orwhere([['branch_id', $user->id], ['lastname', 'LIKE', '%'.$search_term.'%']])->get();
       return response()->json(['success' => true, "result"=> sizeof($members) > 0 ? $members : ['message'=>'no result found']]);
     }
 

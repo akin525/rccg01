@@ -198,15 +198,15 @@ display: none;
 
 								<!--Textarea-->
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="demo-textarea-input">Altar</label>
+									<label class="col-md-3 control-label" for="demo-textarea-input">Address</label>
 									<div class="col-md-9">
-										<textarea id="demo-textarea-input" name="address" rows="5" class="form-control" placeholder="Enter Altar" required></textarea>
+										<textarea id="demo-textarea-input" name="address" rows="5" class="form-control" placeholder="Enter Address" required></textarea>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="demo-textarea-input">Region</label>
+									<label class="col-md-3 control-label" for="demo-textarea-input">Landmark</label>
 									<div class="col-md-9">
-										<textarea id="demo-textarea-input" name="address2" rows="5" class="form-control" placeholder="Enter Region"></textarea>
+										<textarea id="demo-textarea-input" name="address2" rows="5" class="form-control" placeholder="Enter Landmark"></textarea>
 									</div>
 								</div>
 							</div>
@@ -221,15 +221,15 @@ display: none;
 								</div>
 							<?php } ?>
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="demo-textarea-input">Block</label>
+									<label class="col-md-3 control-label" for="demo-textarea-input">City</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="city" placeholder="Enter member block" required>
+										<input type="text" class="form-control" name="city" placeholder="Enter member city" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="demo-textarea-input">Town</label>
+									<label class="col-md-3 control-label" for="demo-textarea-input">State</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="state" placeholder="Enter member town" required>
+										<input type="text" class="form-control" name="state" placeholder="Enter member state" required>
 									</div>
 								</div>
 								<div class="form-group">

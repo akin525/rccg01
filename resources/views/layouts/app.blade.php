@@ -127,17 +127,17 @@
 						<!--End Search-->
 					</ul>
 					<ul class="nav navbar-top-links">
-						<li class="dropdown">
-								<a href="{{ route('notification') }}">
-									<i class="fa fa-bullhorn fa-3x" aria-hidden="true"></i> Announcement &nbsp;&nbsp;&nbsp
-										<span class="badge badge-header badge-danger"></span>
-								</a>
+{{--						<li class="dropdown">--}}
+{{--								<a href="{{ route('notification') }}">--}}
+{{--									<i class="fa fa-bullhorn fa-3x" aria-hidden="true"></i> Announcement &nbsp;&nbsp;&nbsp--}}
+{{--										<span class="badge badge-header badge-danger"></span>--}}
+{{--								</a>--}}
 
 
 
-								<!--Notification dropdown menu-->
+{{--								<!--Notification dropdown menu-->--}}
 
-						</li>
+{{--						</li>--}}
 						<!--User dropdown-->
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<li id="dropdown-user" class="dropdown">
@@ -295,26 +295,26 @@
 										</ul>
 									</li>
 									<!--Menu list item-->
-									<li class="{{ (Route::currentRouteName() === 'collection.offering' || Route::currentRouteName() === 'collection.report' || Route::currentRouteName() === 'collection.analysis') ? 'active-sub active' : ''}}">
-										<a href="#">
-											<i class="fa fa-money"></i>
-											<span class="menu-title">Collection</span>
-											<i class="arrow"></i>
-										</a>
-										<ul class="collapse">
-											<li class="{{Route::currentRouteName() === 'collection.offering' ? 'active-sub active' : '' }}">
-												<a href="{{route('collection.offering')}}"><i class="fa fa-save"></i> Save Collection</a>
-											</li>
-											<li class="{{ Route::currentRouteName() === 'collection.report' ? 'active-sub active' : '' }}">
-												<a href="{{route('collection.report')}}"><i class="fa fa-eye"></i> View Collection</a>
-											</li>
-											<li class="{{ Route::currentRouteName() === 'collection.analysis' ? 'active-sub active' : '' }}">
-												<a href="{{route('collection.analysis')}}"><i class="fa fa-signal"></i> Analysis</a>
-											</li>
+{{--									<li class="{{ (Route::currentRouteName() === 'collection.offering' || Route::currentRouteName() === 'collection.report' || Route::currentRouteName() === 'collection.analysis') ? 'active-sub active' : ''}}">--}}
+{{--										<a href="#">--}}
+{{--											<i class="fa fa-money"></i>--}}
+{{--											<span class="menu-title">Collection</span>--}}
+{{--											<i class="arrow"></i>--}}
+{{--										</a>--}}
+{{--										<ul class="collapse">--}}
+{{--											<li class="{{Route::currentRouteName() === 'collection.offering' ? 'active-sub active' : '' }}">--}}
+{{--												<a href="{{route('collection.offering')}}"><i class="fa fa-save"></i> Save Collection</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{ Route::currentRouteName() === 'collection.report' ? 'active-sub active' : '' }}">--}}
+{{--												<a href="{{route('collection.report')}}"><i class="fa fa-eye"></i> View Collection</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{ Route::currentRouteName() === 'collection.analysis' ? 'active-sub active' : '' }}">--}}
+{{--												<a href="{{route('collection.analysis')}}"><i class="fa fa-signal"></i> Analysis</a>--}}
+{{--											</li>--}}
 
-										</ul>
+{{--										</ul>--}}
 
-									</li>
+{{--									</li>--}}
 									<li class="{{Route::currentRouteName() === 'groups' || Route::currentRouteName() === 'group.view' ? 'active-sub' : ''}}">
 										<a href="{{ route('groups') }}">
 											<i class="fa fa-users"></i>
@@ -322,134 +322,134 @@
 
 										</a>
 									</li>
-									<li class="{{Route::currentRouteName() === 'email' || Route::currentRouteName() === 'sms' || Route::currentRouteName() === 'inbox' ? 'active-sub active' : ''}}">
-										<a href="#">
-											<i class="fa fa-comments-o"></i>
-											<span class="menu-title">Messaging</span>
-											<i class="arrow"></i>
-										</a>
-										<ul class="collapse">
-											<li class="{{Route::currentRouteName() === 'email' ? 'active-sub active' : ''}}">
-												<a href="{{route('email')}}"><i class="fa fa-envelope"></i> Email</a>
-											</li>
-											<li class="{{Route::currentRouteName() === 'sms' ? 'active-sub active' : ''}}">
-												<a href="{{route('sms')}}"><i class="fa fa-mobile"></i> Bulk SMS</a>
-											</li>
-											<li class="{{Route::currentRouteName() === 'inbox' ? 'active-sub active' : ''}}">
-												<a href="{{route('inbox')}}"><i class="fa fa-comments"></i> Communicator</a>
-											</li>
+{{--									<li class="{{Route::currentRouteName() === 'email' || Route::currentRouteName() === 'sms' || Route::currentRouteName() === 'inbox' ? 'active-sub active' : ''}}">--}}
+{{--										<a href="#">--}}
+{{--											<i class="fa fa-comments-o"></i>--}}
+{{--											<span class="menu-title">Messaging</span>--}}
+{{--											<i class="arrow"></i>--}}
+{{--										</a>--}}
+{{--										<ul class="collapse">--}}
+{{--											<li class="{{Route::currentRouteName() === 'email' ? 'active-sub active' : ''}}">--}}
+{{--												<a href="{{route('email')}}"><i class="fa fa-envelope"></i> Email</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{Route::currentRouteName() === 'sms' ? 'active-sub active' : ''}}">--}}
+{{--												<a href="{{route('sms')}}"><i class="fa fa-mobile"></i> Bulk SMS</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{Route::currentRouteName() === 'inbox' ? 'active-sub active' : ''}}">--}}
+{{--												<a href="{{route('inbox')}}"><i class="fa fa-comments"></i> Communicator</a>--}}
+{{--											</li>--}}
 
-										</ul>
-									</li>
+{{--										</ul>--}}
+{{--									</li>--}}
 									<!-- @ if (\Auth::user()->isAdmin()) -->
-									<li class="{{Route::currentRouteName() === 'branch.tools' || Route::currentRouteName() === 'branch.options' || Route::currentRouteName() === 'branch.register' || Route::currentRouteName() === 'branches' ? 'active-sub active' : ''}}">
-										<a href="#">
-											<i class="fa fa-building-o"></i>
-											<span class="menu-title">Admin Tools</span>
-											<i class="arrow"></i>
-										</a>
-										<ul class="collapse">
-											@if (\Auth::user()->isAdmin())
-											<li class="{{Route::currentRouteName() === 'branches' ? 'active-sub' : ''}}">
-												<a href="{{route('branches')}}"><i class="fa fa-tree"></i> Branches</a>
-											</li>
-											<li class="{{Route::currentRouteName() === 'branch.register' ? 'active-sub' : ''}}">
-												<a href="{{route('branch.register')}}"><i class="fa fa-plus"></i> Add New Branch</a>
-											</li>
-											<li class="{{Route::currentRouteName() === 'branch.tools' ? 'active-sub' : ''}}">
-												<a href="{{route('branch.tools')}}"><i class="fa fa-wrench"></i> Tools</a>
-											</li>
-											@endif
-											<li class="{{Route::currentRouteName() === 'branch.options' ? 'active-sub' : ''}}">
-												<a href="{{route('branch.options')}}"><i class="fa fa-cog"></i> Options</a>
-											</li>
+{{--									<li class="{{Route::currentRouteName() === 'branch.tools' || Route::currentRouteName() === 'branch.options' || Route::currentRouteName() === 'branch.register' || Route::currentRouteName() === 'branches' ? 'active-sub active' : ''}}">--}}
+{{--										<a href="#">--}}
+{{--											<i class="fa fa-building-o"></i>--}}
+{{--											<span class="menu-title">Admin Tools</span>--}}
+{{--											<i class="arrow"></i>--}}
+{{--										</a>--}}
+{{--										<ul class="collapse">--}}
+{{--											@if (\Auth::user()->isAdmin())--}}
+{{--											<li class="{{Route::currentRouteName() === 'branches' ? 'active-sub' : ''}}">--}}
+{{--												<a href="{{route('branches')}}"><i class="fa fa-tree"></i> Branches</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{Route::currentRouteName() === 'branch.register' ? 'active-sub' : ''}}">--}}
+{{--												<a href="{{route('branch.register')}}"><i class="fa fa-plus"></i> Add New Branch</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{Route::currentRouteName() === 'branch.tools' ? 'active-sub' : ''}}">--}}
+{{--												<a href="{{route('branch.tools')}}"><i class="fa fa-wrench"></i> Tools</a>--}}
+{{--											</li>--}}
+{{--											@endif--}}
+{{--											<li class="{{Route::currentRouteName() === 'branch.options' ? 'active-sub' : ''}}">--}}
+{{--												<a href="{{route('branch.options')}}"><i class="fa fa-cog"></i> Options</a>--}}
+{{--											</li>--}}
 
-										</ul>
-									</li>
+{{--										</ul>--}}
+{{--									</li>--}}
 									<!-- @ endif -->
-									<li class="{{Route::currentRouteName() === 'calendar' ? 'active-sub' : ''}}">
-										<a href="{{ route('calendar') }}">
-											<i class="fa fa-calendar"></i>
-											<span class="menu-title">Calendar & Events</span>
-											<!--<i class="arrow"></i>-->
-										</a>
-									</li>
-									<li class="{{Route::currentRouteName() == 'report.membership.all' || Route::currentRouteName() == 'report.membership' || Route::currentRouteName() == 'report.collections' || Route::currentRouteName() == 'report.collections.all' || Route::currentRouteName() == 'report.attendance' || Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : ''}}">
-										<a href="#">
-											<i class="fa fa-signal"></i>
-											<span class="menu-title">Reports</span>
-											<i class="arrow"></i>
-										</a>
-										<ul class="collapse">
-											@if(!(\Auth::user()->isAdmin()))
-											<li class="{{ Route::currentRouteName() === 'report.membership' ? 'active-sub active' : '' }}">
-												<a href="{{route('report.membership')}}">Membership</a>
-											</li>
-											<li class="{{ Route::currentRouteName() === 'report.collections' ? 'active-sub active' : '' }}">
-												<a href="{{route('report.collections')}}">Collections</a>
-											</li>
-											<li class="{{ Route::currentRouteName() === 'report.attendance' ? 'active-sub active' : '' }}">
-												<a href="{{route('report.attendance')}}">Attendance</a>
-											</li>
-											@else
-											<li class="{{Route::currentRouteName() == 'report.membership.all' || Route::currentRouteName() == 'report.membership' || Route::currentRouteName() == 'report.collections' || Route::currentRouteName() == 'report.collections.all' || Route::currentRouteName() == 'report.attendance' || Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : ''}}">
-												<li class="{{Route::currentRouteName() == 'report.membership.all' || Route::currentRouteName() === 'report.membership' ? 'active-sub active' : '' }}">
-													<a href="#">
-														<i class="fa fa-users"></i>
-														<span class="menu-title">Membership</span>
-														<i class="arrow"></i>
-													</a>
-													<ul class="collapse">
-														<li class="{{ Route::currentRouteName() == 'report.membership.all' ? 'active-sub active' : '' }}">
-															<a href="{{route('report.membership.all')}}"><i class="fa fa-level-up"></i> All Branches</a>
-														</li>
-														<li class="{{ Route::currentRouteName() == 'report.membership' ? 'active-sub active' : '' }}">
-															<a href="{{route('report.membership')}}"><i class="fa fa-map-marker"></i> This Branch</a>
-														</li>
-													</ul>
-												</li>
-												<li class="{{Route::currentRouteName() == 'report.collections' || Route::currentRouteName() == 'report.collections.all' ? 'active-sub active' : '' }}">
-													<a href="#">
-														<i class="fa fa-money"></i>
-														<span class="menu-money">Collections</span>
-														<i class="arrow"></i>
-													</a>
-													<ul class="collapse">
-														<li class="{{Route::currentRouteName() == 'report.collections.all' ? 'active-sub active' : '' }}">
-															<a href="{{route('report.collections.all')}}"><i class="fa fa-level-up"></i> All Branches</a>
-														</li>
-														<li class="{{ Route::currentRouteName() === 'report.collections' ? 'active-sub active' : '' }}">
-															<a href="{{route('report.collections')}}"><i class="fa fa-map-marker"></i> This Branch</a>
-														</li>
-													</ul>
-												</li>
-												<li class="{{Route::currentRouteName() == 'report.attendance' || Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : '' }}">
-													<a href="#">
-														<i class="fa fa-check"></i>
-														<span class="menu-mark">Attendance</span>
-														<i class="arrow"></i>
-													</a>
-													<ul class="collapse">
-														<li class="{{ Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : '' }}">
-															<a href="{{route('report.attendance.all')}}"><i class="fa fa-level-up"></i> All Branches</a>
-														</li>
-														<li class="{{ Route::currentRouteName() == 'report.attendance' ? 'active-sub active' : '' }}">
-															<a href="{{route('report.attendance')}}"><i class="fa fa-map-marker"></i> This Branch</a>
-														</li>
-													</ul>
-												</li>
+{{--									<li class="{{Route::currentRouteName() === 'calendar' ? 'active-sub' : ''}}">--}}
+{{--										<a href="{{ route('calendar') }}">--}}
+{{--											<i class="fa fa-calendar"></i>--}}
+{{--											<span class="menu-title">Calendar & Events</span>--}}
+{{--											<!--<i class="arrow"></i>-->--}}
+{{--										</a>--}}
+{{--									</li>--}}
+{{--									<li class="{{Route::currentRouteName() == 'report.membership.all' || Route::currentRouteName() == 'report.membership' || Route::currentRouteName() == 'report.collections' || Route::currentRouteName() == 'report.collections.all' || Route::currentRouteName() == 'report.attendance' || Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : ''}}">--}}
+{{--										<a href="#">--}}
+{{--											<i class="fa fa-signal"></i>--}}
+{{--											<span class="menu-title">Reports</span>--}}
+{{--											<i class="arrow"></i>--}}
+{{--										</a>--}}
+{{--										<ul class="collapse">--}}
+{{--											@if(!(\Auth::user()->isAdmin()))--}}
+{{--											<li class="{{ Route::currentRouteName() === 'report.membership' ? 'active-sub active' : '' }}">--}}
+{{--												<a href="{{route('report.membership')}}">Membership</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{ Route::currentRouteName() === 'report.collections' ? 'active-sub active' : '' }}">--}}
+{{--												<a href="{{route('report.collections')}}">Collections</a>--}}
+{{--											</li>--}}
+{{--											<li class="{{ Route::currentRouteName() === 'report.attendance' ? 'active-sub active' : '' }}">--}}
+{{--												<a href="{{route('report.attendance')}}">Attendance</a>--}}
+{{--											</li>--}}
+{{--											@else--}}
+{{--											<li class="{{Route::currentRouteName() == 'report.membership.all' || Route::currentRouteName() == 'report.membership' || Route::currentRouteName() == 'report.collections' || Route::currentRouteName() == 'report.collections.all' || Route::currentRouteName() == 'report.attendance' || Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : ''}}">--}}
+{{--												<li class="{{Route::currentRouteName() == 'report.membership.all' || Route::currentRouteName() === 'report.membership' ? 'active-sub active' : '' }}">--}}
+{{--													<a href="#">--}}
+{{--														<i class="fa fa-users"></i>--}}
+{{--														<span class="menu-title">Membership</span>--}}
+{{--														<i class="arrow"></i>--}}
+{{--													</a>--}}
+{{--													<ul class="collapse">--}}
+{{--														<li class="{{ Route::currentRouteName() == 'report.membership.all' ? 'active-sub active' : '' }}">--}}
+{{--															<a href="{{route('report.membership.all')}}"><i class="fa fa-level-up"></i> All Branches</a>--}}
+{{--														</li>--}}
+{{--														<li class="{{ Route::currentRouteName() == 'report.membership' ? 'active-sub active' : '' }}">--}}
+{{--															<a href="{{route('report.membership')}}"><i class="fa fa-map-marker"></i> This Branch</a>--}}
+{{--														</li>--}}
+{{--													</ul>--}}
+{{--												</li>--}}
+{{--												<li class="{{Route::currentRouteName() == 'report.collections' || Route::currentRouteName() == 'report.collections.all' ? 'active-sub active' : '' }}">--}}
+{{--													<a href="#">--}}
+{{--														<i class="fa fa-money"></i>--}}
+{{--														<span class="menu-money">Collections</span>--}}
+{{--														<i class="arrow"></i>--}}
+{{--													</a>--}}
+{{--													<ul class="collapse">--}}
+{{--														<li class="{{Route::currentRouteName() == 'report.collections.all' ? 'active-sub active' : '' }}">--}}
+{{--															<a href="{{route('report.collections.all')}}"><i class="fa fa-level-up"></i> All Branches</a>--}}
+{{--														</li>--}}
+{{--														<li class="{{ Route::currentRouteName() === 'report.collections' ? 'active-sub active' : '' }}">--}}
+{{--															<a href="{{route('report.collections')}}"><i class="fa fa-map-marker"></i> This Branch</a>--}}
+{{--														</li>--}}
+{{--													</ul>--}}
+{{--												</li>--}}
+{{--												<li class="{{Route::currentRouteName() == 'report.attendance' || Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : '' }}">--}}
+{{--													<a href="#">--}}
+{{--														<i class="fa fa-check"></i>--}}
+{{--														<span class="menu-mark">Attendance</span>--}}
+{{--														<i class="arrow"></i>--}}
+{{--													</a>--}}
+{{--													<ul class="collapse">--}}
+{{--														<li class="{{ Route::currentRouteName() == 'report.attendance.all' ? 'active-sub active' : '' }}">--}}
+{{--															<a href="{{route('report.attendance.all')}}"><i class="fa fa-level-up"></i> All Branches</a>--}}
+{{--														</li>--}}
+{{--														<li class="{{ Route::currentRouteName() == 'report.attendance' ? 'active-sub active' : '' }}">--}}
+{{--															<a href="{{route('report.attendance')}}"><i class="fa fa-map-marker"></i> This Branch</a>--}}
+{{--														</li>--}}
+{{--													</ul>--}}
+{{--												</li>--}}
 
-											</li>
+{{--											</li>--}}
 
-											@endif
-										</ul>
-									</li>
-									<li class="{{Route::currentRouteName() == 'ticket' ? 'active-sub' : ''}}">
-	                  <a href="{{ route('ticket') }}">
-                      <i class="fa fa-life-ring"></i>
-                      <span class="menu-title">Ticket</span>
-	                  </a>
-	                </li>
+{{--											@endif--}}
+{{--										</ul>--}}
+{{--									</li>--}}
+{{--									<li class="{{Route::currentRouteName() == 'ticket' ? 'active-sub' : ''}}">--}}
+{{--	                  <a href="{{ route('ticket') }}">--}}
+{{--                      <i class="fa fa-life-ring"></i>--}}
+{{--                      <span class="menu-title">Ticket</span>--}}
+{{--	                  </a>--}}
+{{--	                </li>--}}
 									<li>
 										<form id="logout" method="POST" action="{{route('logout')}}">
 		                  @csrf
@@ -488,7 +488,7 @@
 			<!-- Visible when footer positions are static -->
 			<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 			<div class="hide-fixed pull-right pad-rgt">
-			Powered By <a href="https://myckhel.adbin.com.ng" style="color:#274868;font-weight:bolder"> Myckhel </a>
+{{--			Powered By <a href="https://myckhel.adbin.com.ng" style="color:#274868;font-weight:bolder"> Myckhel </a>--}}
 			</div>
 			<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 			<!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->

@@ -94,12 +94,13 @@ class AttendanceController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Attendance  $attendance
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Attendance $attendance, Request $request)
     {
         $user = \Auth::user();
         $attendance = Attendance::where('attendance_date', $request->get('date') )->where('branch_id',$user->id )->first();
+        $convertedDate=Carbon::parse($request->get('date'));
         if ($attendance)
         {
             return response()->json(['status' => true, 'attendance' => $attendance]);

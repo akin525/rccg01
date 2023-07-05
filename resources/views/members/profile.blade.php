@@ -87,8 +87,8 @@ $colors = colo();//$generateColor($c_types);
                         <i class="fa fa-inbox icon-lg icon-fw"></i>{{$member->email}}</a>
                       </p>
                       <p>Phone:    <i class="fa fa-phone icon-lg icon-fw"></i>{{$member->phone}}</p>
-                        <p>Block:    <i class="fa fa-home icon-lg icon-fw"></i>{{$member->city}}</p>
-                        <p>City:    <i class="fa fa-home icon-lg icon-fw"></i>{{$member->state}}</p>
+                        <p>City:    <i class="fa fa-home icon-lg icon-fw"></i>{{$member->city}}</p>
+                        <p>State:    <i class="fa fa-home icon-lg icon-fw"></i>{{$member->state}}</p>
                         <p>Country:    <i class="fa fa-home icon-lg icon-fw"></i>{{$member->country}}</p>
                       <p class="text-sm text-center"></p>
                     </div>
