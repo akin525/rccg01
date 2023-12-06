@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Event;
 use DB;
 use Paystack;
+use App\Event;
 use App\Setting;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Dcblogdev\Countries\Facades\Countries;
 // use Mapper;
 
@@ -32,7 +33,7 @@ class HomeController extends Controller
       if (Setting::notSet()) {
         return view('setup');
       }
-        $user = \Auth::user();
+        $user = Auth::user();
         $c_types = \App\CollectionsType::getTypes();
          $eventsall =  \App\Announcement::leftjoin('users',"announcements.branch_id", '=','users.id')->where('announcements.branch_id', $user->id)->orWhere('announcements.branch_id', $user->id)->orderBy('announcements.id', 'desc')->get();
         $members = \App\Member::where('branch_id', $user->id)->get();

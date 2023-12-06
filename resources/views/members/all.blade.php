@@ -8,6 +8,7 @@
 <link href="{{ URL::asset('plugins/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet">
 @endsection
 
+
 @section('content')
 <!--CONTENT CONTAINER-->
 <!--===================================================-->
@@ -101,7 +102,8 @@ $(document).ready(function () {
         columns: [
            
             // { title: "S/N", render: () => (i++), name: 'id' },
-            { title: "Photo", data: 'photo', render: (photo) => (`<img src="{{url('images/')}}/${photo}"  class="img-md img-circle" alt="Profile Picture">`), name: 'photo' },
+
+            { title: "Photo", data: 'photo', render: (photo) => (`<img src="{{asset('images/')}}/${photo}"  class="img-md img-circle" alt="Profile Picture">`), name: 'photo' },
             { title: "ID", data: 'id', name: 'id' },
             { title: "Full Name", data: {firstname: 'firstname', lastname: 'lastname'}, name: 'fullname', render: (data) => (`${data.firstname + ' ' + data.lastname}`) },
             // { title: "Occupation", data: 'occupation', name: 'occupation' },
@@ -125,7 +127,7 @@ $(document).ready(function () {
             // { title: "wedding Anniversary", data: 'wedding_anniversary', name: 'wedding_anniversary' },
             { title: "Action", data: 'id', name: 'action', render: (id) => (`
               <div class="btn-group">
-<!--                <button style="background-color:orange" class="btn text-light edit" data-id="${id}"><i class="fa fa-edit"></i></button>-->
+            <!--                <button style="background-color:orange" class="btn text-light edit" data-id="${id}"><i class="fa fa-edit"></i></button>-->
                 <a style="background-color:green" class="btn text-light" href="../member/profile/${id}"><i class="fa fa-eye"></i></a>
                 <a id="${id}" style="background-color:#8c0e0e" class="d-member btn text-light"><i class="fa fa-trash"></i></a>
               </div>

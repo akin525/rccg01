@@ -18,7 +18,6 @@ use DateTimeInterface;
 use Ramsey\Uuid\Builder\UuidBuilderInterface;
 use Ramsey\Uuid\Codec\CodecInterface;
 use Ramsey\Uuid\Converter\NumberConverterInterface;
-use Ramsey\Uuid\Converter\Time\UnixTimeConverter;
 use Ramsey\Uuid\Converter\TimeConverterInterface;
 use Ramsey\Uuid\Generator\DceSecurityGeneratorInterface;
 use Ramsey\Uuid\Generator\DefaultTimeGenerator;
@@ -27,7 +26,6 @@ use Ramsey\Uuid\Generator\RandomGeneratorInterface;
 use Ramsey\Uuid\Generator\TimeGeneratorInterface;
 use Ramsey\Uuid\Generator\UnixTimeGenerator;
 use Ramsey\Uuid\Lazy\LazyUuidFromString;
-use Ramsey\Uuid\Math\BrickMathCalculator;
 use Ramsey\Uuid\Provider\NodeProviderInterface;
 use Ramsey\Uuid\Provider\Time\FixedTimeProvider;
 use Ramsey\Uuid\Type\Hexadecimal;
@@ -48,63 +46,26 @@ use const STR_PAD_LEFT;
 
 class UuidFactory implements UuidFactoryInterface
 {
-    /**
-     * @var CodecInterface
-     */
-    private $codec;
-
-    /**
-     * @var DceSecurityGeneratorInterface
-     */
-    private $dceSecurityGenerator;
-
-    /**
-     * @var NameGeneratorInterface
-     */
-    private $nameGenerator;
-
-    /**
-     * @var NodeProviderInterface
-     */
-    private $nodeProvider;
-
-    /**
-     * @var NumberConverterInterface
-     */
-    private $numberConverter;
-
-    /**
-     * @var RandomGeneratorInterface
-     */
-    private $randomGenerator;
-
-    /**
-     * @var TimeConverterInterface
-     */
-    private $timeConverter;
-
-    /**
-     * @var TimeGeneratorInterface
-     */
-    private $timeGenerator;
-
-    /**
-     * @var UuidBuilderInterface
-     */
-    private $uuidBuilder;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /** @var bool whether the feature set was provided from outside, or we can operate under "default" assumptions */
-    private $isDefaultFeatureSet;
-
+    private CodecInterface $codec;
+    private DceSecurityGeneratorInterface $dceSecurityGenerator;
+    private NameGeneratorInterface $nameGenerator;
+    private NodeProviderInterface $nodeProvider;
+    private NumberConverterInterface $numberConverter;
+    private RandomGeneratorInterface $randomGenerator;
+    private TimeConverterInterface $timeConverter;
+    private TimeGeneratorInterface $timeGenerator;
     private TimeGeneratorInterface $unixTimeGenerator;
+    private UuidBuilderInterface $uuidBuilder;
+    private ValidatorInterface $validator;
 
     /**
-     * @param FeatureSet $features A set of available features in the current environment
+     * @var bool whether the feature set was provided from outside, or we can
+     *     operate under "default" assumptions
+     */
+    private bool $isDefaultFeatureSet;
+
+    /**
+     * @param FeatureSet|null $features A set of available features in the current environment
      */
     public function __construct(?FeatureSet $features = null)
     {
@@ -352,6 +313,14 @@ class UuidFactory implements UuidFactoryInterface
     }
 
     /**
+     * @psalm-pure
+     */
+    public function fromHexadecimal(Hexadecimal $hex): UuidInterface
+    {
+        return $this->codec->decode($hex->__toString());
+    }
+
+    /**
      * @inheritDoc
      */
     public function uuid1($node = null, ?int $clockSeq = null): UuidInterface
@@ -433,23 +402,31 @@ class UuidFactory implements UuidFactoryInterface
      */
     public function uuid7(?DateTimeInterface $dateTime = null): UuidInterface
     {
-        if ($dateTime !== null) {
-            $timeProvider = new FixedTimeProvider(
-                new Time($dateTime->format('U'), $dateTime->format('u'))
-            );
-
-            $timeGenerator = new UnixTimeGenerator(
-                new UnixTimeConverter(new BrickMathCalculator()),
-                $timeProvider,
-                $this->randomGenerator,
-            );
-
-            $bytes = $timeGenerator->generate();
-        } else {
-            $bytes = $this->unixTimeGenerator->generate();
-        }
+        assert($this->unixTimeGenerator instanceof UnixTimeGenerator);
+        $bytes = $this->unixTimeGenerator->generate(null, null, $dateTime);
 
         return $this->uuidFromBytesAndVersion($bytes, Uuid::UUID_TYPE_UNIX_TIME);
+    }
+
+    /**
+     * Returns a version 8 (Custom) UUID
+     *
+     * The bytes provided may contain any value according to your application's
+     * needs. Be aware, however, that other applications may not understand the
+     * semantics of the value.
+     *
+     * @param string $bytes A 16-byte octet string. This is an open blob
+     *     of data that you may fill with 128 bits of information. Be aware,
+     *     however, bits 48 through 51 will be replaced with the UUID version
+     *     field, and bits 64 and 65 will be replaced with the UUID variant. You
+     *     MUST NOT rely on these bits for your application needs.
+     *
+     * @return UuidInterface A UuidInterface instance that represents a
+     *     version 8 UUID
+     */
+    public function uuid8(string $bytes): UuidInterface
+    {
+        return $this->uuidFromBytesAndVersion($bytes, Uuid::UUID_TYPE_CUSTOM);
     }
 
     /**
@@ -467,6 +444,7 @@ class UuidFactory implements UuidFactoryInterface
      */
     public function uuid(string $bytes): UuidInterface
     {
+        /** @psalm-suppress ImpurePropertyFetch */
         return $this->uuidBuilder->build($this->codec, $bytes);
     }
 
@@ -484,8 +462,12 @@ class UuidFactory implements UuidFactoryInterface
      *
      * @psalm-pure
      */
-    private function uuidFromNsAndName($ns, string $name, int $version, string $hashAlgorithm): UuidInterface
-    {
+    private function uuidFromNsAndName(
+        UuidInterface | string $ns,
+        string $name,
+        int $version,
+        string $hashAlgorithm
+    ): UuidInterface {
         if (!($ns instanceof UuidInterface)) {
             $ns = $this->fromString($ns);
         }
@@ -525,6 +507,7 @@ class UuidFactory implements UuidFactoryInterface
             return LazyUuidFromString::fromBytes($bytes);
         }
 
+        /** @psalm-suppress ImpureVariable */
         return $this->uuid($bytes);
     }
 }

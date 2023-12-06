@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use DataTables;
-use App\CollectionsType;
+use Auth as auths;
 
+use App\CollectionsType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables as datatable;
 
 class MemberController extends Controller
 {
@@ -18,7 +22,7 @@ class MemberController extends Controller
      */
     public function __construct()
     {
-        $this->user = \Auth::user();
+        $this->user = Auth::user();
     }
     /**
      * Display a listing of the resource.
@@ -27,11 +31,12 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-      $user = \Auth::user();
+      $user = Auth::user();
       if ($request->draw) {
-        return DataTables::of($user->members)->make(true);
+        return datatable::of($user->members)->make(true);
       } else {
-        return view('members.all');//, compact('members'));
+        $member = Member::all();
+        return view('members.all', compact('member'));//, compact('members'));
       }
     }
 
@@ -65,7 +70,7 @@ class MemberController extends Controller
         return response()->json(['status' => false, 'text' => "The phone ($request->phone) already exists for a member."]);
       }
 
-        $user = \Auth::user();
+        $user = Auth::user();
 
         $relatives = null;
 
@@ -91,20 +96,24 @@ class MemberController extends Controller
         $this->validate($request, [
             'firstname' => 'bail|required|string|max:255',
             'lastname' => 'required|string|max:255',
+            'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'dob' => 'required|string|max:255',
             'email' => 'required|string|max:255',
         ]);
-        $image_name = 'profile.png'; // default profile image
-        if ($request->hasFile('photo'))
+          // default profile image
+        if ($request->hasFile('myprofile'))
         {
-            $image = $request->file('photo');
-            $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+          // dd("yes");
+            $image = $request->file('myprofile');
+            $filename = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
-            $image->move($destinationPath, $input['imagename']);
-            $image_name = $input['imagename'];
+            $image->move($destinationPath, $filename);
+            $image_name = $filename;
+            // dd($filename);
+        }else{
+          $image_name = "profile.png";
         }
-
         $member = new Member(array(
             'branch_id' => $user->id,
             'id' => $request->get('id'),
@@ -114,6 +123,10 @@ class MemberController extends Controller
             'email' => $request->get('email'),
             'dob' => date('Y-m-d',strtotime($request->get('dob'))),
             'phone' => $request->get('phone'),
+            'talent' => $request->get('talent'),
+            'interest' => $request->get('interest'),
+            'formal_worship' => $request->get('formal_worship'),
+            'another_member' => $request->get('another_member'),
             'occupation' => $request->get('occupation'),
             'position' => $request->get('position'),
             'address' => $request->get('address'),
@@ -131,9 +144,10 @@ class MemberController extends Controller
             'member_status' => $request->member_status
         ));
         $member->save();
-        return response()->json(['status' => true, 'text' => "Member Successfully registered"]);
-        // return redirect()->route('member.register.form')->with('status', 'Member Successfully registered');
+        // return response()->json(['status' => true, 'text' => "Member Successfully registered"]);
+         return redirect()->route('member.register.form')->with('status', 'Member Successfully registered');
     }
+
 
     /**
      * Display the specified resource.
@@ -144,7 +158,7 @@ class MemberController extends Controller
     public function show(Member $member, $id)
     {
       $member = Member::find($id);
-      $user = \Auth::user();
+      $user = Auth::user();
       // dd($user->members()->where('members.id', $id)->get());
       $c_types = CollectionsType::getTypes();
       // $sql = 'SELECT COUNT(case when attendance = "yes" then 1 end) AS present, COUNT(case when attendance = "no" then 1 end) AS absent,
@@ -161,7 +175,7 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member)
+    public function edit(Member $member,$id)
     {
         $array = array('id'=>$id);
         Validator::make($array, [
@@ -181,7 +195,7 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member)
+    public function update(Request $request, Member $member,$id)
     {
         // check if image isnt empty
         if (!empty($request->file('image'))){
@@ -306,7 +320,7 @@ class MemberController extends Controller
     }
 
     public function testMail(Request $request){
-      return new \App\Mail\MailToMember($request, \Auth::user());
+      return new \App\Mail\MailToMember($request, Auth::user());
     }
 
     public function updateMember(Request $request){
