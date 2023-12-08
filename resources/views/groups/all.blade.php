@@ -143,7 +143,7 @@
                                             href="{{ route('group.view', $group->id) }}">View Group</a>
                                         <a onclick="return confirm('Are you sure you want to delete the group?')"
                                             class="btn btn-sm d-inline" href="{{ route('group.delete', $group->id) }}"
-                                            style="background-color:#8c0e0e">Delete Group</a>
+                                            style="background-color:white">Delete Group</a>
                                     </td>
                                 </tr>
                                 <?php $count++; ?>

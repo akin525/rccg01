@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ URL::asset('css/pignose.calendar.min.css') }}">
 @endsection
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
     <?php
     
     // extract addedVariables value to variable
@@ -74,6 +76,16 @@
         .icon {
             font-size: 100px;
         }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.previous {
+        float: left;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.next {
+        float: right;
+        background-color: navy;
+        color: white;
+    }
     </style>
     <div id="content-container">
         <div id="page-head">
@@ -156,7 +168,7 @@
                             <h1 class="panel-title">Building Offering<h1>
                         </div>
                         <div class="panel-body clearfix table-resposive">
-                            <table id="demo-dt-basic" class="table table-striped table-bordered datatable" cellspacing="0"
+                            <table id="demo-dt-basic-building" class="table table-striped table-bordered datatable" cellspacing="0"
                                 width="100%">
                                 <thead>
                                     <tr>
@@ -189,7 +201,7 @@
                             <h1 class="panel-title text-center">Offerings<h1>
                         </div>
                         <div class="panel-body text-center clearfix table-response">
-                            <table id="demo-dt-basic" class="table table-striped table-bordered datatable" cellspacing="0"
+                            <table id="demo-dt-basic-offering" class="table table-striped table-bordered datatable" cellspacing="0"
                                 width="100%">
                                 <thead>
                                     <tr>
@@ -230,5 +242,88 @@
 @section('js')
     <script src="{{ URL::asset('js/functions.js') }}"></script>
     <script src="{{ URL::asset('js/pignose.calendar.full.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
 
+    <script>
+        $(document).ready(function () {
+            // DataTable initialization for Tithes
+            $('#demo-dt-basic').DataTable({
+                dom: '<"top"B>rt<"bottom"ip><"clear">',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text: 'Copy'
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        title: 'PDF Title',
+                        customize: function (doc) {
+                            // You can customize the PDF output if needed
+                        }
+                    }
+                ],
+                // Add other DataTables options as needed
+            });
+
+            // DataTable initialization for Building Offering
+            $('#demo-dt-basic-building').DataTable({
+                dom: '<"top"B>rt<"bottom"ip><"clear">',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text: 'Copy'
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        title: 'PDF Title',
+                        customize: function (doc) {
+                            // You can customize the PDF output if needed
+                        }
+                    }
+                ],
+                // Add other DataTables options as needed
+            });
+
+            // DataTable initialization for Offerings
+            $('#demo-dt-basic-offering').DataTable({
+                dom: '<"top"B>rt<"bottom"ip><"clear">',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text: 'Copy'
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        title: 'PDF Title',
+                        customize: function (doc) {
+                            // You can customize the PDF output if needed
+                        }
+                    }
+                ],
+                // Add other DataTables options as needed
+            });
+        });
+    </script>
 @endsection
