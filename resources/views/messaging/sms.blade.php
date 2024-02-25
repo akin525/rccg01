@@ -51,52 +51,6 @@
                 <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px">
                     <div class="panel" style="background-color: #e8ddd3;">
                         <div class="panel-heading">
-                            <h3 class="panel-title">AI Message Response</h3>
-                        </div>
-                        @if (isset($responseData) && $responseData['success'])
-                        {{-- <p>{{ $responseData['message'] }}</p> --}}
-                        <p> {{ $responseData['ai'] }}</p>
-                    @endif
-                    </div>
-
-                </div>
-
-
-                <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px">
-                    <div class="panel" style="background-color: #e8ddd3;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">AI Message</h3>
-                        </div>
-                        <!--Block Styled Form -->
-                        <!--===================================================-->
-                        <form method="POST" action="{{ route('message.aimessage') }}">
-                            @csrf
-                            <div class="panel-body">
-                                <div class="row">
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Message</label>
-                                            <textarea name="message" class="form-control" style="height:300px" required></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer text-right">
-                                <button class="btn btn-success" type="submit">Get AI Message</button>
-                            </div>
-                        </form>
-                    </div>
-
-
-                </div>
-                
-
-                <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:420px">
-                    <div class="panel" style="background-color: #e8ddd3;">
-                        <div class="panel-heading">
                             <h3 class="panel-title">SMS Messaging for All Members</h3>
                         </div>
 
@@ -192,114 +146,63 @@
                                 <button  class="btn btn-success" type="submit">Send</button>
                             </div>
                         </form>
+                        
+                        
+                         <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:10px; margin-top:30px">
+                    <div class="panel" style="background-color: #e8ddd3;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">AI Message Response</h3>
+                        </div>
+                        @if (isset($responseData) && $responseData['success'])
+                        {{-- <p>{{ $responseData['message'] }}</p> --}}
+                        <p> {{ $responseData['ai'] }}</p>
+                    @endif
+                    </div>
 
-                        {{-- <form method="POST" action="{{ route('sendMessage') }}">
+                </div>
+
+
+               
+
+                        <!--===================================================-->
+                        <!--End Block Styled Form -->
+
+                      
+                    </div>
+
+                </div>
+            </div>
+                                 <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px">
+                    <div class="panel" style="background-color: #e8ddd3;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">AI Message</h3>
+                        </div>
+                        <!--Block Styled Form -->
+                        <!--===================================================-->
+                        <form method="POST" action="{{ route('message.aimessage') }}">
                             @csrf
-                            <input name="branch_id" value="3" type="text" hidden="hidden" />
                             <div class="panel-body">
                                 <div class="row">
-                                    <div id="sms_balance_container">
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Number</label>
-                                            <!--input type="text" name="to" class="form-control"-->
-                                            <select id="num-selector" name="to[]" class="selectpicker"
-                                                data-live-search="true" data-actions-box="true" data-width="100%" multiple
-                                                required>
-                                                @foreach ($members as $member)
-                                                    <option value="{{ $member->phone }}">
-                                                        {{ ucwords($member->getFullname()) . ' - ' . $member->phone }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12">
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="row">
-                                    <label class="col-lg-1 control-label text-left" for="inputSubject">Subject</label>
-                                    <div class="col-lg-6">
-                                        <input type="text" id="inputSubject" name="subject" class="form-control"
-                                            required>
-                                    </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">Message</label>
-                                            <textarea name="message" class="form-control" style="height:300px" required></textarea>
+                                            <textarea name="message" class="form-control" style="height:200px" required></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-footer text-right">
-                                <button id="send-btn" class="btn btn-success" type="submit">Send</button>
+                                <button class="btn btn-success" type="submit">Get AI Message</button>
                             </div>
-                        </form> --}}
-                        {{-- @endif --}}
-                        <!--===================================================-->
-                        <!--End Block Styled Form -->
-
-                        {{-- <div class="panel" style="background-color: #e8ddd3;">
-                          <div class="panel-heading">
-                              <h3 class="panel-title">SMS Messaging For Groups</h3>
-                          </div>
-                          <form method="POST" action="{{ route('sendGroupMessage') }}">
-                              @csrf
-                              <input name="branch_id" value="3" type="text" hidden="hidden" />
-                              <div class="panel-body">
-                                  <div class="row">
-                                      <div id="sms_balance_container">
-                                      </div>
-                                      <div class="col-sm-12">
-                                          <div class="col-sm-12">
-                                          </div>
-                                          <br><br><br>
-                                          <div class="col-sm-12">
-                                              <div class="col-lg-9">
-                                                  <select id="groups-selector" name="to[]" data-live-search="true"
-                                                      data-width="100%" data-actions-box="true" class="selectpicker" multiple>
-                                                      {{-- <option data-hidden="true" selected>Select Group to send to</option> --}}
-                                                      {{-- @foreach ($groups as $group) --}}
-                                                      {{-- <option value="{{ $group->id }}">{{ ucwords($group->name) }}
-                                                      </option>
-                                                      @endforeach
-                                                      @foreach ($default_groups as $group)
-                                                          <option value="{{ $group->id }}">{{ ucwords($group->name) }}
-                                                          </option>
-                                                      @endforeach
-                                                  </select>
-                                              </div>
-                                          </div>
-                                      </div> --}}
-                                  {{-- </div>
-                                  <div class="row">
-                                      <label class="col-lg-1 control-label text-left" for="inputSubject">Subject</label>
-                                      <div class="col-lg-6">
-                                          <input type="text" id="inputSubject" name="subject" class="form-control"
-                                              required>
-                                      </div>
-                                      <div class="col-sm-12">
-                                          <div class="form-group">
-                                              <label class="control-label">Message</label>
-                                              <textarea name="message" class="form-control" style="height:300px" required></textarea>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="panel-footer text-right">
-                                  <button id="send-btn" class="btn btn-success" type="submit">Send</button>
-                              </div>
-                          </form>
-                          {{-- @endif --}}
-                          <!--===================================================-->
-                          <!--End Block Styled Form -->
-  
-                      {{-- </div>  --}}
+                        </form>
                     </div>
 
+
                 </div>
-            </div>
+
         </div>
         <!--===================================================-->
         <!--End page content-->

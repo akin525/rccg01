@@ -35,4 +35,15 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'ai' => [
+        'ai_api_url' => env('AI_API_URL'),
+        'content_type' => env('CONTENT_TYPE'),
+    ],
+
+    'termii' => [
+        'termii_api_key' => env('TERMII_API_KEY'),
+        'termii_api_url' => env('TERMII_API_URL'),
+        'termii_content_type' => env('TERMII_CONTENT_TYPE '),
+    ],
+
 ];

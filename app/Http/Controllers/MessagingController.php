@@ -122,6 +122,12 @@ class MessagingController extends Controller
   public function sendMessage(Request $request)
   {
 
+    //loading values fron config
+    $termiiApiKey = config('services.termii.termii_api_key');
+    $termiiApiUrl = config('services.termii.termii_api_url');
+    $termiiContentType = config('services.termii.termii_content_type');
+
+
     $curl = curl_init();
     // Get values from the request
     $recipients = $request->to;
@@ -138,7 +144,7 @@ class MessagingController extends Controller
       "sms" => $message,
       "type" => "plain",
       "channel" => "generic",
-      "api_key" => "TLxl3IyjUzfIrbB4TU4Drat5AfCWI7D3gZiyJvdVA1qbl20bNIAg1esx5IgitK",
+      "api_key" => $termiiApiKey,
     ];
 
     // Convert message parameters to JSON
@@ -146,7 +152,7 @@ class MessagingController extends Controller
 
     // Set cURL options
     curl_setopt_array($curl, [
-      CURLOPT_URL => 'https://api.ng.termii.com/api/sms/send',
+      CURLOPT_URL => $termiiApiUrl,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -156,8 +162,8 @@ class MessagingController extends Controller
       CURLOPT_CUSTOMREQUEST => 'POST',
       CURLOPT_POSTFIELDS => $jsonMessageParams,
       CURLOPT_HTTPHEADER => [
-        'Content-Type: application/json',
-        'api_key: TLxl3IyjUzfIrbB4TU4Drat5AfCWI7D3gZiyJvdVA1qbl20bNIAg1esx5IgitK',
+        'Content-Type: ' . $termiiContentType,
+        'api_key: ' . $termiiApiKey,
       ],
     ]);
 
@@ -259,6 +265,12 @@ class MessagingController extends Controller
   // }
   public function sendGroupMessage(Request $request)
   {
+
+    //loading values fron config
+    $termiiApiKey = config('services.termii.termii_api_key');
+    $termiiApiUrl = config('services.termii.termii_api_url');
+    $termiiContentType = config('services.termii.termii_content_type');
+
       $curl = curl_init();
       // Get values from the request
       $message = $request->message;
@@ -299,28 +311,28 @@ class MessagingController extends Controller
           "sms" => $message,
           "type" => "plain",
           "channel" => "dnd",
-          "api_key" => "TLxl3IyjUzfIrbB4TU4Drat5AfCWI7D3gZiyJvdVA1qbl20bNIAg1esx5IgitK",
+          "api_key" => $termiiApiKey,
       ];
   
       // Convert message parameters to JSON
       $jsonMessageParams = json_encode($messageParams);
   
       // Set cURL options
-      curl_setopt_array($curl, [
-          CURLOPT_URL => 'https://api.ng.termii.com/api/sms/send',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS => $jsonMessageParams,
-          CURLOPT_HTTPHEADER => [
-              'Content-Type: application/json',
-              'api_key: TLxl3IyjUzfIrbB4TU4Drat5AfCWI7D3gZiyJvdVA1qbl20bNIAg1esx5IgitK',
-          ],
-      ]);
+    curl_setopt_array($curl, [
+      CURLOPT_URL => $termiiApiUrl,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS => $jsonMessageParams,
+      CURLOPT_HTTPHEADER => [
+        'Content-Type: ' . $termiiContentType,
+        'api_key: ' . $termiiApiKey,
+      ],
+    ]);
   
       // Execute cURL request
       $response = curl_exec($curl);
@@ -354,6 +366,12 @@ class MessagingController extends Controller
 
 public function whatsappsend(Request $request)
 {
+
+  //loading values fron config
+  $termiiApiKey = config('services.termii.termii_api_key');
+  $termiiApiUrl = config('services.termii.termii_api_url');
+  $termiiContentType = config('services.termii.termii_content_type');
+
   $curl = curl_init();
   // Get values from the request
   $message = $request->message;
@@ -394,15 +412,15 @@ public function whatsappsend(Request $request)
       "sms" => $message,
       "type" => "plain",
       "channel" => "dnd",
-      "api_key" => "TLxl3IyjUzfIrbB4TU4Drat5AfCWI7D3gZiyJvdVA1qbl20bNIAg1esx5IgitK",
+      "api_key" => $termiiApiKey,
   ];
 
   // Convert message parameters to JSON
   $jsonMessageParams = json_encode($messageParams);
 
-  // Set cURL options
-  curl_setopt_array($curl, [
-      CURLOPT_URL => 'https://api.ng.termii.com/api/sms/send',
+   // Set cURL options
+    curl_setopt_array($curl, [
+      CURLOPT_URL => $termiiApiUrl,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -412,10 +430,11 @@ public function whatsappsend(Request $request)
       CURLOPT_CUSTOMREQUEST => 'POST',
       CURLOPT_POSTFIELDS => $jsonMessageParams,
       CURLOPT_HTTPHEADER => [
-          'Content-Type: application/json',
-          'api_key: TLxl3IyjUzfIrbB4TU4Drat5AfCWI7D3gZiyJvdVA1qbl20bNIAg1esx5IgitK',
+        'Content-Type: ' . $termiiContentType,
+        'api_key: ' . $termiiApiKey,
       ],
-  ]);
+    ]);
+  
 
   // Execute cURL request
   $response = curl_exec($curl);
@@ -424,7 +443,7 @@ public function whatsappsend(Request $request)
   if ($response === false) {
       $error = curl_error($curl);
       // Log or handle the error as needed
-      dd("cURL Error: " . $error);
+      // dd("cURL Error: " . $error);
   }
  
   // Close cURL session
@@ -471,10 +490,15 @@ public function indexaimessage()
       "message" => $request->message
     ];
 
+    //loading values from config
+    $aiUrl = config('services.ai.ai_api_url');
+    $contentType = config('services.ai.content_type');
+
+
     $encodemessage = json_encode($message);
     
     curl_setopt_array($curl, array(
-      CURLOPT_URL => 'http://resources.5starcompany.com.ng/api/aibot',
+      CURLOPT_URL => $aiUrl,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -483,9 +507,7 @@ public function indexaimessage()
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => 'POST',
       CURLOPT_POSTFIELDS =>$encodemessage,
-      CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/json'
-      ),
+      CURLOPT_HTTPHEADER => array($contentType),
     ));
     
     $response = curl_exec($curl);
@@ -501,7 +523,7 @@ public function indexaimessage()
     foreach ($groups as $group){
       // dd($group->id);
     }
-    
+    // dd($responseData);
     $members = \App\Member::where('branch_id', $user->id)->get(); 
     $default_groups = [];
 
