@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\FinancialController;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\FinancialController;
+use App\Http\Controllers\AttendanceController;
 // use App\Http\Controllers\FinancialController;
 
 /*
@@ -53,6 +54,12 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/member/analysis', 'MemberController@memberAnalysis')->name('member.analysis');
   Route::get('/member/stats', 'MemberController@memberRegStats')->name('member.reg.stats');
   Route::get('/member/attendance/{id}', 'MemberController@attendance')->name('member.attendance');
+
+  //for department
+  Route::get('/getdepartment', [MemberController::class, 'getdepartment'])->name('member.getdepartment');
+  Route::post('createdepartment', [MemberController::class, 'createdepartment'])->name('member.createdepartment');
+  Route::get('/member.editdept/{id}', [MemberController::class, 'editDept'])->name('member.editdept');
+  Route::post('/member.updatedept/{id}', [MemberController::class, 'updatedept'])->name('member.updatedept');
 
   Route::get('/branches', 'BranchController@index')->name('branches');
   Route::get('/branches/{id}/destroy', 'BranchController@destroy')->name('branch.destroy');

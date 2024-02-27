@@ -6,6 +6,7 @@ use App\Member;
 use DataTables;
 use Auth as auths;
 
+use App\Department;
 use App\CollectionsType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -272,7 +273,7 @@ class MemberController extends Controller
 
     public function getRelative(Request $request, $search_term){
 
-      $user = \Auth::user();
+      $user = Auth::user();
 
 //      $sql = "SELECT * from members WHERE branch_id = '$user->id' AND  MATCH (firstname,lastname)
 //      AGAINST ('$search_term')";
@@ -549,4 +550,47 @@ class MemberController extends Controller
     }
     return $obj;
   }
+
+  //for department
+
+  public function getdepartment()
+  {
+    $dept = Department::all();
+    return view('dept.department', compact('dept'));
+  }
+
+  public function createdepartment(Request $request)
+  {
+    $request->validate([
+      'deptname' => 'required',
+    ]);
+    $group = Department::create([
+      'branch_id' => $request->branch_id,
+      'dept_name' => $request->deptname
+    ]);
+
+    if ($group) {
+      return redirect()->back()->with('status', 'Department created Successfully!');
+    } else {
+      return redirect()->back()->with('status', 'Department not created Successfully!');
+    }
+  }
+
+  public function editDept(Request $request, $id)
+  {
+    $findDept =  Department::where('id', $id)->first();
+
+    return view('dept.viewdept', compact('findDept'));
+  }
+
+  public function updatedept(Request $request, $id)
+  {
+    $deptname = $request->deptname;
+    $updateDept = Department::find($id);
+    $updateDept->update(['dept_name' => $deptname]);
+
+    return redirect()->back()->with('status', 'Department Updated Successfully!');
+
+  }
+
 }

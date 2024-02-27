@@ -302,6 +302,15 @@
                                             </li>
                                         </ul>
                                     </li>
+
+                                    <li
+                                        class="{{ Route::currentRouteName() === 'member.getdepartment' || Route::currentRouteName() === 'member.getdepartment' ? 'active-sub' : '' }}">
+                                        <a href="{{ route('member.getdepartment') }}">
+                                            <i class="fa fa-users"></i>
+                                            <span class="menu-title">Department</span>
+
+                                        </a>
+                                    </li>
                                     <!--Menu list item-->
                                     <li
                                         class="{{ Route::currentRouteName() === 'attendance.analysis' || Route::currentRouteName() === 'attendance.view.form' ? 'active-sub active' : '' }}
@@ -370,10 +379,10 @@
                                             </li>
 
                                             <li
-                                            class="{{ Route::currentRouteName() === 'financial.viewall' ? 'active-sub active' : '' }}">
-                                            <a href="{{ route('financial.viewall') }}"><i
-                                                    class="fa fa-signal"></i>View All Offering</a>
-                                        </li>
+                                                class="{{ Route::currentRouteName() === 'financial.viewall' ? 'active-sub active' : '' }}">
+                                                <a href="{{ route('financial.viewall') }}"><i
+                                                        class="fa fa-signal"></i>View All Offering</a>
+                                            </li>
                                         </ul>
                                     </li>
 
