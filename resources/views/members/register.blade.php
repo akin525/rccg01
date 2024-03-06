@@ -229,7 +229,10 @@
                                                     'violinist','fluitist','saxophonist','usher','leader','technician','keyboardist','security','data
                                                     admin','hospitality','shift leader w','shift leader k','shift leader
                                                     v','medic'
-                                                    <option value="Violinist">Violinist</option>
+                                                    @foreach($depts as $dept)
+                                                    <option value="{{ $dept->dept_name }}">{{ $dept->dept_name }}</option>
+                                                     @endforeach
+                                                    {{-- <option value="Violinist">Violinist</option>
                                                     <option value="fluitist">Fluitist</option>
                                                     <option value="saxophonist">Saxophonist</option>
                                                     <option value="usher">Worship Usher</option>
@@ -242,7 +245,7 @@
                                                     <option value="shift_leader_k">Keyboardists Shift Leader</option>
                                                     <option value="shift_leader_v">Violin Team Leader</option>
                                                     <option value="medic">Medic</option>
-                                                    <option value="Special Assignment">Special Assignment</option>
+                                                    <option value="Special Assignment">Special Assignment</option> --}}
 
                                                     'violinist','fluitist','saxophonist','usher','special','leader','technician','keyboardist','data_admin','hospitality','shift_leader_w','shift_leader_k','shift_leader_v','medic'
                                                 </select>
@@ -648,24 +651,25 @@
                                                     {{-- <input id="img-input" type="file" accept="image/*" capture name="photo" style="display: none"> --}}
                                                 </div>
                                                 <!-- <span class="pull-left btn btn-primary btn-file">
-              											 Select...
-              												 <input id="img-input" type="file" accept="image/*" capture name="photo">
-             												</span> -->
+                  Select...
+                  <input id="img-input" type="file" accept="image/*" capture name="photo">
+                 </span> -->
                                                 <!-- <input type="file" accept="image/*" capture="camera"> -->
                                             </div>
                                         </div>
-										<label class="col-md-3 control-label">Photo</label>
-										<div class="btn btn-file">
-											<i class="fa fa-3x fa-folder"></i>
-											<span class="name">Choose File</span>
-											<input type="file" name="myprofile" accept="image/*">
-										</div>
-										<div class="btn btn-file element" data-toggle="modal" data-target="#myModal">
-											<i class="fa fa-camera"></i>
-											<span class="name">From Cam</span>
-											<input type="file"capture name="myprofile" accept="image/*" style="display: none">
-										</div>
-										
+                                        <label class="col-md-3 control-label">Photo</label>
+                                        <div class="btn btn-file">
+                                            <i class="fa fa-3x fa-folder"></i>
+                                            <span class="name">Choose File</span>
+                                            <input type="file" name="myprofile" accept="image/*">
+                                        </div>
+                                        <div class="btn btn-file element" data-toggle="modal" data-target="#myModal">
+                                            <i class="fa fa-camera"></i>
+                                            <span class="name">From Cam</span>
+                                            <input type="file"capture name="myprofile" accept="image/*"
+                                                style="display: none">
+                                        </div>
+
 
                                         <div class="image" id="img-show-container" style="display: none">
                                             <div class="fa fa-remove blue delete" onclick="resetImgUpl()"></div>
@@ -685,10 +689,10 @@
 
 
                                         <!--div class="row">
-             <div class="col-md-3" style="">
-              <button class="btn btn-info pull-center" type="submit">REGISTER MEMBER</button>
-             </div>
-            </div-->
+                 <div class="col-md-3" style="">
+                  <button class="btn btn-info pull-center" type="submit">REGISTER MEMBER</button>
+                 </div>
+                </div-->
                                         <div class="form-group" style="padding-top:50px">
                                             <div class="col-md-9">
                                                 <span class=" pull-right">
@@ -762,13 +766,13 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- <h1>Take a snapshot of the current video stream</h1>
-        Click on the Start WebCam button.
-        <p>
-        <button onclick="startWebcam();">Start WebCam</button>
-        <button onclick="stopWebcam();">Stop WebCam</button>
-         <button onclick="snapshot();">Take Snapshot</button>
-        </p>
-        <video onclick="snapshot(this);" width=400 height=400 id="video" controls autoplay></video> -->
+            Click on the Start WebCam button.
+            <p>
+            <button onclick="startWebcam();">Start WebCam</button>
+            <button onclick="stopWebcam();">Stop WebCam</button>
+             <button onclick="snapshot();">Take Snapshot</button>
+            </p>
+            <video onclick="snapshot(this);" width=400 height=400 id="video" controls autoplay></video> -->
                                             <div id="captured" class="" style="display:none">
                                                 <h3 class="text-primary"> Screenshots : <h3>
                                                         <canvas id="myCanvas" width="400" height="350"></canvas>

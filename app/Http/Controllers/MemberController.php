@@ -48,7 +48,8 @@ class MemberController extends Controller
      */
     public function create()
     {
-      return view('members.register');//, compact('classes', 'sections'));
+      $depts = Department::all();
+      return view('members.register', compact('depts'));//, compact('classes', 'sections'));
     }
 
     /**
