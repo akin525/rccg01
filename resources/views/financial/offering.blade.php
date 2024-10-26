@@ -57,7 +57,14 @@
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <label class="control-label">Total Amount</label>
-                                        <input type="number" name="amount" class="form-control" required>
+                                        <select class="form-control" name="amount" required>
+                                            <option>Select your domination</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="500">500</option>
+                                            <option value="1000">1000</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-3"></div>

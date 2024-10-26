@@ -125,12 +125,12 @@ class MemberController extends Controller
             'email' => $request->get('email'),
             'dob' => date('Y-m-d',strtotime($request->get('dob'))),
             'phone' => $request->get('phone'),
-            'talent' => $request->get('talent'),
-            'interest' => $request->get('interest'),
-            'formal_worship' => $request->get('formal_worship'),
-            'another_member' => $request->get('another_member'),
-            'occupation' => $request->get('occupation'),
-            'position' => $request->get('position'),
+//            'talent' => $request->get('talent'),
+//            'interest' => $request->get('interest'),
+//            'formal_worship' => $request->get('formal_worship'),
+//            'another_member' => $request->get('another_member'),
+//            'occupation' => $request->get('occupation'),
+//            'position' => $request->get('position'),
             'address' => $request->get('address'),
             'address2' => $request->get('address2'),
             'postal' => $request->get('postal'),
@@ -139,11 +139,11 @@ class MemberController extends Controller
             'country' => $request->get('country'),
             'sex' => $request->get('sex'),
             'marital_status' => $request->get('marital_status'),
-            'member_since' => date('Y-m-d',strtotime($request->get('member_since'))),
+//            'member_since' => date('Y-m-d',strtotime($request->get('member_since'))),
             'wedding_anniversary' => date('Y-m-d',strtotime($request->get('wedding_anniversary'))),
             'photo' => $image_name,
-            'relative' => $relatives,
-            'member_status' => $request->member_status
+//            'relative' => $relatives,
+//            'member_status' => $request->member_status
         ));
         $member->save();
         // return response()->json(['status' => true, 'text' => "Member Successfully registered"]);

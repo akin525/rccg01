@@ -166,39 +166,39 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Talent</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="talent"
-                                                    placeholder="Enter your Talent" required>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Talent</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <input type="text" class="form-control" name="talent"--}}
+{{--                                                    placeholder="Enter your Talent" required>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Interest</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="interest"
-                                                    placeholder="Enter your Interest" required>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Interest</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <input type="text" class="form-control" name="interest"--}}
+{{--                                                    placeholder="Enter your Interest" required>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Formal place of
-                                                worship</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="formal_worship"
-                                                    placeholder="What is your formal place of worship" required>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Formal place of--}}
+{{--                                                worship</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <input type="text" class="form-control" name="formal_worship"--}}
+{{--                                                    placeholder="What is your formal place of worship" required>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Are you a member
-                                                of another church</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="another_member"
-                                                    placeholder="if yes what is your interest there" required>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Are you a member--}}
+{{--                                                of another church</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <input type="text" class="form-control" name="another_member"--}}
+{{--                                                    placeholder="if yes what is your interest there" required>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                         <!--Text Input-->
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="demo-text-input">Occupation</label>
@@ -220,37 +220,37 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Department</label>
-                                            <div class="col-md-9">
-                                                <select name="position"
-                                                    class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
-                                                    data-style="btn-success">
-                                                    'violinist','fluitist','saxophonist','usher','leader','technician','keyboardist','security','data
-                                                    admin','hospitality','shift leader w','shift leader k','shift leader
-                                                    v','medic'
-                                                    @foreach($depts as $dept)
-                                                    <option value="{{ $dept->dept_name }}">{{ $dept->dept_name }}</option>
-                                                     @endforeach
-                                                    {{-- <option value="Violinist">Violinist</option>
-                                                    <option value="fluitist">Fluitist</option>
-                                                    <option value="saxophonist">Saxophonist</option>
-                                                    <option value="usher">Worship Usher</option>
-                                                    <option value="leader">Worship Leader</option>
-                                                    <option value="technician">Technician</option>
-                                                    <option value="keyboardist">Keyboardist</option>
-                                                    <option value="data_admin">Registrar</option>
-                                                    <option value="hospitality">Hospitality</option>
-                                                    <option value="shift_leader_w">Worship Shift Leader</option>
-                                                    <option value="shift_leader_k">Keyboardists Shift Leader</option>
-                                                    <option value="shift_leader_v">Violin Team Leader</option>
-                                                    <option value="medic">Medic</option>
-                                                    <option value="Special Assignment">Special Assignment</option> --}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Department</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <select name="position"--}}
+{{--                                                    class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"--}}
+{{--                                                    data-style="btn-success">--}}
+{{--                                                    'violinist','fluitist','saxophonist','usher','leader','technician','keyboardist','security','data--}}
+{{--                                                    admin','hospitality','shift leader w','shift leader k','shift leader--}}
+{{--                                                    v','medic'--}}
+{{--                                                    @foreach($depts as $dept)--}}
+{{--                                                    <option value="{{ $dept->dept_name }}">{{ $dept->dept_name }}</option>--}}
+{{--                                                     @endforeach--}}
+{{--                                                    --}}{{-- <option value="Violinist">Violinist</option>--}}
+{{--                                                    <option value="fluitist">Fluitist</option>--}}
+{{--                                                    <option value="saxophonist">Saxophonist</option>--}}
+{{--                                                    <option value="usher">Worship Usher</option>--}}
+{{--                                                    <option value="leader">Worship Leader</option>--}}
+{{--                                                    <option value="technician">Technician</option>--}}
+{{--                                                    <option value="keyboardist">Keyboardist</option>--}}
+{{--                                                    <option value="data_admin">Registrar</option>--}}
+{{--                                                    <option value="hospitality">Hospitality</option>--}}
+{{--                                                    <option value="shift_leader_w">Worship Shift Leader</option>--}}
+{{--                                                    <option value="shift_leader_k">Keyboardists Shift Leader</option>--}}
+{{--                                                    <option value="shift_leader_v">Violin Team Leader</option>--}}
+{{--                                                    <option value="medic">Medic</option>--}}
+{{--                                                    <option value="Special Assignment">Special Assignment</option> --}}
 
-                                                    'violinist','fluitist','saxophonist','usher','special','leader','technician','keyboardist','data_admin','hospitality','shift_leader_w','shift_leader_k','shift_leader_v','medic'
-                                                </select>
-                                            </div>
-                                        </div>
+{{--                                                    'violinist','fluitist','saxophonist','usher','special','leader','technician','keyboardist','data_admin','hospitality','shift_leader_w','shift_leader_k','shift_leader_v','medic'--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
 
                                         <!--Textarea-->
@@ -603,27 +603,27 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Member
-                                                Since</label>
-                                            <div class="col-md-9">
-                                                <input type="text" id="member_since" placeholder="Member Since"
-                                                    name="member_since" class="datepicker form-control" required />
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Member--}}
+{{--                                                Since</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <input type="text" id="member_since" placeholder="Member Since"--}}
+{{--                                                    name="member_since" class="datepicker form-control" required />--}}
 
-                                            </div>
-                                        </div>
-                                        <div class="form-group" id="member_status_div" style="display:none">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Member
-                                                Status</label>
-                                            <div id="selectparent" class="col-md-9">
-                                                <select id="member_status" name="member_status"
-                                                    class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
-                                                    data-style="btn-info">
-                                                    <option selected value="old">Member</option>
-                                                    <option value="new">First Timer</option>
-                                                </select>
-                                            </div>
-                                        </div>
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-group" id="member_status_div" style="display:none">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Member--}}
+{{--                                                Status</label>--}}
+{{--                                            <div id="selectparent" class="col-md-9">--}}
+{{--                                                <select id="member_status" name="member_status"--}}
+{{--                                                    class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"--}}
+{{--                                                    data-style="btn-info">--}}
+{{--                                                    <option selected value="old">Member</option>--}}
+{{--                                                    <option value="new">First Timer</option>--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                         <div id="wedding" class="form-group" style="display:none">
                                             <label class="col-md-3 control-label" for="demo-text-input">Wedding
                                                 Aniversary</label>
@@ -675,17 +675,17 @@
                                             <div class="fa fa-remove blue delete" onclick="resetImgUpl()"></div>
                                             <canvas id="img-show" class="img-thumbnail img-response"></canvas>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Relative</label>
-                                            <div class="col-md-9">
-                                                <button type="button" data-target="#demo-default-modal"
-                                                    id="open-modal-btn" data-toggle="modal"
-                                                    class="btn btn-primary btn-lg" style="display:none;">Launch demo
-                                                    modal</button>
-                                                <button id="add-relative-btn" class="btn btn-info"type="button">Add
-                                                    Relative</button>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label">Relative</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <button type="button" data-target="#demo-default-modal"--}}
+{{--                                                    id="open-modal-btn" data-toggle="modal"--}}
+{{--                                                    class="btn btn-primary btn-lg" style="display:none;">Launch demo--}}
+{{--                                                    modal</button>--}}
+{{--                                                <button id="add-relative-btn" class="btn btn-info"type="button">Add--}}
+{{--                                                    Relative</button>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
 
                                         <!--div class="row">
@@ -717,40 +717,40 @@
                         <!--===================================================-->
                         <div class="modal fade" id="demo-default-modal" role="dialog" tabindex="-1"
                             aria-labelledby="demo-default-modal" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+{{--                            <div class="modal-dialog">--}}
+{{--                                <div class="modal-content">--}}
 
-                                    <!--Modal header-->
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"><i
-                                                class="pci-cross pci-circle"></i></button>
-                                        <h4 class="modal-title">Add a Relative</h4>
-                                    </div>
+{{--                                    <!--Modal header-->--}}
+{{--                                    <div class="modal-header">--}}
+{{--                                        <button type="button" class="close" data-dismiss="modal"><i--}}
+{{--                                                class="pci-cross pci-circle"></i></button>--}}
+{{--                                        <h4 class="modal-title">Add a Relative</h4>--}}
+{{--                                    </div>--}}
 
 
-                                    <!--Modal body-->
-                                    <div class="modal-body">
+{{--                                    <!--Modal body-->--}}
+{{--                                    <div class="modal-body">--}}
 
-                                        <div class="form-group">
-                                            <label class="col-md-2 control-label" for="demo-email-input">Search
-                                                Relative</label>
-                                            <div class="col-md-10">
-                                                <input type="text" id="search-relative-input" class="form-control"
-                                                    name="name" placeholder="Enter relative Name">
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-2 control-label" for="demo-email-input">Search--}}
+{{--                                                Relative</label>--}}
+{{--                                            <div class="col-md-10">--}}
+{{--                                                <input type="text" id="search-relative-input" class="form-control"--}}
+{{--                                                    name="name" placeholder="Enter relative Name">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-md-12" id="relatives-result-container"></div>
-                                    </div>
+{{--                                        <div class="col-md-12" id="relatives-result-container"></div>--}}
+{{--                                    </div>--}}
 
-                                    <!--Modal footer-->
-                                    <div class="modal-footer">
-                                        <button data-dismiss="modal" id="close-modal-btn" class="btn btn-default"
-                                            type="button">Close</button>
-                                        <button class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
+{{--                                    <!--Modal footer-->--}}
+{{--                                    <div class="modal-footer">--}}
+{{--                                        <button data-dismiss="modal" id="close-modal-btn" class="btn btn-default"--}}
+{{--                                            type="button">Close</button>--}}
+{{--                                        <button class="btn btn-primary">Save changes</button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="panel-footer panel-primary bg-dark">
                             <!-- Modal -->
