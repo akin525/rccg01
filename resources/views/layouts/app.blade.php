@@ -351,6 +351,26 @@
                                         </ul>
                                     </li>
 
+                                    <li
+                                            class="{{ Route::currentRouteName() === 'email' || Route::currentRouteName() === 'sms' ? 'active-sub active' : '' }}
+                                    {{ Route::currentRouteName() === 'attendance' ? 'active-sub active' : '' }}">
+                                        <a href="#">
+                                            <i class="fa fa-bookmark"></i>
+                                            <span class="menu-title">Remittance</span>
+                                            <i class="arrow"></i>
+                                        </a>
+                                        <ul class="collapse">
+                                            <li
+                                                    class="{{ Route::currentRouteName() === 'financial.area' ? 'active-sub active' : '' }}">
+                                                <a href="{{ route('financial.area') }}"><i class="fa fa-save"></i> Area Financial Report</a>
+                                            </li>
+                                            <li
+                                                    class="{{ Route::currentRouteName() === 'financial.area' ? 'active-sub active' : '' }}">
+                                                <a href="{{ route('financial.allarea') }}"><i class="fa fa-save"></i>View Area FIn Report</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
 
 
                                     <li
@@ -367,16 +387,16 @@
                                                 <a href="{{ route('financial.getoffering') }}"><i
                                                         class="fa fa-save"></i> Offering</a>
                                             </li>
-                                            <li
-                                                class="{{ Route::currentRouteName() === 'financial.getithe' ? 'active-sub active' : '' }}">
-                                                <a href="{{ route('financial.getithe') }}"><i class="fa fa-eye"></i>
-                                                    Tithe</a>
-                                            </li>
-                                            <li
-                                                class="{{ Route::currentRouteName() === 'financial.getbuildingoffering' ? 'active-sub active' : '' }}">
-                                                <a href="{{ route('financial.getbuildingoffering') }}"><i
-                                                        class="fa fa-signal"></i> Building Offering</a>
-                                            </li>
+{{--                                            <li--}}
+{{--                                                class="{{ Route::currentRouteName() === 'financial.getithe' ? 'active-sub active' : '' }}">--}}
+{{--                                                <a href="{{ route('financial.getithe') }}"><i class="fa fa-eye"></i>--}}
+{{--                                                    Tithe</a>--}}
+{{--                                            </li>--}}
+{{--                                            <li--}}
+{{--                                                class="{{ Route::currentRouteName() === 'financial.getbuildingoffering' ? 'active-sub active' : '' }}">--}}
+{{--                                                <a href="{{ route('financial.getbuildingoffering') }}"><i--}}
+{{--                                                        class="fa fa-signal"></i> Building Offering</a>--}}
+{{--                                            </li>--}}
 
                                             <li
                                                 class="{{ Route::currentRouteName() === 'financial.viewall' ? 'active-sub active' : '' }}">

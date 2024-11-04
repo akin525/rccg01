@@ -262,14 +262,14 @@
                                                     required></textarea>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label"
-                                                for="demo-textarea-input">Landmark</label>
-                                            <div class="col-md-9">
-                                                <textarea id="demo-textarea-input" name="address2" rows="5" class="form-control"
-                                                    placeholder="Enter Landmark"></textarea>
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label"--}}
+{{--                                                for="demo-textarea-input">Landmark</label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <textarea id="demo-textarea-input" name="address2" rows="5" class="form-control"--}}
+{{--                                                    placeholder="Enter Landmark"></textarea>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="col-md-6">
                                         <?php $ipInfo = app('App\Http\Controllers\VisitorController')->ip_info(app('App\Http\Controllers\VisitorController')->getUserIP(), 'Location'); ?>
@@ -657,18 +657,18 @@
                                                 <!-- <input type="file" accept="image/*" capture="camera"> -->
                                             </div>
                                         </div>
-                                        <label class="col-md-3 control-label">Photo</label>
-                                        <div class="btn btn-file">
-                                            <i class="fa fa-3x fa-folder"></i>
-                                            <span class="name">Choose File</span>
-                                            <input type="file" name="myprofile" accept="image/*">
-                                        </div>
-                                        <div class="btn btn-file element" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-camera"></i>
-                                            <span class="name">From Cam</span>
-                                            <input type="file"capture name="myprofile" accept="image/*"
-                                                style="display: none">
-                                        </div>
+{{--                                        <label class="col-md-3 control-label">Photo</label>--}}
+{{--                                        <div class="btn btn-file">--}}
+{{--                                            <i class="fa fa-3x fa-folder"></i>--}}
+{{--                                            <span class="name">Choose File</span>--}}
+{{--                                            <input type="file" name="myprofile" accept="image/*">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="btn btn-file element" data-toggle="modal" data-target="#myModal">--}}
+{{--                                            <i class="fa fa-camera"></i>--}}
+{{--                                            <span class="name">From Cam</span>--}}
+{{--                                            <input type="file"capture name="myprofile" accept="image/*"--}}
+{{--                                                style="display: none">--}}
+{{--                                        </div>--}}
 
 
                                         <div class="image" id="img-show-container" style="display: none">

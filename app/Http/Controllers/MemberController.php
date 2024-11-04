@@ -132,7 +132,7 @@ class MemberController extends Controller
 //            'occupation' => $request->get('occupation'),
 //            'position' => $request->get('position'),
             'address' => $request->get('address'),
-            'address2' => $request->get('address2'),
+//            'address2' => $request->get('address2'),
             'postal' => $request->get('postal'),
             'city' => $request->get('city'),
             'state' => $request->get('state'),
@@ -141,7 +141,7 @@ class MemberController extends Controller
             'marital_status' => $request->get('marital_status'),
 //            'member_since' => date('Y-m-d',strtotime($request->get('member_since'))),
             'wedding_anniversary' => date('Y-m-d',strtotime($request->get('wedding_anniversary'))),
-            'photo' => $image_name,
+//            'photo' => $image_name,
 //            'relative' => $relatives,
 //            'member_status' => $request->member_status
         ));

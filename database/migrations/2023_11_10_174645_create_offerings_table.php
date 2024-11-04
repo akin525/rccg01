@@ -15,8 +15,9 @@ class CreateOfferingsTable extends Migration
     {
         Schema::create('offerings', function (Blueprint $table) {
             $table->id();
-            $table->string('amount');
+            $table->string('type');
             $table->date('date');
+            $table->decimal('grand_total', 10, 2)->nullable();
             $table->timestamps();
         });
     }

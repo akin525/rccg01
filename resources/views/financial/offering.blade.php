@@ -43,37 +43,93 @@
                     <div class="panel-heading">
                         {{-- <h3 class="panel-title text-center">Mark Attendnace for <strong>{{\Auth::user()->branchname}} <i>{{\Auth::user()->branchcode}}</i></strong></h3> --}}
                     </div>
+
+
+
                     <form id="b-attendance-form" method="POST" action="{{ route('financial.offering') }}">
                         @csrf
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Date</label>
-                                        <input type="date" name="date" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Total Amount</label>
-                                        <select class="form-control" name="amount" required>
-                                            <option>Select your domination</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                            <option value="200">200</option>
-                                            <option value="500">500</option>
-                                            <option value="1000">1000</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3"></div>
+                            <div class="form-group">
+                                <label class="control-label">Offering Type</label>
+                                <select class="form-control" id="type" name="type" required>
+                                    <option>Select Offering Type</option>
+                                    <option value="worker-offering">Worker Offering</option>
+                                    <option value="sunday_school-offering">Sunday School</option>
+                                    <option value="building-offering">Building Offering</option>
+                                    <option value="sunday_love-offering">SLO</option>
+                                    <option value="Tithe">Tithe</option>
+                                </select>
                             </div>
-                            <div class="row">
+
+                            <div class="form-group">
+                                <label class="control-label">Date</label>
+                                <input type="date" name="date" class="form-control" required>
                             </div>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Denomination</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody id="denomination-rows">
+                                <!-- Each row will use array inputs for denomination, quantity, and total -->
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2"><strong>Total</strong></td>
+                                    <td><input type="text" id="grand-total" name="grand_total" readonly class="form-control" /></td>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
-                        </div>
-                        <div class="panel-footer text-right bg-dark">
+
+                    <script>
+                        // JavaScript for generating rows with denomination values
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const denominations = [1000, 500, 200, 100, 50, 20, 10, 5];
+                            const denominationRows = document.getElementById("denomination-rows");
+
+                            denominations.forEach(denomination => {
+                                const row = document.createElement("tr");
+                                row.innerHTML = `
+                <td>${denomination}</td>
+                <td><input type="number" name="denominations[${denomination}][quantity]" class="form-control quantity-input" data-denomination="${denomination}" min="0" /></td>
+                <td><input type="text" name="denominations[${denomination}][total]" class="form-control total-input" readonly /></td>
+            `;
+                                denominationRows.appendChild(row);
+                            });
+
+                            function calculateTotals() {
+                                let grandTotal = 0;
+                                document.querySelectorAll(".quantity-input").forEach(input => {
+                                    const denomination = parseFloat(input.getAttribute("data-denomination"));
+                                    const quantity = parseInt(input.value) || 0;
+                                    const total = denomination * quantity;
+
+                                    const totalCell = input.closest("tr").querySelector(".total-input");
+                                    totalCell.value = total ? total.toFixed(2) : "";
+                                    grandTotal += total;
+                                });
+                                document.getElementById("grand-total").value = grandTotal.toFixed(2);
+                            }
+
+                            document.querySelectorAll(".quantity-input").forEach(input => {
+                                input.addEventListener("input", calculateTotals);
+                            });
+
+                            document.getElementById("type").addEventListener("change", () => {
+                                document.querySelectorAll(".quantity-input").forEach(input => input.value = "");
+                                document.querySelectorAll(".total-input").forEach(input => input.value = "");
+                                document.getElementById("grand-total").value = "";
+                            });
+                        });
+                    </script>
+
+
+                    <div class="panel-footer text-right bg-dark">
                          <button id="btn-mark" class="btn btn-success" type="submit">Submit</button>
                          </div>
                 </form>
@@ -100,3 +156,4 @@
     <script src="{{ URL::asset('plugins/datatables/buttons.html5.min.js') }}"></script>
 
     <script src="{{ URL::asset('plugins/datatables/buttons.colVis.min.js') }}"></script>
+@endsection
