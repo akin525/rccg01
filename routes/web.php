@@ -38,6 +38,9 @@ Route::get('/home', function () {
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/member/registration', 'MemberController@create1')->name('member.registration.form');
+Route::post('/member/registration', 'MemberController@store')->name('member.registration');
+
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/dashboard', 'HomeController@index')->name('dashboard');

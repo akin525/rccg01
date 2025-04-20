@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Member;
+use App\User;
 use DataTables;
 use Auth as auths;
 
@@ -52,6 +53,23 @@ class MemberController extends Controller
       return view('members.register', compact('depts'));//, compact('classes', 'sections'));
     }
 
+    public function create1(Request $request)
+    {
+        $referrerId = null;
+        $branchname = null;
+
+        if ($request->has('ref')) {
+            try {
+                $referrerId = decrypt($request->query('ref'));
+                $branchname = User::where('branchcode', $referrerId)->get(['branchname'])->first()["branchname"];
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                // Handle invalid/modified referral codes
+            }
+        }
+
+        return view('members.register', compact('referrerId','branchname'));//, compact('classes', 'sections'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -61,16 +79,16 @@ class MemberController extends Controller
     public function store(Request $request)
     {
       // validate email
-      $member = Member::where('email', $request->email)->get(['id'])->first();
-      if($member){
-        return response()->json(['status' => false, 'text' => "The email ($request->email) already exists for a member."]);
-          // return redirect()->back()->with('status', "The email ($request->email) already exists for a member.");
-      }
-      // validate Phone
-      $member = Member::where('phone', $request->phone)->get(['id'])->first();
-      if($member){
-        return response()->json(['status' => false, 'text' => "The phone ($request->phone) already exists for a member."]);
-      }
+        $memberByEmail = Member::where('email', $request->email)->first();
+        if ($memberByEmail) {
+            return $this->errorResponse("The email ({$request->email}) already exists for a member.", $request);
+        }
+
+        $memberByPhone = Member::where('phone', $request->phone)->first();
+        if ($memberByPhone) {
+            return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
+        }
+
 
         $user = Auth::user();
 
@@ -103,6 +121,13 @@ class MemberController extends Controller
             'dob' => 'required|string|max:255',
             'email' => 'required|string|max:255',
         ]);
+
+        $branchname = User::where('branchcode', $request->get('referralId'))->first()["id"];
+        if ($user == null){
+            $branch_id = $branchname;
+        }else{
+            $branch_id = $user->id;
+        }
           // default profile image
         if ($request->hasFile('myprofile'))
         {
@@ -117,7 +142,7 @@ class MemberController extends Controller
           $image_name = "profile.png";
         }
         $member = new Member(array(
-            'branch_id' => $user->id,
+            'branch_id' => $branch_id,
             'id' => $request->get('id'),
             'title' => $request->get('title'),
             'firstname' => $request->get('firstname'),
@@ -126,7 +151,7 @@ class MemberController extends Controller
             'dob' => date('Y-m-d',strtotime($request->get('dob'))),
             'phone' => $request->get('phone'),
 //            'talent' => $request->get('talent'),
-//            'interest' => $request->get('interest'),
+            'interest' => $request->get('interest'),
 //            'formal_worship' => $request->get('formal_worship'),
 //            'another_member' => $request->get('another_member'),
 //            'occupation' => $request->get('occupation'),
@@ -141,15 +166,30 @@ class MemberController extends Controller
             'marital_status' => $request->get('marital_status'),
 //            'member_since' => date('Y-m-d',strtotime($request->get('member_since'))),
             'wedding_anniversary' => date('Y-m-d',strtotime($request->get('wedding_anniversary'))),
-//            'photo' => $image_name,
+            'photo' => $image_name,
 //            'relative' => $relatives,
 //            'member_status' => $request->member_status
         ));
         $member->save();
         // return response()->json(['status' => true, 'text' => "Member Successfully registered"]);
-         return redirect()->route('member.register.form')->with('status', 'Member Successfully registered');
+        if ($user == null) {
+            return redirect()->route('member.registration.form')->with('status', 'Member Successfully registered');
+        }else{
+            return redirect()->route('member.register.form')->with('status', 'Member Successfully registered');
+        }
     }
 
+    /**
+     * Return error response for both API and web form.
+     */
+    private function errorResponse($message, Request $request)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['status' => false, 'text' => $message], 422);
+        }
+
+        return redirect()->back()->withInput()->with('error', $message);
+    }
 
     /**
      * Display the specified resource.

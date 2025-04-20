@@ -44,12 +44,14 @@
             <!--End page title-->
             <!--Breadcrumb-->
             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            @if(Auth::user() != null)
             <ol class="breadcrumb">
                 <li>
                     <i class="fa fa-home"></i><a href="{{ route('dashboard') }}"> Dashboard</a>
                 </li>
                 <li class="active">Registration</li>
             </ol>
+            @endif
             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
             <!--End breadcrumb-->
         </div>
@@ -68,6 +70,11 @@
                                     {{ session('status') }}
                                 </div>
                             @endif
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                             @if (count($errors) > 0)
                                 @foreach ($errors->all() as $error)
                                     <div class="alert alert-danger">{{ $error }}</div>
@@ -78,7 +85,7 @@
                             <div class="" style="border:1pt solid #090c5e; border-radius:25px;">
                                 <!-- BASIC FORM ELEMENTS -->
                                 <!--===================================================-->
-                                <form id="register-form" method="POST" action="{{ route('member.register') }}"
+                                <form id="register-form" method="POST" action="{{ Auth::user() != null ? route('member.register') : route('member.registration') }}"
                                     class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
                                     @csrf
                                     <div class="col-md-6">
@@ -88,10 +95,12 @@
                                                 Code</label>
                                             <div class="col-md-9">
                                                 <input type="text" id="demo-readonly-input"
-                                                    value="{{ \Auth::user()->branchcode }}" class="form-control"
+                                                    value="{{ optional(\Auth::user())->branchname ?? $branchname  }}" class="form-control"
                                                     placeholder="Readonly input here..." readonly>
                                             </div>
                                         </div>
+
+                                        <input type="text" id="referralId" name="referralId" value="{{ optional(\Auth::user())->branchname ?? $referrerId }}" readonly style="position:absolute; left:-9999px;">
                                         <!--Text Input-->
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="demo-text-input">Title</label>
@@ -159,12 +168,20 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="demo-email-input">Phone
-                                                Number</label>
+                                                Number/ WhatsApp</label>
                                             <div class="col-md-9">
                                                 <input type="number" class="form-control" name="phone"
                                                     placeholder="Enter your phone number" required>
                                             </div>
                                         </div>
+
+{{--                                        <div class="form-group">--}}
+{{--                                            <label class="col-md-3 control-label" for="demo-email-input">Hubby </label>--}}
+{{--                                            <div class="col-md-9">--}}
+{{--                                                <input type="hubby" class="form-control" name="phone"--}}
+{{--                                                    placeholder="Enter your phone number" required>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
 {{--                                        <div class="form-group">--}}
 {{--                                            <label class="col-md-3 control-label" for="demo-text-input">Talent</label>--}}
@@ -174,13 +191,13 @@
 {{--                                            </div>--}}
 {{--                                        </div>--}}
 
-{{--                                        <div class="form-group">--}}
-{{--                                            <label class="col-md-3 control-label" for="demo-text-input">Interest</label>--}}
-{{--                                            <div class="col-md-9">--}}
-{{--                                                <input type="text" class="form-control" name="interest"--}}
-{{--                                                    placeholder="Enter your Interest" required>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="demo-text-input">Interest</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="interest"
+                                                    placeholder="Enter your Interest" required>
+                                            </div>
+                                        </div>
 
 {{--                                        <div class="form-group">--}}
 {{--                                            <label class="col-md-3 control-label" for="demo-text-input">Formal place of--}}
@@ -283,14 +300,14 @@
                                         </div>
                                         <?php } ?>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-textarea-input">City</label>
+                                            <label class="col-md-3 control-label" for="demo-textarea-input">Town of Origin</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" name="city"
                                                     placeholder="Enter member city" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-textarea-input">State</label>
+                                            <label class="col-md-3 control-label" for="demo-textarea-input">State of Origin</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" name="state"
                                                     placeholder="Enter member state" required>
@@ -707,6 +724,21 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        @if(Auth::user() != null)
+                                        <div class="form-group" style="padding-top:50px">
+                                            <div class="col-md-9">
+                                                <span class=" pull-right">
+                                                    @php
+                                                        $referralCode = encrypt(Auth::user()->branchcode);
+                                                        $referralLink = url('/member/registration?ref=' . $referralCode);
+                                                    @endphp
+                                                    <input type="text" id="referralLink" value="{{ $referralLink }}" readonly style="position:absolute; left:-9999px;">
+                                                    <button id="registerlink" class="btn btn-info pull-center"
+                                                    >GENERATE MEMBER REGISTRATION LINK</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                 </form>
                             </div>
@@ -822,6 +854,11 @@
     </div>
     <!--===================================================-->
     <!--END CONTENT CONTAINER-->
+    <!-- Notification -->
+
+    <div id="copyNotice" style="display: none; margin-top: 10px; color: green; font-weight: bold;">
+        ✅ Referral link copied to clipboard!
+    </div>
 
 @endsection
 
@@ -832,6 +869,48 @@
     <script src="{{ URL::asset('js/cam/howler.core.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/main.js') }}"></script>
     <script>
+        document.querySelectorAll('input[name="marital_status"]').forEach((el) => {
+            el.addEventListener('change', function () {
+                if (this.value === 'married') {
+                    document.getElementById('wedding').style.display = 'block';
+                } else {
+                    document.getElementById('wedding').style.display = 'none';
+                }
+            });
+        });
+        document.getElementById('registerlink').addEventListener('click', function () {
+            const linkInput = document.getElementById('referralLink');
+            const linkText = linkInput.value;
+            const notice = document.getElementById('copyNotice');
+
+            // Try using the modern Clipboard API
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(linkText).then(() => {
+                    showNotice();
+                }).catch(err => {
+                    fallbackCopy(linkInput);
+                    showNotice();
+                });
+            } else {
+                // Fallback for older browsers
+                fallbackCopy(linkInput);
+                showNotice();
+            }
+
+            function fallbackCopy(input) {
+                input.select();
+                input.setSelectionRange(0, 99999); // For mobile
+                document.execCommand('copy');
+            }
+
+            function showNotice() {
+                notice.style.display = 'block';
+                setTimeout(() => {
+                    notice.style.display = 'none';
+                }, 3000);
+            }
+        });
+
         // function uploadImg() {
         //   var input = document.querySelector('input[type=file]');
         //   var file = input.files[0];
@@ -868,17 +947,6 @@
                 // displayAsImage(file); // see Example 7
             };
 
-            // toggle Anniversary
-            $('input:radio[name="marital_status"]').change(
-                function() {
-                    if (this.checked && this.value == 'married') {
-                        $('#wedding').show();
-                        $("#anniversary").prop('required', true);
-                    } else {
-                        $('#wedding').hide();
-                        $("#anniversary").prop('required', false);
-                    }
-                });
             // toggle member since date
             $('#member_since').change(function() {
                 let today = new Date();
