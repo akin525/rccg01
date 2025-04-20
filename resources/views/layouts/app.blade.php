@@ -101,19 +101,22 @@
             <div id="navbar-container" class="boxed">
                 <!--Brand logo & name-->
                 <!--================================-->
+                @if(Auth::user() != null)
                 <div class="navbar-header">
                     <a href="{{ url('/dashboard') }}" class="navbar-brand">
                         <img src="{{ URL::asset('img/logo.png') }}" alt="Nifty Logo" class="brand-icon">
                         <div class="brand-title">
-                            <span class="brand-text">{{ strtoupper(\Auth::user()->branchname) }}</span>
+                            <span class="brand-text">{{ strtoupper(optional(\Auth::user())->branchname ?? '') }}</span>
                         </div>
                     </a>
                 </div>
+                @endif
                 <!--================================-->
                 <!--End brand logo & name-->
                 <!--Navbar Dropdown-->
                 <!--================================-->
                 <div class="navbar-content">
+                    @if(Auth::user() != null)
                     <ul class="nav navbar-top-links">
                         <!--Navigation toogle button-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -143,6 +146,7 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End Search-->
                     </ul>
+                    @endif
                     <ul class="nav navbar-top-links">
                         {{--						<li class="dropdown"> --}}
                         {{--								<a href="{{ route('notification') }}"> --}}
@@ -158,19 +162,21 @@
                         <!--User dropdown-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li id="dropdown-user" class="dropdown">
+                            @if(Auth::user() != null)
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
                                 <span class="ic-user pull-right">
                                     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                                     <!--You can use an image instead of an icon.-->
                                     <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
                                     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                                    <i class="fa fa-user"> Hello {{ \Auth::user()->branchname }}</i>
+                                    <i class="fa fa-user"> Hello {{ optional(\Auth::user())->branchname ?? '' }}</i>
                                 </span>
                                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                                 <!--You can also display a user name in the navbar.-->
                                 <!--<div class="username hidden-xs">Aaron Chavez</div>-->
                                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                             </a>
+                            @endif
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
                                 <ul class="head-list">
                                     <li>
@@ -205,6 +211,7 @@
                 <div id="mainnav">
                     <!--Menu-->
                     <!--================================-->
+                    @if(Auth::user() != null)
                     <div id="mainnav-menu-wrap">
                         <div class="nano">
                             <div class="nano-content">
@@ -222,8 +229,8 @@
                                                 <i class="dropdown-caret"></i>
                                             </span>
                                             <p class="mnp-name"><!--span class="flag-icon flag-icon-ng"></span-->
-                                                {{ \Auth::user()->branchname }}</p>
-                                            <p class="mnp-desc">{{ \Auth::user()->branchcode }}</p>
+                                                {{ optional(\Auth::user())->branchname ?? '' }}</p>
+                                            <p class="mnp-desc">{{ optional(\Auth::user())->branchcode ?? '' }}</p>
                                         </a>
                                     </div>
                                 </div>
@@ -630,6 +637,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <!--================================-->
                     <!--End menu-->
                 </div>
