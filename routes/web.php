@@ -199,6 +199,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/financial/viewall', [FinancialController::class, 'viewall'])->name('financial.viewall');
   Route::get('/financial/area', [FinancialController::class, 'remintance'])->name('financial.area');
   Route::get('/financial/allarea', [FinancialController::class, 'finreport'])->name('financial.allarea');
+  Route::get('/financial/remittance', [FinancialController::class, 'fetchUnremittedOfferings'])->name('financial.remittance');
 });
 
 Route::get('/admin/login', function () {

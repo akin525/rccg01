@@ -376,6 +376,11 @@
                                                 <a href="{{ route('financial.allarea') }}"><i class="fa fa-save"></i>View Area FIn Report</a>
                                             </li>
 
+                                            <li
+                                                    class="{{ Route::currentRouteName() === 'financial.area' ? 'active-sub active' : '' }}">
+                                                <a href="{{ route('financial.remittance') }}"><i class="fa fa-save"></i>View Parish FIn Report</a>
+                                            </li>
+
                                         </ul>
                                     </li>
 

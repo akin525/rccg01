@@ -130,105 +130,46 @@
                     @endif
                 </div>
                 {{--  --}}
-                <div class="col-md-offset-1 col-md-10" style="margin-bottom:50px">
-                    <div class="panel rounded-top" style="background-color: #e8ddd3;">
-                        <div class="panel-heading text-center">
-                            <h1 class="panel-title">Tithes<h1>
-                        </div>
-                        <div class="panel-body clearfix table-resposive">
-                            <table id="demo-dt-basic" class="table table-striped table-bordered datatable" cellspacing="0"
-                                width="100%">
-                                <thead>
+                @foreach($offering_types as $offering_type)
+                    <div class="col-md-offset-1 col-md-10" style="margin-bottom:50px">
+                        <div class="panel rounded-top" style="background-color: #e8ddd3;">
+                            <div class="panel-heading text-center">
+                                <h1 class="panel-title">{{$offering_type["name"]}}<h1>
+                            </div>
+                            <div class="panel-body clearfix table-resposive">
+                                <table id="demo-dt-basic" class="table table-striped table-bordered datatable" cellspacing="0"
+                                       width="100%">
+                                    <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th class="min-tablet">Amount</th>
+                                        <th class="min-tablet">Denomination</th>
+                                        <th class="min-tablet">Quantity</th>
+                                        <th class="min-tablet">Total</th>
                                         <th class="min-tablet">Date</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $count = 1; ?>
-                                    @foreach ($tithe as $tithes)
-                                      
+                                    </thead>
+                                    <tbody>
+                                        <?php $count = 1; ?>
+                                        @foreach($offerings->where('offering_id', $offering_type["id"]) as $offering)
+
                                         <tr>
                                             <td><strong>{{ $count }}</strong></td>
-                                            <td>{{ $tithes->amount }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($tithes->date)->format('l, F j, Y') }}</td>                                            {{-- <td><button id="{{$list->attendance_date}}" type="submit" class="btn btn-primary viewBtn" onclick="viewer(this);">View</button></td> --}}
+                                            <td>{{ $offering->denomination }}</td>
+                                            <td>{{ $offering->quantity }}</td>
+                                            <td>{{ $offering->total}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($offering->date)->format('l, F j, Y') }}</td>                                            {{-- <td><button id="{{$list->attendance_date}}" type="submit" class="btn btn-primary viewBtn" onclick="viewer(this);">View</button></td> --}}
                                         </tr>
-                                        <?php $count++; ?>
+                                            <?php $count++; ?>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-offset-1 col-md-10" style="margin-bottom:50px">
-                    <div class="panel rounded-top" style="background-color: #e8ddd3;">
-                        <div class="panel-heading text-center">
-                            <h1 class="panel-title">Building Offering<h1>
-                        </div>
-                        <div class="panel-body clearfix table-resposive">
-                            <table id="demo-dt-basic-building" class="table table-striped table-bordered datatable" cellspacing="0"
-                                width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th class="min-tablet">Amount</th>
-                                        <th class="min-tablet">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $count = 1; ?>
-                                    @foreach ($building as $buildings)
-                                    
-                                        <tr>
-                                            <td><strong>{{ $count }}</strong></td>
-                                            <td>{{ $buildings->amount }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($tithes->date)->format('l, F j, Y') }}</td>                                            {{-- <td><button id="{{$list->attendance_date}}" type="submit" class="btn btn-primary viewBtn" onclick="viewer(this);">View</button></td> --}}
-                                        </tr>
-                                        <?php $count++; ?>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+{{--                    <option value="{{$offering_type['value']}}">{{$offering_type["name"]}}</option>--}}
 
-
-                <div class="col-md-offset-1 col-md-10" style="margin-bottom:50px">
-                    <div class="panel rounded-top" style="background-color: #e8ddd3;">
-                        <div class="panel-heading">
-                            <h1 class="panel-title text-center">Offerings<h1>
-                        </div>
-                        <div class="panel-body text-center clearfix table-response">
-                            <table id="demo-dt-basic-offering" class="table table-striped table-bordered datatable" cellspacing="0"
-                                width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th class="min-tablet">Amount</th>
-                                        <th class="min-tablet">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $count = 1; ?>
-                                    @foreach ($offering as $offerings)
-                                        <tr>
-                                            <td><strong>{{ $count }}</strong></td>
-                                            <td>{{ ucwords($offerings->amount) }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($tithes->date)->format('l, F j, Y') }}</td>
-                                            {{-- <td>{{ucwords($member->lastname)}}</td> --}}
-                                            {{-- <td>
-                                  <button data-fullname="{{$member->getFullname()}}" data-id="{{$member->id}}" class="btn btn-primary show-member-history fa fa-eye"> View</button>
-                                </td> --}}
-                                        </tr>
-                                        <?php $count++; ?>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
 
             </div>
         </div>
