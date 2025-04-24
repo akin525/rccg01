@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\BuildingOffering;
 use App\FinancialReport;
 use App\OfferingDetail;
+use App\OfferingType;
+use App\Remittance;
 use App\Tithe;
 use App\Offering;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FinancialController extends Controller
 {
@@ -41,6 +45,7 @@ class FinancialController extends Controller
 
     public function offering(Request $request)
     {
+        $user = Auth::user();
         $validate = validator([
             'type' => 'required|string',
             'date' => 'required|date',
@@ -48,20 +53,22 @@ class FinancialController extends Controller
             'denominations.*.total' => 'nullable|numeric|min:0',
         ]);
         if ($validate) {
-            $offering = new Offering();
-            $offering->type = $request->input('type');
-            $offering->date = $request->input('date');
-            $offering->grand_total = $request->input('grand_total');
-            $offering->save();
+//            $offering = new Offering();
+//            $offering->type = $request->input('type');
+//            $offering->date = $request->input('date');
+//            $offering->grand_total = $request->input('grand_total');
+//            $offering->save();
 
             // Save each denomination detail
             foreach ($request->input('denominations') as $denomination => $data) {
                 if (!empty($data['quantity']) && !empty($data['total'])) {
                     $offeringDetail = new OfferingDetail();
-                    $offeringDetail->offering_id = $offering->id;
+                    $offeringDetail->offering_id = $request->input('type');
                     $offeringDetail->denomination = $denomination;
                     $offeringDetail->quantity = $data['quantity'];
                     $offeringDetail->total = $data['total'];
+                    $offeringDetail->offering_date = $request->input('date');
+                    $offeringDetail->branch_id = $user->id;
                     $offeringDetail->save();
                 }
             }
@@ -74,7 +81,8 @@ class FinancialController extends Controller
 
     public function getoffering()
     {
-        return view('financial.offering');
+        $offering_types = OfferingType::all();
+        return view('financial.offering', compact('offering_types'));
     }
     public function finreport()
     {
@@ -107,11 +115,79 @@ class FinancialController extends Controller
         return view('financial.buildingoffering');
     }
 
-    public function viewall()
+    public function viewall(Request $request)
     {
-        $building = BuildingOffering::all();
-        $offering = Offering::all();
-        $tithe = Tithe::all();
-        return view('financial.viewall', compact('building', 'offering', 'tithe'));
+        $user = Auth::user();
+        $week = $request->input('week', now()->weekOfYear);
+        $year = $request->input('year', now()->year);
+
+        $startOfWeek = Carbon::now()->setISODate($year, $week)->startOfWeek(Carbon::MONDAY);
+        $endOfWeek = Carbon::now()->setISODate($year, $week)->endOfWeek(Carbon::SUNDAY);
+
+        $offerings = OfferingDetail::whereBetween('offering_date', [$startOfWeek, $endOfWeek])
+            ->where('branch_id', $user->id)
+            ->get();
+
+        $offering_types = OfferingType::all();
+
+        return view('financial.viewall', compact('offering_types', 'offerings'));
+    }
+
+    public function viewall1()
+    {
+        $user = Auth::user();
+        $startOfWeek = Carbon::now()->subWeeks(2)->startOfWeek(Carbon::MONDAY);
+        $endOfWeek = Carbon::now()->subWeeks(2)->endOfWeek(Carbon::SUNDAY);
+        $startOfWeek = Carbon::now()->subWeek()->startOfWeek(Carbon::MONDAY);
+        $endOfWeek = Carbon::now()->subWeek()->endOfWeek(Carbon::SUNDAY);
+        $offerings = OfferingDetail::whereBetween('created_at', [$startOfWeek, $endOfWeek])->where('branch_id', $user->id)->get();
+        $offering_types = OfferingType::all();
+        return view('financial.viewall', compact('offering_types','offerings'));
+    }
+
+    public function fetchUnremittedOfferings()
+    {
+        $user = Auth::user();
+// Get the current date
+        $now = Carbon::now()->subMonth();
+
+        // Get the latest two remittance records
+        $remittances = Remittance::where('branch_id', $user->id)
+//            ->orderByDesc('remittance_date')
+//            ->limit(2)
+            ->pluck('remittance_date');
+
+        // Define start and end of period
+        $startDate = $remittances->filter(function ($date) use ($now) {
+            return $date <= $now;
+        })->first();
+        $endDate = $remittances->filter(function ($date) use ($now) {
+            return $date >= $now;
+        })->first();   // Latest remittance
+
+        // If no remittance at all, fetch everything
+        if ($remittances->isEmpty()) {
+            $offerings = OfferingDetail::where('branch_id', $user->id)->get();
+        }else {
+            // If there's no previous remittance, default to first day of last month
+            if (!$startDate) {
+                $startDate = Carbon::now()->subMonth()->startOfMonth();
+            }
+            $offerings = OfferingDetail::whereDate('offering_date', '>', Carbon::parse($startDate)->toDateString())
+                ->whereDate('offering_date', '<=', Carbon::parse($endDate)->toDateString())
+                ->where('branch_id', $user->id)
+                ->get();
+        }
+        $offering_types = OfferingType::all();
+
+        $totalsByOfferingType = []; // initialize array to hold totals
+
+        foreach ($offering_types as $offering_type) {
+            $totalsByOfferingType[$offering_type->id] = $offerings
+                ->where('offering_id', $offering_type->id)
+                ->sum('total');
+        }
+        dd($totalsByOfferingType);
+        return view('financial.financialreport', compact('totalsByOfferingType', 'offering_types' ));
     }
 }

@@ -53,12 +53,17 @@
                                 <label class="control-label">Offering Type</label>
                                 <select class="form-control" id="type" name="type" required>
                                     <option>Select Offering Type</option>
-                                    <option value="worker-offering">Worker Offering</option>
-                                    <option value="sunday_school-offering">Sunday School</option>
-                                    <option value="building-offering">Building Offering</option>
-                                    <option value="sunday_love-offering">SLO</option>
-                                    <option value="Tithe">Tithe</option>
+                                    @foreach($offering_types as $offering_type)
+
+                                        <option value="{{$offering_type['id']}}">{{$offering_type["name"]}}</option>
+
+                                    @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Name</label>
+                                <input type="text" name="other_name" class="form-control">
                             </div>
 
                             <div class="form-group">

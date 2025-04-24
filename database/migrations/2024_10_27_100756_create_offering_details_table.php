@@ -13,6 +13,7 @@ class CreateOfferingDetailsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('offering_details');
         Schema::create('offering_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('offering_id')->constrained('offerings')->onDelete('cascade');
