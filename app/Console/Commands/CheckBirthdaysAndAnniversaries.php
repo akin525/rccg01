@@ -56,6 +56,7 @@ class CheckBirthdaysAndAnniversaries extends Command
                     // Send reminder to admin
                     Mail::raw("Reminder: {$member->title} {$member->firstname} {$member->lastname}'s birthday is on {$dob->toFormattedDateString()}", function ($message) {
                         $message->to('odejinmiabraham@gmail.com')->subject('Birthday Reminder');
+                        $message->to('odejinmiabraham@gmail.com')->subject('Birthday Reminder');
                     }
                     );
                 }
