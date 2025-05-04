@@ -1,179 +1,163 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ \Auth::user()->branchname }}{{ \Auth::user()->branchcode }}: Attendance Report
-@endsection
-
-@section('link')
-    <link rel="stylesheet" href="{{ URL::asset('css/pignose.calendar.min.css') }}">
-@endsection
+@section('title', 'Usher Count Sheet')
 
 @section('content')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
     <style>
-        li {
-            display: inline;
+        .count-sheet-table, .count-sheet-table td, .count-sheet-table th {
+            border: 1px solid #000;
+            border-collapse: collapse;
         }
-        .dropbtn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
+        .count-sheet-table td, .count-sheet-table th {
+            padding: 4px;
+            text-align: center;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
-        }
-        .icon {
-            font-size: 100px;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button.previous {
-            float: left;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button.next {
-            float: right;
-            background-color: navy;
-            color: white;
+        .section-title {
+            background-color: #ccc;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 
-    <div id="content-container">
-        <div id="page-head">
-            <div id="page-title">
-                <h1 class="page-header text-overflow">Attendance</h1>
-            </div>
-            <ol class="breadcrumb">
-                <li><i class="fa fa-home"></i><a href="{{ route('dashboard') }}"> Dashboard</a></li>
-                <li class="active">All</li>
-            </ol>
-        </div>
+    @php
+        $currentWeek = request('week', now()->weekOfYear);
+        $currentYear = request('year', now()->year);
 
-        <div id="page-content">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <form method="GET" action="{{ route('financial.viewall') }}" class="form-inline text-center">
-                        <div class="form-group">
-                            <label for="week">Week #</label>
-                            <input type="number" name="week" id="week" class="form-control" min="1" max="53"
-                                   value="{{ request('week', now()->weekOfYear) }}">
-                        </div>
-                        <div class="form-group" style="margin-left: 10px;">
-                            <label for="year">Year</label>
-                            <input type="number" name="year" id="year" class="form-control"
-                                   value="{{ request('year', now()->year) }}">
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Filter</button>
-                    </form>
-                </div>
-            </div>
+        $todayWeek = now()->weekOfYear;
+        $todayYear = now()->year;
 
-            @if(request('week'))
-                @php
-                    $startOfWeek = \Carbon\Carbon::now()->setISODate(request('year', now()->year), request('week'))->startOfWeek(\Carbon\Carbon::MONDAY);
-                    $endOfWeek = \Carbon\Carbon::now()->setISODate(request('year', now()->year), request('week'))->endOfWeek(\Carbon\Carbon::SUNDAY);
-                @endphp
-                <div class="alert alert-info text-center">
-                    Showing offerings for the week of <strong>{{ $startOfWeek->format('F j, Y') }}</strong> to <strong>{{ $endOfWeek->format('F j, Y') }}</strong>
-                </div>
+        $previousWeek = $currentWeek - 1;
+        $previousYear = $currentYear;
+        if ($previousWeek < 1) {
+            $previousYear -= 1;
+            $previousWeek = \Carbon\Carbon::create($previousYear)->endOfYear()->weekOfYear;
+        }
+
+        $nextWeek = $currentWeek + 1;
+        $nextYear = $currentYear;
+        if ($nextWeek > 53) {
+            $nextYear += 1;
+            $nextWeek = 1;
+        }
+
+        $showNext = !($currentWeek == $todayWeek && $currentYear == $todayYear);
+    @endphp
+
+    <div class="container">
+
+        @if(request('week'))
+            @php
+                $startOfWeek = \Carbon\Carbon::now()->setISODate(request('year', now()->year), request('week'))->startOfWeek(\Carbon\Carbon::MONDAY);
+                $endOfWeek = \Carbon\Carbon::now()->setISODate(request('year', now()->year), request('week'))->endOfWeek(\Carbon\Carbon::SUNDAY);
+            @endphp
+        @endif
+
+        <div class="col-md-6 col-md-offset-3">
+            @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
             @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">{{ $error }}</div>
+                @endforeach
+            @endif
+        </div>
 
-            <div class="col-md-6 col-md-offset-3">
-                @if (session('status'))
-                    <div class="alert alert-success">{{ session('status') }}</div>
-                @endif
-                @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger">{{ $error }}</div>
-                    @endforeach
+        <div class="row text-center mb-3">
+            <div class="form-group" style="margin-left: 20px;">
+                <a href="{{ route('financial.viewall', ['week' => $previousWeek, 'year' => $previousYear]) }}" class="btn btn-warning">Previous</a>
+
+                @if($showNext)
+                    <a href="{{ route('financial.viewall', ['week' => $nextWeek, 'year' => $nextYear]) }}" class="btn btn-success" style="margin-left: 10px;">Next</a>
                 @endif
             </div>
-
-            @foreach($offering_types as $offering_type)
-                <div class="col-md-offset-1 col-md-10" style="margin-bottom:50px">
-                    <div class="panel rounded-top" style="background-color: #e8ddd3;">
-                        <div class="panel-heading text-center">
-                            <h1 class="panel-title">{{ $offering_type["name"] }}</h1>
-                        </div>
-                        <div class="panel-body clearfix table-responsive">
-                            <table id="demo-dt-basic" class="table table-striped table-bordered datatable" cellspacing="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th>S/N</th>
-                                    <th class="min-tablet">Denomination</th>
-                                    <th class="min-tablet">Quantity</th>
-                                    <th class="min-tablet">Total</th>
-                                    <th class="min-tablet">Date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @php $count = 1; @endphp
-                                @foreach($offerings->where('offering_id', $offering_type["id"]) as $offering)
-                                    <tr>
-                                        <td><strong>{{ $count }}</strong></td>
-                                        <td>{{ $offering->denomination }}</td>
-                                        <td>{{ $offering->quantity }}</td>
-                                        <td>{{ $offering->total }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($offering->date)->format('l, F j, Y') }}</td>
-                                    </tr>
-                                    @php $count++; @endphp
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
         </div>
+        <h3 class="text-center">THE REDEEMED CHRISTIAN CHURCH OF GOD</h3>
+        <p class="text-center">LAGOS PROVINCE 64</p>
+        <h4 class="text-center">USHERS COUNT SHEET</h4>
+
+        <table style="width:100%; margin-bottom: 10px;">
+            <tr>
+                <td><strong>Parish:</strong> {{\Auth::user()->branchname}}</td>
+                <td><strong>Area:</strong> 41</td>
+                <td><strong>Date:</strong> {{ $endOfWeek->format('F j, Y') }}</td>
+                <td><strong>Sheet No:</strong> 0651</td>
+            </tr>
+        </table>
+
+        @php
+
+            $labels = ['1000','500','200','100','50','20','10','5',"Transfer"
+            ];
+             $chunks = collect($offering_types)->chunk(3);
+        @endphp
+
+        @foreach($chunks as $group)
+            <table class="count-sheet-table" width="100%" style="margin-bottom: 10px;">
+                <tr>
+                    @foreach($group as $type)
+                        <th colspan="3" class="section-title">{{ $type->name }}</th>
+                    @endforeach
+                </tr>
+                <tr>
+                    @foreach($group as $type)
+                        <td>Denom</td><td>Qty</td><td>N</td>
+                    @endforeach
+                </tr>
+
+                @foreach($labels as $label)
+                    <tr>
+                        @foreach($group as $type)
+                            @php
+                                $items = $offerings->where('offering_id', $type->id)->where("denomination", $label)->first();
+                            @endphp
+                            <td>{{ $label }}</td>
+                            <td>{{ $items->quantity ?? '' }}</td>
+                            <td>{{ $items->total ?? '' }}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </table>
+        @endforeach
+
+        <!-- Summary Table -->
+        <table class="count-sheet-table" width="100%" style="margin-top: 20px;">
+            <tr><th colspan="4" class="section-title">SUMMARY</th></tr>
+            @foreach($offering_types as $key)
+                @php
+                    $sum = $offerings->where('offering_id', $key->id)->sum('total');
+                @endphp
+                <tr>
+                    <td>{{ $key->name }}</td>
+                    <td colspan="2"></td>
+                    <td><strong>{{ number_format($sum, 2) }}</strong></td>
+                </tr>
+            @endforeach
+            <tr>
+                <td>Total</td>
+                <td colspan="2"></td>
+                <td><strong>{{ number_format($offerings->sum('total'), 2) }}</strong></td>
+            </tr>
+        </table>
+
+        <!-- Signatures -->
+        <table style="width:100%; margin-top: 30px;">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><strong>Head Usher</strong></td><td>Name: ____________________</td><td>Signature: ________________</td>
+            </tr>
+            <tr>
+                <td><strong>Treasurer</strong></td><td>Name: ____________________</td><td>Signature: ________________</td>
+            </tr>
+            <tr>
+                <td><strong>Pastor</strong></td><td>Name: ____________________</td><td>Signature: ________________</td>
+            </tr>
+        </table>
+            <br>
+            <br>
     </div>
-@endsection
-
-@section('js')
-    <script src="{{ URL::asset('js/functions.js') }}"></script>
-    <script src="{{ URL::asset('js/pignose.calendar.full.min.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
-
-    <script>
-        $(document).ready(function () {
-            $('#demo-dt-basic').DataTable({
-                dom: '<"top"B>rt<"bottom"ip><"clear">',
-                buttons: [
-                    { extend: 'copy', text: 'Copy' },
-                    { extend: 'excel', text: 'Excel' },
-                    { extend: 'pdf', text: 'PDF', title: 'PDF Title' }
-                ]
-            });
-        });
-    </script>
 @endsection

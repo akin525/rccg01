@@ -94,16 +94,24 @@
                     <script>
                         // JavaScript for generating rows with denomination values
                         document.addEventListener("DOMContentLoaded", function () {
-                            const denominations = [1000, 500, 200, 100, 50, 20, 10, 5];
+                            const denominations = [1000, 500, 200, 100, 50, 20, 10, 5, "Transfer"];
                             const denominationRows = document.getElementById("denomination-rows");
 
                             denominations.forEach(denomination => {
                                 const row = document.createElement("tr");
-                                row.innerHTML = `
-                <td>${denomination}</td>
-                <td><input type="number" name="denominations[${denomination}][quantity]" class="form-control quantity-input" data-denomination="${denomination}" min="0" /></td>
-                <td><input type="text" name="denominations[${denomination}][total]" class="form-control total-input" readonly /></td>
-            `;
+                                if(denomination === "Transfer") {
+                                    row.innerHTML = `
+                                        <td>${denomination}</td>
+                                        <td><input type="text" name="denominations[${denomination}][quantity]" class="form-control quantity-input" data-denomination="${denomination}"  /></td>
+                                        <td><input type="text" name="denominations[${denomination}][total]" class="form-control total-input" readonly /></td>
+                                    `;
+                                }else {
+                                    row.innerHTML = `
+                                        <td>${denomination}</td>
+                                        <td><input type="number" name="denominations[${denomination}][quantity]" class="form-control quantity-input" data-denomination="${denomination}" min="0" /></td>
+                                        <td><input type="text" name="denominations[${denomination}][total]" class="form-control total-input" readonly /></td>
+                                    `;
+                                }
                                 denominationRows.appendChild(row);
                             });
 
@@ -112,7 +120,12 @@
                                 document.querySelectorAll(".quantity-input").forEach(input => {
                                     const denomination = parseFloat(input.getAttribute("data-denomination"));
                                     const quantity = parseInt(input.value) || 0;
-                                    const total = denomination * quantity;
+                                    var total = 0;
+                                    if(isNaN(denomination)) {
+                                        total = quantity;
+                                    }else {
+                                        total = denomination * quantity;
+                                    }
 
                                     const totalCell = input.closest("tr").querySelector(".total-input");
                                     totalCell.value = total ? total.toFixed(2) : "";

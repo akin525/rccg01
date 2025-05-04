@@ -303,7 +303,7 @@
                                             <label class="col-md-3 control-label" for="demo-textarea-input">Town of Origin</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" name="city"
-                                                    placeholder="Enter member city" required>
+                                                    placeholder="Enter member Town of Origin" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -320,8 +320,8 @@
                                                 <!--input type="text" class="form-control" name="country" placeholder="Enter member country" required-->
                                                 <select class="form-control" name="country" required
                                                     placeholder="Enter member country">
-                                                    <option selected value="{{ $ipInfo && $ipInfo['country'] }}">
-                                                        {{ $ipInfo && $ipInfo['country'] }}</option>
+{{--                                                    <option selected value="{{ $ipInfo && $ipInfo['country'] }}">--}}
+{{--                                                        {{ $ipInfo && $ipInfo['country'] }}</option>--}}
                                                     <option value="United States">United States</option>
                                                     <option value="United Kingdom">United Kingdom</option>
                                                     <option value="Afghanistan">Afghanistan</option>
@@ -643,9 +643,9 @@
 {{--                                        </div>--}}
                                         <div id="wedding" class="form-group" style="display:none">
                                             <label class="col-md-3 control-label" for="demo-text-input">Wedding
-                                                Aniversary</label>
+                                                Aniversary Date</label>
                                             <div class="col-md-9">
-                                                <input id="anniversary" type="text" placeholder="Wedding Anniversary"
+                                                <input id="anniversary" type="text" placeholder="Wedding Anniversary Date"
                                                     name="wedding_anniversary" class="datepicker form-control" />
 
                                             </div>

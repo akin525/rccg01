@@ -127,7 +127,7 @@ $(document).ready(function () {
             // { title: "wedding Anniversary", data: 'wedding_anniversary', name: 'wedding_anniversary' },
             { title: "Action", data: 'id', name: 'action', render: (id) => (`
               <div class="btn-group">
-            <!--                <button style="background-color:orange" class="btn text-light edit" data-id="${id}"><i class="fa fa-edit"></i></button>-->
+<!--                            <button style="background-color:orange" class="btn text-light edit" data-id="${id}"><i class="fa fa-edit"></i></button>-->
                 <a style="background-color:green" class="btn text-light" href="../member/profile/${id}"><i class="fa fa-eye"></i></a>
                 <a id="${id}" style="background-color:#8c0e0e" class="d-member btn text-light"><i class="fa fa-trash"></i></a>
               </div>

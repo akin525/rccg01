@@ -187,7 +187,7 @@ class FinancialController extends Controller
                 ->where('offering_id', $offering_type->id)
                 ->sum('total');
         }
-        dd($totalsByOfferingType);
+        dd("Gospel Offering $totalsByOfferingType[1], Sunday School $totalsByOfferingType[2], Building Offering $totalsByOfferingType[3], SLO $totalsByOfferingType[4], Children Offering $totalsByOfferingType[5], Congregation Tithe $totalsByOfferingType[6], Minister Tithe $totalsByOfferingType[7], First Fruit $totalsByOfferingType[8], Tuesday Offering $totalsByOfferingType[9], Thursday Offering $totalsByOfferingType[10], Thanksgiving $totalsByOfferingType[11], Others $totalsByOfferingType[12]");
         return view('financial.financialreport', compact('totalsByOfferingType', 'offering_types' ));
     }
 }

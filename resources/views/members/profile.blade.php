@@ -76,6 +76,7 @@ $colors = colo();//$generateColor($c_types);
                       </div>
                       <a href="tel:{{$member->phone}}" class="btn  btn-success btn-md">Call</a>
                       <a href="{{route('email')}}?mail={{$member->email}}" class="btn  btn-primary btn-md">Email</a>
+                      <a href="{{route('member.edit', ['id' => $member->id])}}" class="btn btn-warning btn-md">Edit</a>
                     </div>
                     <br><br>
                     <div class="col-md-12">

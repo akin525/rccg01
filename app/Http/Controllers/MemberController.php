@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use App\User;
+use Carbon\Carbon;
 use DataTables;
 use Auth as auths;
 
@@ -79,15 +80,15 @@ class MemberController extends Controller
     public function store(Request $request)
     {
       // validate email
-        $memberByEmail = Member::where('email', $request->email)->first();
-        if ($memberByEmail) {
-            return $this->errorResponse("The email ({$request->email}) already exists for a member.", $request);
-        }
+//        $memberByEmail = Member::where('email', $request->email)->first();
+//        if ($memberByEmail) {
+//            return $this->errorResponse("The email ({$request->email}) already exists for a member.", $request);
+//        }
 
-        $memberByPhone = Member::where('phone', $request->phone)->first();
-        if ($memberByPhone) {
-            return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
-        }
+//        $memberByPhone = Member::where('phone', $request->phone)->first();
+//        if ($memberByPhone) {
+//            return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
+//        }
 
 
         $user = Auth::user();
@@ -122,8 +123,8 @@ class MemberController extends Controller
             'email' => 'required|string|max:255',
         ]);
 
-        $branchname = User::where('branchcode', $request->get('referralId'))->first()["id"];
         if ($user == null){
+            $branchname = User::where('branchcode', $request->get('referralId'))->first()["id"];
             $branch_id = $branchname;
         }else{
             $branch_id = $user->id;
@@ -141,6 +142,11 @@ class MemberController extends Controller
         }else{
           $image_name = "profile.png";
         }
+        $birthdate = date('Y-m-d',strtotime($request->get('dob')));
+        $dob = Carbon::parse($birthdate);
+        $age = $dob->age;
+
+        $status = $age < 12 ? 'Child' : 'Adult';
         $member = new Member(array(
             'branch_id' => $branch_id,
             'id' => $request->get('id'),
@@ -148,7 +154,8 @@ class MemberController extends Controller
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
-            'dob' => date('Y-m-d',strtotime($request->get('dob'))),
+            'dob' => $birthdate,
+            'category' => $status,
             'phone' => $request->get('phone'),
 //            'talent' => $request->get('talent'),
             'interest' => $request->get('interest'),
@@ -173,9 +180,29 @@ class MemberController extends Controller
         $member->save();
         // return response()->json(['status' => true, 'text' => "Member Successfully registered"]);
         if ($user == null) {
-            return redirect()->route('member.registration.form')->with('status', 'Member Successfully registered');
+            $referralCode = encrypt($branch_id);
+            return redirect()->route('member.registration.form', ['ref' => $referralCode])->with('status', 'Member Successfully registered');
         }else{
             return redirect()->route('member.register.form')->with('status', 'Member Successfully registered');
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function categorymember(Request $request)
+    {
+      // validate email
+        $members = Member::all();
+        foreach ($members as $member){
+            $dob = Carbon::parse($member->date_of_birth);
+            $age = $dob->age;
+
+            $status = $age < 18 ? 'Child' : 'Adult';
+            $members->category = $status;
         }
     }
 
