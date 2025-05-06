@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/member/delete', 'MemberController@delete')->name('member.delete.multi');
   Route::post('/member/upgrade', 'MemberController@upgrade')->name('member.upgrade');
   Route::post('/member/upload/img', 'MemberController@uploadImg')->name('member.upload.img');
-  Route::post('/member/update', 'MemberController@updateMember')->name('member.update');
+  Route::post('/member/update', 'MemberController@update')->name('member.update');
   Route::get('/member/analysis', 'MemberController@memberAnalysis')->name('member.analysis');
   Route::get('/member/stats', 'MemberController@memberRegStats')->name('member.reg.stats');
   Route::get('/member/attendance/{id}', 'MemberController@attendance')->name('member.attendance');

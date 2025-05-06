@@ -71,7 +71,7 @@
             $id = $member->id;
             $title = $member->title;
             $fname = $member->firstname;
-            $lname = $member->lname;
+            $lname = $member->lastname;
             $dob = $member->dob;
             $email = $member->email;
             $phone = $member->phone;
@@ -94,7 +94,7 @@
 						<div class=""  style="border:1pt solid #090c5e; border-radius:25px;">
 							<!-- BASIC FORM ELEMENTS -->
 							<!--===================================================-->
-							<form method="POST" action="{{route('member.edit',$id)}}" class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
+							<form method="POST" action="{{route('member.update')}}" class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
 							@csrf
 								<div class="col-md-6">
 								<!--Static-->
@@ -130,7 +130,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="demo-text-input">Firstname</label>
 									<div class="col-md-9">
-										<input type="text" id="demo-text-input" name="firstname" value="{{old('firstname') or $fname}}" class="form-control" placeholder="Firstname" required>
+										<input type="text" id="demo-text-input" name="firstname" value="{{$fname}}" class="form-control" placeholder="Firstname" required>
 
 									</div>
 								</div>
@@ -188,7 +188,7 @@
 									<label class="col-md-3 control-label" for="demo-text-input">Position</label>
 									<div class="col-md-9">
 										<select name="position" class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-4" data-style="btn-success">
-                      <option class="bg-primary" value="{{$position}}">{{$position}}</option>
+                     						 <option class="bg-primary" value="{{$position}}">{{$position}}</option>
 											<option value="senior pastor">Senior Pastor</option>
 											<option value="pastor">Pastor</option>
 											<option value="member">Member</option>
@@ -213,13 +213,13 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="demo-textarea-input">Address I</label>
 									<div class="col-md-9">
-										<textarea id="demo-textarea-input" name="address" value="{{$address}}" rows="5" class="form-control" placeholder="Address I" required></textarea>
+										<input id="demo-textarea-input" name="address" value="{{$address}}" rows="5" class="form-control" placeholder="Address I" required></input>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="demo-textarea-input">Address II</label>
 									<div class="col-md-9">
-										<textarea id="demo-textarea-input" name="address2" value="{{$address2}}" rows="5" class="form-control" placeholder="Address II"></textarea>
+										<input id="demo-textarea-input" name="address2" value="{{$address2}}" rows="5" class="form-control" placeholder="Address II"></input>
 									</div>
 								</div>
 							</div>
@@ -227,7 +227,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="demo-textarea-input">Postal</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" value="{{$postal}}" name="postal" placeholder="Enter memeber Postal/ZIP Code" required>
+										<input type="text" class="form-control" value="{{$postal}}" name="postal" placeholder="Enter memeber Postal/ZIP Code">
 									</div>
 								</div>
 								<div class="form-group">
@@ -514,6 +514,7 @@
 								</div>
 								<div class="form-group pad-ver">
 									<label class="col-md-3 control-label">Marital Status</label>
+									<input type="text" id="id" name="id" value="{{ $id }}" readonly style="position:absolute; left:-9999px;">
 									<div class="col-md-9">
 										<div class="radio">
 
@@ -531,17 +532,19 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="demo-text-input">Member Since</label>
 									<div class="col-md-9">
-									<input  type="text" placeholder="Member Since" name="member_since" value="{{$member_since}}" class="datepicker form-control" required/>
+									<input  type="text" placeholder="Member Since" name="member_since" value="{{$member_since}}" class="datepicker form-control"/>
 
 									</div>
 								</div>
+								@if($wedding_anniversary != null)
 								<div class="form-group">
 									<label class="col-md-3 control-label" for="demo-text-input">Wedding Aniversary</label>
 									<div class="col-md-9">
-									<input  type="text" placeholder="Wedding Anniversary" name="wedding_anniversary" value="{{$wedding_anniversary}}" class="datepicker form-control" required/>
+									<input  type="text" placeholder="Wedding Anniversary" name="wedding_anniversary" value="{{$wedding_anniversary}}" class="datepicker form-control"/>
 
 									</div>
 								</div>
+								@endif
 								<div class="form-group">
 									<label class="col-md-3 control-label">Photo</label>
 									<div class="col-md-9">

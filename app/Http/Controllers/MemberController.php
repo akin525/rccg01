@@ -161,7 +161,7 @@ class MemberController extends Controller
             'interest' => $request->get('interest'),
 //            'formal_worship' => $request->get('formal_worship'),
 //            'another_member' => $request->get('another_member'),
-//            'occupation' => $request->get('occupation'),
+            'occupation' => $request->get('occupation'),
 //            'position' => $request->get('position'),
             'address' => $request->get('address'),
 //            'address2' => $request->get('address2'),
@@ -172,11 +172,14 @@ class MemberController extends Controller
             'sex' => $request->get('sex'),
             'marital_status' => $request->get('marital_status'),
 //            'member_since' => date('Y-m-d',strtotime($request->get('member_since'))),
-            'wedding_anniversary' => date('Y-m-d',strtotime($request->get('wedding_anniversary'))),
+//            'wedding_anniversary' => date('Y-m-d',strtotime($request->get('wedding_anniversary'))),
             'photo' => $image_name,
 //            'relative' => $relatives,
 //            'member_status' => $request->member_status
         ));
+        if ($request->get('wedding_anniversary') != null){
+            $member->wedding_anniversary = date('Y-m-d',strtotime($request->get('wedding_anniversary')));
+        }
         $member->save();
         // return response()->json(['status' => true, 'text' => "Member Successfully registered"]);
         if ($user == null) {
@@ -264,49 +267,55 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member,$id)
+    public function update(Request $request)
     {
         // check if image isnt empty
-        if (!empty($request->file('image'))){
+        if (!empty($request->file('photo'))){
             // validate image
             $this->validate($request, [
-                'class_id' => 'bail|required|integer|min:1',
-                'section_id' => 'required|integer|min:1',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//                'class_id' => 'bail|required|integer|min:1',
+//                'section_id' => 'required|integer|min:1',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-            $image = $request->file('image');
+            $image = $request->file('photo');
             $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $input['imagename']);
             $image_name = $input['imagename'];
         }
 
+        $id = $request->get('id');
         $member = Member::whereId($id)->firstOrFail();
-        $member->class_id = $request->get('class_id');
-        $member->section_id = $request->get('section_id');
+//        $member->class_id = $request->get('class_id');
+//        $member->section_id = $request->get('section_id');
         $member->firstname = $request->get('firstname');
         $member->lastname = $request->get('lastname');
-        //$member->image = $request->get('image');
-        $member->mobileno = $request->get('mobileno');
-        if (!empty($image_name) && ($image_name!== NULL)) $member->image = $image_name;
-        $member->gender = $request->get('gender');
-        $member->date_of_birth = $request->get('date_of_birth');
-        $member->current_address = $request->get('current_address');
-        $member->guardian_is = $request->get('guardian_is');
-        $member->father_name = $request->get('father_name');
-        $member->father_phone = $request->get('father_phone');
-        $member->father_occupation = $request->get('father_occupation');
-        $member->mother_name = $request->get('mother_name');
-        $member->mother_phone = $request->get('mother_phone');
-        $member->mother_occupation = $request->get('mother_occupation');
-        $member->guardian_name = $request->get('guardian_name');
-        $member->guardian_relation = $request->get('guardian_relation');
-        $member->guardian_phone = $request->get('guardian_phone');
-        $member->guardian_occupation = $request->get('guardian_occupation');
-        $member->guardian_address = $request->get('guardian_address');
-        $member->is_active = $request->get('is_active');
+        $member->phone = $request->get('phone');
+        if (!empty($image_name) && ($image_name!== NULL)) $member->photo = $image_name;
+        $member->sex = $request->get('gender');
+        $member->dob = $request->get('dob');
+        $member->address = $request->get('address');
+        $member->address2 = $request->get('address2');
+        $member->postal = $request->get('postal');
+        $member->city = $request->get('city');
+        $member->state = $request->get('state');
+        $member->country = $request->get('country');
+        $member->marital_status = $request->get('marital_status');
+//        $member->guardian_is = $request->get('guardian_is');
+//        $member->father_name = $request->get('father_name');
+//        $member->father_phone = $request->get('father_phone');
+//        $member->father_occupation = $request->get('father_occupation');
+//        $member->mother_name = $request->get('mother_name');
+//        $member->mother_phone = $request->get('mother_phone');
+//        $member->mother_occupation = $request->get('mother_occupation');
+//        $member->guardian_name = $request->get('guardian_name');
+//        $member->guardian_relation = $request->get('guardian_relation');
+//        $member->guardian_phone = $request->get('guardian_phone');
+//        $member->guardian_occupation = $request->get('guardian_occupation');
+//        $member->guardian_address = $request->get('guardian_address');
+//        $member->is_active = $request->get('is_active');
         $member->save();
-        return redirect(action('MemberController@edit_form', $id))->with('status', 'Member Record Successfully updated');
+        return redirect()->route('member.profile', $id)->with('status', 'Member Record Successfully updated');
 
     }
 
