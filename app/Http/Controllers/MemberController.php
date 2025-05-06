@@ -124,8 +124,8 @@ class MemberController extends Controller
         ]);
 
         if ($user == null){
-            $branchname = User::where('branchcode', $request->get('referralId'))->first()["id"];
-            $branch_id = $branchname;
+            $branchname = User::where('branchcode', $request->get('referralId'))->first();
+            $branch_id = $branchname["id"];
         }else{
             $branch_id = $user->id;
         }
@@ -180,7 +180,7 @@ class MemberController extends Controller
         $member->save();
         // return response()->json(['status' => true, 'text' => "Member Successfully registered"]);
         if ($user == null) {
-            $referralCode = encrypt($branch_id);
+            $referralCode = encrypt($branchname["branchcode"]);
             return redirect()->route('member.registration.form', ['ref' => $referralCode])->with('status', 'Member Successfully registered');
         }else{
             return redirect()->route('member.register.form')->with('status', 'Member Successfully registered');
@@ -198,10 +198,9 @@ class MemberController extends Controller
       // validate email
         $members = Member::all();
         foreach ($members as $member){
-            $dob = Carbon::parse($member->date_of_birth);
+            $dob = Carbon::parse($member->dob);
             $age = $dob->age;
-
-            $status = $age > 18 ? 'Child' : 'Adult';
+            $status = $age < 18 ? 'Child' : 'Adult';
             $member->category = $status;
             $member->save();
         }

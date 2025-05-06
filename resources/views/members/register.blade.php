@@ -149,7 +149,7 @@
                                             <label class="col-md-3 control-label" for="demo-text-input">Date Of
                                                 Birth</label>
                                             <div class="col-md-9">
-                                                <input type="text" placeholder="Date of Birth" name="dob"
+                                                <input type="text" placeholder="Date of Birth" id="dob" name="dob"
                                                     class="datepicker form-control" required />
 
                                             </div>
@@ -646,7 +646,7 @@
                                                 Aniversary Date</label>
                                             <div class="col-md-9">
                                                 <input id="anniversary" type="text" placeholder="Wedding Anniversary Date"
-                                                    name="wedding_anniversary" class="datepicker form-control" />
+                                                    name="wedding_anniversary" class="form-control" />
 
                                             </div>
                                         </div>
@@ -733,7 +733,7 @@
                                                         $referralLink = url('/member/registration?ref=' . $referralCode);
                                                     @endphp
                                                     <input type="text" id="referralLink" value="{{ $referralLink }}" readonly style="position:absolute; left:-9999px;">
-                                                    <button id="registerlink" class="btn btn-info pull-center"
+                                                    <button type="button" id="registerlink" class="btn btn-info pull-center"
                                                     >GENERATE MEMBER REGISTRATION LINK</button>
                                                 </span>
                                             </div>
@@ -863,12 +863,33 @@
 @endsection
 
 @section('js')
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
     <script src="{{ URL::asset('js/cam/DetectRTC.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/adapter.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/screenfull.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/howler.core.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/main.js') }}"></script>
     <script>
+        $(document).ready(function () {
+            $('#anniversary').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+         $(document).ready(function () {
+            $('#dob').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
         document.querySelectorAll('input[name="marital_status"]').forEach((el) => {
             el.addEventListener('change', function () {
                 if (this.value === 'married') {
