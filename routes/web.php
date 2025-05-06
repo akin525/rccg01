@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/member/register', 'MemberController@create')->name('member.register.form');
   Route::post('/member/register', 'MemberController@store')->name('member.register');
   Route::get('/members/all', 'MemberController@index')->name('members.all');
+  Route::get('/members/categorymember', 'MemberController@categorymember')->name('members.categorymember');
   Route::get('/member/profile/{id}', 'MemberController@show')->name('member.profile');
   Route::get('/member/edit/{id}', 'MemberController@modify')->name('member.edit');
   Route::post('/member/delete/{id}', 'MemberController@destroy')->name('member.delete');
