@@ -201,8 +201,9 @@ class MemberController extends Controller
             $dob = Carbon::parse($member->date_of_birth);
             $age = $dob->age;
 
-            $status = $age < 18 ? 'Child' : 'Adult';
-            $members->category = $status;
+            $status = $age > 18 ? 'Child' : 'Adult';
+            $member->category = $status;
+            $member->save();
         }
     }
 
