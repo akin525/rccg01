@@ -177,10 +177,11 @@
 											<option value="Surveyor">Surveyor</option>
 											<option value="Business Person">Business Person</option>
 											<option value="Lecturer">Lecturer</option>
-											<option value="Professor">Professor</option>
+											<option value="Teacher">Teacher</option>
 											<option value="Pharmacist">Pharmacist</option>
-											<option value="Civil Servant">Civil Servant</option>
-											<option value="Retired">*Retired</option>
+											<option value="Civil_Servant">Civil Servant</option>
+											<option value="Retired">Retired</option>
+											<option value="Other">Other</option>
 										</select>
 									</div>
 								</div>
