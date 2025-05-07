@@ -103,7 +103,7 @@ $(document).ready(function () {
            
             // { title: "S/N", render: () => (i++), name: 'id' },
 
-            { title: "Photo", data: 'photo', render: (photo) => (`<img src="{{asset('images/')}}/${photo}"  class="img-md img-circle" alt="Profile Picture">`), name: 'photo' },
+            { title: "Photo", data: 'photo', render: (photo) => (`<img src="{{asset('public/images/')}}/${photo}"  class="img-md img-circle" alt="Profile Picture">`), name: 'photo' },
             { title: "ID", data: 'id', name: 'id' },
             { title: "Full Name", data: {firstname: 'firstname', lastname: 'lastname'}, name: 'fullname', render: (data) => (`${data.firstname + ' ' + data.lastname}`) },
             // { title: "Occupation", data: 'occupation', name: 'occupation' },
