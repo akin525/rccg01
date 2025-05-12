@@ -268,8 +268,8 @@
                                             <tr class="<?php echo $class[$num]; ?>" id="row,{{ $count }}" data-category="{{ $member->category }}">
                                                 <td><strong>{{ $count }}</strong></td>
                                                 <td>
-                                                    <a href="{{ url('images/' . $member->photo) }}" target="_blank">
-                                                        <img src="{{ url('images/' . $member->photo) }}" class="img-lg img-circle" alt="Profile Picture" style="cursor: zoom-in;">
+                                                    <a href="{{ url('public/images/' . $member->photo) }}" target="_blank">
+                                                        <img src="{{ url('public/images/' . $member->photo) }}" class="img-lg img-circle" alt="Profile Picture" style="cursor: zoom-in;">
                                                     </a>
                                                 </td>
 
