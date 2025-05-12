@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Branch extends Authenticatable
 {
@@ -84,5 +85,14 @@ class Branch extends Authenticatable
 
       return $branch;
 
+    }
+
+    public static function generateUniqueBranchCode()
+    {
+        do {
+            $code = strtoupper(Str::random(6)); // Random 6-character alphanumeric
+        } while (User::where('branchcode', $code)->exists());
+
+        return $code;
     }
 }

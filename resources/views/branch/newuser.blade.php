@@ -11,7 +11,7 @@
 		<!--Page Title-->
 		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 		<div id="page-title">
-			<h1 class="page-header text-overflow">Branch Registration</h1>
+			<h1 class="page-header text-overflow">User Registration</h1>
 		</div>
 		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 		<!--End page title-->
@@ -33,7 +33,7 @@
 			<div class="col-lg-8 col-lg-offset-2">
 				<div class="panel" style="background-color: #e8ddd3;">
 					<div class="panel-heading">
-						<h2 class="panel-title text-center">Register Branch</h2>
+						<h2 class="panel-title text-center">Register User</h2>
 					</div>
 					@include('layouts.error')
 
@@ -43,7 +43,7 @@
 		        <div class="cls-content-lg panel">
 		            <div class="panel-body">
 		                <div class="mar-ver pad-btm">
-		                    <h1 class="h3">Create a New Branch Account</h1>
+		                    <h1 class="h3">Create a New User Account</h1>
 		                    <p>Set up account.</p>
 		                </div>
 										@if (isset($_GET['s']))
@@ -58,8 +58,20 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input id="branchname" placeholder="Branch Name" type="text" class="form-control{{ $errors->has('branchname') ? ' is-invalid' : '' }}" name="branchname" value="{{ old('branchname') }}" required autofocus>
-
+								<select class="form-control{{ $errors->has('branchname') ? ' is-invalid' : '' }}" name="branchname" required autofocus>
+									<option value="">Enter user Branch</option>
+									@foreach($branches as $branch)
+										<option value="{{$branch->branchname}}"
+												data-branchcode="{{ $branch->branchcode }}"
+												data-address="{{ $branch->address }}"
+												data-city="{{ $branch->city }}"
+												data-state="{{ $branch->state }}"
+												data-country="{{ $branch->country }}"
+												data-currency="{{ $branch->currency }}">
+											{{ $branch->branchname }}
+										</option>
+									@endforeach
+								</select>
                                 @if ($errors->has('branchname'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('branchname') }}</strong>
@@ -69,7 +81,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input id="branchcode" placeholder="Branch Code" type="text" class="form-control{{ $errors->has('branchcode') ? ' is-invalid' : '' }}" name="branchcode" value="{{ $branchcode }}" required readonly>
+                                <input id="branchcode" placeholder="Branch Code" type="text" class="form-control{{ $errors->has('branchcode') ? ' is-invalid' : '' }}" name="branchcode" value="{{ old('branchcode') }}" required readonly>
 
                                 @if ($errors->has('branchcode'))
                                     <span class="invalid-feedback">
@@ -111,7 +123,7 @@
                     <div class="row">
 											<div class="col-sm-12">
 													<div class="form-group">
-															<textarea type="text" class="form-control" placeholder="Branch Address" name="address"></textarea>
+															<textarea type="text" class="form-control" placeholder="Branch Address" name="address" id="address" readonly></textarea>
 															@if ($errors->has('address'))
 																	<span class="invalid-feedback">
 																			<strong>{{ $errors->first('address') }}</strong>
@@ -121,7 +133,7 @@
 											</div>
 											<div class="col-sm-3">
 													<div class="form-group">
-															<input id="city" type="city" placeholder="City" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required>
+															<input id="city" type="city" placeholder="City" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required readonly>
 
 															@if ($errors->has('city'))
 																	<span class="invalid-feedback">
@@ -132,7 +144,7 @@
 											</div>
 											<div class="col-sm-3">
 													<div class="form-group">
-															<input id="state" type="state" placeholder="State" class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }}" name="state" value="{{ old('state') }}" required>
+															<input id="state" type="state" placeholder="State" class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }}" name="state" value="{{ old('state') }}" required readonly>
 
 															@if ($errors->has('state'))
 																	<span class="invalid-feedback">
@@ -144,10 +156,10 @@
 											<div class="col-sm-3">
 													<div class="form-group">
 															<!--input id="country" type="country" placeholder="Country" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country') }}" required-->
-															<select  id="country"class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" required>
-																<option value="" selected disabled>Country</option>
+															<input  id="country" class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" required readonly>
+{{--																<option value="" selected disabled>Country</option>--}}
                              		<!-- <option value="158">Nigeria</option> -->
-                              </select>
+                              </input>
 															@if ($errors->has('country'))
 																	<span class="invalid-feedback">
 																			<strong>{{ $errors->first('country') }}</strong>
@@ -158,14 +170,9 @@
 											<div class="col-sm-3">
 													<div class="form-group">
 															<!--input id="country" type="country" placeholder="Country" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country') }}" required-->
-															<select class="form-control {{ $errors->has('currency') ? ' is-invalid' : '' }}" name="currency" required placeholder="Enter Branch Currency">
-																 <option value="" selected disabled>Currency</option>
-																 @foreach($currencies as $currency)
-																 @if($currency->currency_symbol)
-																 <option value="{{$currency->currency_symbol}}" {{$currency->name == 'Nigeria' ? 'selected' : '' }}>{{$currency->currency_name}} - {{$currency->currency_symbol}}</option>
-																 @endif
-																 @endforeach
-															 </select>
+															<input class="form-control {{ $errors->has('currency') ? ' is-invalid' : '' }}" name="currency" id="currency" required placeholder="Enter Branch Currency" readonly>
+
+															 </input>
 															@if ($errors->has('currency'))
 																	<span class="invalid-feedback">
 																			<strong>{{ $errors->first('currency') }}</strong>
@@ -197,6 +204,27 @@
 
 @section('js')
 <script>
+	document.addEventListener("DOMContentLoaded", function() {
+		const branchSelect = document.querySelector('select[name="branchname"]');
+
+		branchSelect.addEventListener('change', function() {
+			const selectedOption = this.options[this.selectedIndex];
+
+			const address = selectedOption.getAttribute('data-address');
+			const branchcode = selectedOption.getAttribute('data-branchcode');
+			const city = selectedOption.getAttribute('data-city');
+			const state = selectedOption.getAttribute('data-state');
+			const country = selectedOption.getAttribute('data-country');
+			const currency = selectedOption.getAttribute('data-currency');
+
+			document.getElementById('address').value = address || '';
+			document.getElementById('branchcode').value = branchcode || '';
+			document.getElementById('city').value = city || '';
+			document.getElementById('state').value = state || '';
+			document.getElementById('country').value = country || '';
+			document.getElementById('currency').value = currency || '';
+		});
+	});
 $(document).ready(() => {
 	select = $('#country')
 	getCountries().then((res)=>{ $(select).append(options(res))})

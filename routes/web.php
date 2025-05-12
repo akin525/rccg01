@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/branches/{id}/destroy', 'BranchController@destroy')->name('branch.destroy');
   Route::get('/branches/register', 'BranchController@registerForm')->name('branch.register.form');
   Route::post('/branches/register', 'BranchController@register')->name('branch.register');
+  Route::get('/branches/newuser', 'BranchController@newuserform')->name('branch.newuser.form');
   Route::post('/branches/update', 'BranchController@updateBranch')->name('branch.update');
   Route::post('/branches/delete', 'BranchController@delete')->name('branch.delete.multi');
   Route::get('/branch/invoice', 'BranchController@invoice')->name('branch.invoice');

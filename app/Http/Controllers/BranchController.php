@@ -65,8 +65,20 @@ class BranchController extends Controller
         //
         $user = \Auth::user();
         $currencies = Countries::all();
+        $branchcode = Branch::generateUniqueBranchCode();
 
-        return ($user->isAdmin()) ? view('branch.register', compact('currencies')) : redirect()->route('dashboard');
+        return ($user->isAdmin()) ? view('branch.register', compact('currencies','branchcode')) : redirect()->route('dashboard');
+    }
+
+     public function newuserform()
+    {
+        //
+        $user = \Auth::user();
+        $currencies = Countries::all();
+//        $branches = User::all();
+        $branches = User::all()->unique('branchname');
+
+        return ($user->isAdmin()) ? view('branch.newuser', compact('currencies','branches')) : redirect()->route('dashboard');
     }
 
 
@@ -102,7 +114,7 @@ class BranchController extends Controller
     {
         return Validator::make($data, [
             'branchname' => 'bail|required|string|max:255',
-            'branchcode' => 'required|string|max:255|unique:users',
+//            'branchcode' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -120,7 +132,7 @@ class BranchController extends Controller
         'branchcode' => $data['branchcode'],
         'address' => $data['address'],
         'email' => $data['email'],
-        'isadmin' => isset($data['isadmin']) ? $data['isadmin'] : 'false',
+        'isadmin' => $data['isadmin'] ?? 'false',
         'password' => Hash::make($data['password']),
         'country' => $data['country'],
         'state' => $data['state'],

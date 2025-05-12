@@ -220,14 +220,35 @@
                         <div class="panel-body">
                             <form id="m-attendance" action="{{ route('attendance.mark') }}" method="post">
                                 @csrf
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <select id="branchFilter" class="form-control{{ $errors->has('branchname') ? ' is-invalid' : '' }}" name="branchname" required autofocus>
+                                            <option value="">All</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->category}}"
+                                                        data-branchcode="{{ $category->category }}">
+                                                    {{ $category->category }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('branchname'))
+                                            <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('branchname') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
                                 <table id="mTable" class="table table-striped table-bordered datatable text-dark"
                                     cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>S/N</th>
+                                            <th>Profile Picture</th>
                                             <th>Title</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
+                                            <th>DOB</th>
                                             <th><input id="select-all" type="checkbox" />Mark All</th>
                                         </tr>
                                     </thead>
@@ -244,11 +265,18 @@
                                                 $num = 1;
                                                 $i = 1;
                                             } ?>
-                                            <tr class="<?php echo $class[$num]; ?>" id="row,{{ $count }}">
+                                            <tr class="<?php echo $class[$num]; ?>" id="row,{{ $count }}" data-category="{{ $member->category }}">
                                                 <td><strong>{{ $count }}</strong></td>
-                                                <td>{{ $member->title }}
-                                                <td>{{ $member->firstname }}
-                                                <td>{{ $member->lastname }}
+                                                <td>
+                                                    <a href="{{ url('images/' . $member->photo) }}" target="_blank">
+                                                        <img src="{{ url('images/' . $member->photo) }}" class="img-lg img-circle" alt="Profile Picture" style="cursor: zoom-in;">
+                                                    </a>
+                                                </td>
+
+                                                <td>{{ $member->title }}</td>
+                                                <td>{{ $member->firstname }}</td>
+                                                <td>{{ $member->lastname }}</td>
+                                                <td>{{ $member->dob }}</td>
                                                 <td>
                                                     <div id="" class="input-group">
                                                         <div class="checkbox">
@@ -320,6 +348,19 @@
 
     <script src="{{ URL::asset('plugins/datatables/buttons.colVis.min.js') }}"></script>
     <script>
+        document.getElementById('branchFilter').addEventListener('change', function () {
+            const selected = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#mTable tbody tr');
+
+            rows.forEach(row => {
+                const category = row.getAttribute('data-category').toLowerCase();
+                if (!selected || category === selected) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
         $(document).ready(() => {
             //for bulk delete
             $('#select-all').click(function() {

@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <input id="branchcode" placeholder="Branch Code" type="text" class="form-control{{ $errors->has('branchcode') ? ' is-invalid' : '' }}" name="branchcode" value="{{ old('branchcode') }}" required>
+                            <input id="branchcode" placeholder="Branch Code" type="text" class="form-control{{ $errors->has('branchcode') ? ' is-invalid' : '' }}" name="branchcode" value="{{ $branchcode }}" required readonly>
 
                             @if ($errors->has('branchcode'))
                                 <span class="invalid-feedback">

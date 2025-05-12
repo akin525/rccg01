@@ -110,7 +110,8 @@ class VisitorController extends Controller
       } else {
         // show register view
         $currencies = Countries::all();
-        return view('auth.register', compact('currencies'));
+        $branchcode = Branch::generateUniqueBranchCode();
+        return view('auth.register', compact('currencies','branchcode'));
       }
       return;
     }

@@ -119,4 +119,5 @@ class User extends Authenticatable
     public function payments(){
       return $this->hasMany(Payment::class, 'branch_id');
     }
+
 }

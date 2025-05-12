@@ -196,9 +196,10 @@ class AttendanceController extends Controller
   {
     $user = User::find(Auth::user()->id);
     $services = $user->getServiceTypes();
-    $members = \App\Member::where('branch_id', $user->id)->get();
+    $members = Member::where('branch_id', $user->id)->get();
     $groups = Group::all();
-    return view('attendance.mark', compact('members', 'services','groups'));
+    $categories = $members->unique('category');
+    return view('attendance.mark', compact('members', 'services','groups', 'categories'));
   }
 
   public function groupmark(Request $request)
