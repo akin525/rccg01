@@ -25,6 +25,8 @@ Route::get('/', function () {
   return redirect()->route('login');
 });
 
+Route::get('testmail', [\App\Http\Controllers\TestMailController::class, 'testmail']);
+
 Route::get('/setup/user', 'VisitorController@setupUser')->name('setupUser');
 Route::post('/setup/user', 'VisitorController@register')->name('visitor.register');
 Route::post('/setup/logo', 'VisitorController@uploadLogo')->name('app.logo');
