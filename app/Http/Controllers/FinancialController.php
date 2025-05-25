@@ -130,7 +130,7 @@ class FinancialController extends Controller
 
         $offering_types = OfferingType::all();
 
-        return view('financial.viewall', compact('offering_types', 'offerings'));
+        return view('financial.viewall', compact('offering_types', 'offerings', 'endOfWeek'));
     }
 
     public function viewall1()

@@ -63,19 +63,20 @@
             @endif
         </div>
 
-        <div class="row text-center mb-3">
-            <div class="form-group" style="margin-left: 20px;">
-                <a href="{{ route('financial.viewall', ['week' => $previousWeek, 'year' => $previousYear]) }}" class="btn btn-warning">Previous</a>
 
-                @if($showNext)
-                    <a href="{{ route('financial.viewall', ['week' => $nextWeek, 'year' => $nextYear]) }}" class="btn btn-success" style="margin-left: 10px;">Next</a>
-                @endif
-            </div>
-        </div>
         <h3 class="text-center">THE REDEEMED CHRISTIAN CHURCH OF GOD</h3>
         <p class="text-center">LAGOS PROVINCE 64</p>
         <h4 class="text-center">USHERS COUNT SHEET</h4>
 
+            <div class="row text-center mb-3">
+                <div class="form-group" style="margin-left: 20px;">
+                    <a href="{{ route('financial.viewall', ['week' => $previousWeek, 'year' => $previousYear]) }}" class="btn btn-warning">Previous</a>
+
+                    @if($showNext)
+                        <a href="{{ route('financial.viewall', ['week' => $nextWeek, 'year' => $nextYear]) }}" class="btn btn-success" style="margin-left: 10px;">Next</a>
+                    @endif
+                </div>
+            </div>
         <table style="width:100%; margin-bottom: 10px;">
             <tr>
                 <td><strong>Parish:</strong> {{\Auth::user()->branchname}}</td>
