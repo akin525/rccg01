@@ -45,13 +45,6 @@
 
     <div class="container">
 
-        @if(request('week'))
-            @php
-                $startOfWeek = \Carbon\Carbon::now()->setISODate(request('year', now()->year), request('week'))->startOfWeek(\Carbon\Carbon::MONDAY);
-                $endOfWeek = \Carbon\Carbon::now()->setISODate(request('year', now()->year), request('week'))->endOfWeek(\Carbon\Carbon::SUNDAY);
-            @endphp
-        @endif
-
         <div class="col-md-6 col-md-offset-3">
             @if (session('status'))
                 <div class="alert alert-success">{{ session('status') }}</div>
@@ -78,6 +71,10 @@
                 </div>
             </div>
         <table style="width:100%; margin-bottom: 10px;">
+                @php
+                    $startOfWeek = Carbon::now()->setISODate(request('year', now()->year), request('week'))->startOfWeek(Carbon::MONDAY);
+                    $endOfWeek = Carbon::now()->setISODate(request('year', now()->year), request('week'))->endOfWeek(Carbon::SUNDAY);
+                @endphp
             <tr>
                 <td><strong>Parish:</strong> {{\Auth::user()->branchname}}</td>
                 <td><strong>Area:</strong> 41</td>

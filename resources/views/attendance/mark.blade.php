@@ -248,7 +248,7 @@
                                             <th>Title</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
-                                            <th>DOB</th>
+{{--                                            <th>DOB</th>--}}
                                             <th><input id="select-all" type="checkbox" />Mark All</th>
                                         </tr>
                                     </thead>
@@ -276,7 +276,7 @@
                                                 <td>{{ $member->title }}</td>
                                                 <td>{{ $member->firstname }}</td>
                                                 <td>{{ $member->lastname }}</td>
-                                                <td>{{ $member->dob }}</td>
+{{--                                                <td>{{ $member->dob }}</td>--}}
                                                 <td>
                                                     <div id="" class="input-group">
                                                         <div class="checkbox">

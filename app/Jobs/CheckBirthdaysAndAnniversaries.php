@@ -1,37 +1,30 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
 use App\Member;
 use Carbon\Carbon;
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class CheckBirthdaysAndAnniversaries extends Command
+class CheckBirthdaysAndAnniversaries implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'command:reminders';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Send birthday and anniversary reminders';
-
-    /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct();
+        //
     }
 
     /**
@@ -41,7 +34,7 @@ class CheckBirthdaysAndAnniversaries extends Command
      */
     public function handle()
     {
-        $this -> checkanniversary();
+        checkanniversary();
     }
 
     protected $smstype = "bc";
@@ -66,6 +59,7 @@ class CheckBirthdaysAndAnniversaries extends Command
             // Handle Birthday
             if ($member->dob) {
                 $dob = Carbon::parse($member->dob)->setYear($today->year);
+                Log::info('Scheduled job ran');
 
                 if ($dob->between($reminderStart, $today)) {
                     // Send reminder to admin
@@ -76,23 +70,19 @@ class CheckBirthdaysAndAnniversaries extends Command
                     );
                 }
 
-                $message = "Happy Birthday {$member->title} {$member->firstname}! May God's love and blessings continue to guide and strengthen you. Wishing you joy, peace, and a year full of grace!";
+                $message = "Happy Birthday {$member->title} {$member->firstname}!";
                 if ($dob->isToday()) {
                     if ($member->email != null) {
                         // Send birthday email to member
-                        try{
-                            Mail::raw($message, function ($message) use ($member) {
-                                $message->to($member->email)->subject('Happy Birthday!');
-                            });
-                            Log::info('Mail sent successfully to ' . $member->email);
-                        } catch (\Exception $e) {
-                            Log::error('Mail failed: ' . $e->getMessage());
-                            // Optional: return response or alert user
-                        }
+                        Mail::raw($message, function ($message) use ($member) {
+                            $message->to($member->email)->subject('Happy Birthday!');
+                        });
                     }
                     if ($this->smstype == "bc") {
+                        Log::error('Something went wrong! 12  '.$message. "  ". $this->smstype);
                         $this->sendkudibroadcast($this->kudisms, $member->phone, $message);
                     }else{
+                        Log::error('Something went wrong! 1234  '.$message. "  ". $this->smstype);
 // 2. Extract value after the comma
                         $parts = explode(',', $message);
                         $lastPart = trim(end($parts)); // "12345"
@@ -114,23 +104,19 @@ class CheckBirthdaysAndAnniversaries extends Command
                 }
 
                 if ($anniversary->isToday()) {
-                    $message = "Happy Wedding Anniversary {$member->title} {$member->firstname}! May God continue to bless your union with love, joy, and lasting peace. Wishing you many more beautiful years together!";
+                    $message = "Happy Wedding Anniversary {$member->title} {$member->firstname}!";
                     if ($member->email != null) {
                         // Send anniversary email to member
-                        try {
-                            Mail::raw($message, function ($message) use ($member) {
-                                $message->to($member->email)->subject('Happy Anniversary!');
-                            });
-                            Log::info('Mail sent successfully to ' . $member->email);
-                        } catch (\Exception $e) {
-                            Log::error('Mail failed: ' . $e->getMessage());
-                            // Optional: return response or alert user
-                        }
+                        Mail::raw($message, function ($message) use ($member) {
+                            $message->to($member->email)->subject('Happy Anniversary!');
+                        });
                     }
                     if ($member->phone != null) {
                         if ($this->smstype == "bc") {
+                            Log::error('Something went wrong! 12  ' . $message . "  " . $this->smstype);
                             $this->sendkudibroadcast($this->kudisms, $member->phone, $message);
                         } else {
+                            Log::error('Something went wrong! 1234  ' . $message . "  " . $this->smstype);
 // 2. Extract value after the comma
                             $parts = explode(',', $message);
                             $lastPart = trim(end($parts)); // "12345"
@@ -144,6 +130,7 @@ class CheckBirthdaysAndAnniversaries extends Command
 
         $this->info('Reminder check completed.');
     }
+
     public function sendkudiwhatsapp($kudisms, $mobile,$message)
     {
         $curl = curl_init();
@@ -158,9 +145,9 @@ class CheckBirthdaysAndAnniversaries extends Command
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'token='.$kudisms["api_key"].
+            CURLOPT_POSTFIELDS => 'token='.$kudisms->api_key.
                 '&recipient='.$mobile.
-                '&template_code='.$kudisms["whatsapptemplatecode"].
+                '&template_code='.$kudisms->whatsapptemplatecode.
                 '&parameters='.$message.
                 '&button_parameters=xxxx%2Cxxxx%2Cxxx
                 &header_parameters=xxxx%2Cxxxx',
@@ -175,13 +162,12 @@ class CheckBirthdaysAndAnniversaries extends Command
         curl_close($curl);
 
         if ($err) {
-            Log::error('Something went wrong!  '.$err);
+            dd("cURL Error #:" . $err);
             echo "cURL Error #:" . $err;
             return [];
         }
         $reply = json_decode($response,true);
-
-        Log::error('Something went wrong!  '.$reply);
+//        dd($reply);
         return $reply;
     }
     public function sendkudiotp($kudisms, $mobile,$message)
@@ -199,12 +185,12 @@ class CheckBirthdaysAndAnniversaries extends Command
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-                "token": "'. $kudisms["api_key"].'",
-                "senderID": "'.$kudisms["sender"].'",
+                "token": "'. $kudisms->api_key.'",
+                "senderID": "'.$kudisms->sender.'",
                 "recipients": "'.$mobile.'",
                 "otp": "'.$message.'",
-                "appnamecode": "'.$kudisms["appnamecode"].'",
-                "templatecode": "'.$kudisms["smstemplatecode"].'"
+                "appnamecode": "'.$kudisms->appnamecode.'",
+                "templatecode": "'.$kudisms->smstemplatecode.'"
             }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: text/plain'
@@ -216,22 +202,21 @@ class CheckBirthdaysAndAnniversaries extends Command
         curl_close($curl);
 
         if ($err) {
-            Log::error('Something went wrong!  '.$err);
+//            dd("cURL Error #:" . $err);
             echo "cURL Error #:" . $err;
             return [];
         }
         $reply = json_decode($response,true);
-
-        Log::error('Something went wrong!  '.$reply);
+//        dd($reply);
         return $reply;
     }
     public function sendkudibroadcast($kudisms, $mobile,$message)
     {
         Log::info('Sending to KudiSMS API', [
-            'url' => 'https://my.kudisms.net/api/sms',
+            'url' => 'https://my.kudisms.net/api/corporate',
             'data' => [
-                'token' => $kudisms["api_key"],
-                'senderID' => $kudisms["sender"],
+                'token' => $kudisms->api_key,
+                'senderID' => $kudisms->sender,
                 'recipients' => $mobile,
                 'message' => $message,
                 'gateway' => '2',
@@ -239,7 +224,7 @@ class CheckBirthdaysAndAnniversaries extends Command
         ]);
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://my.kudisms.net/api/sms',
+            CURLOPT_URL => 'https://my.kudisms.net/api/corporate',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -250,8 +235,8 @@ class CheckBirthdaysAndAnniversaries extends Command
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'token' => $kudisms["api_key"],
-                'senderID' => $kudisms["sender"],
+                'token' => $kudisms->api_key,
+                'senderID' => $kudisms->sender,
                 'recipients' => $mobile,
                 'message' => $message,
                 'gateway' => '2'),
@@ -267,8 +252,7 @@ class CheckBirthdaysAndAnniversaries extends Command
             echo "cURL Error #:" . $err;
             return [];
         }
-
-        Log::error('Something went wrong!  '.$response);
+        Log::error('Something went wrong! tolu '. $response);
         $reply = json_decode($response,true);
 
         Log::error('Something went wrong!  '.$reply);
