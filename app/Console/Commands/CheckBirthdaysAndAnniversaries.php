@@ -72,6 +72,7 @@ class CheckBirthdaysAndAnniversaries extends Command
                     Mail::raw("Reminder: {$member->title} {$member->firstname} {$member->lastname}'s birthday is on {$dob->toFormattedDateString()}", function ($message) {
                         $message->to('odejinmiabraham@gmail.com')->subject('Birthday Reminder');
                         $message->to('akinlabisamson15@gmail.com')->subject('Birthday Reminder');
+                        $message->to('onyemachiblessing48@gmail.com')->subject('Birthday Reminder');
                     }
                     );
                 }
@@ -110,6 +111,7 @@ class CheckBirthdaysAndAnniversaries extends Command
                     Mail::raw("Reminder: {$member->title} {$member->firstname} {$member->lastname}'s anniversary is on {$anniversary->toFormattedDateString()}", function ($message) {
                         $message->to('odejinmiabraham@gmail.com')->subject('Anniversary Reminder');
                         $message->to('akinlabisamson15@gmail.com')->subject('Anniversary Reminder');
+                        $message->to('onyemachiblessing48@gmail.com')->subject('Anniversary Reminder');
                     });
                 }
 
