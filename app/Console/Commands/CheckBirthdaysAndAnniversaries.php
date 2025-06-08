@@ -265,15 +265,15 @@ class CheckBirthdaysAndAnniversaries extends Command
         curl_close($curl);
 
         if ($err) {
-            Log::error('Something went wrong!  '.$err);
+            Log::error('Something went wrong! error  '.$err);
             echo "cURL Error #:" . $err;
             return [];
         }
 
-        Log::error('Something went wrong!  '.$response);
+        Log::error('Something went wrong! response  '.$response);
         $reply = json_decode($response,true);
 
-        Log::error('Something went wrong!  '.$reply);
+        Log::error('Something went wrong! last response  '.$reply);
         return $reply;
     }
 }
