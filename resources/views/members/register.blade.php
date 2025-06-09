@@ -162,7 +162,7 @@
                                             <label class="col-md-3 control-label" for="demo-email-input">Email</label>
                                             <div class="col-md-9">
                                                 <input type="email" id="demo-email-input" class="form-control"
-                                                    name="email" placeholder="Enter your email" required>
+                                                    name="email" placeholder="Enter your email">
                                                 <!--small class="help-block">Please enter your email</small-->
                                             </div>
                                         </div>
@@ -171,7 +171,7 @@
                                                 Number/ WhatsApp</label>
                                             <div class="col-md-9">
                                                 <input type="number" class="form-control" name="phone"
-                                                    placeholder="Enter your phone number" required>
+                                                    placeholder="Enter your phone number">
                                             </div>
                                         </div>
 

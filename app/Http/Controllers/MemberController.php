@@ -80,15 +80,15 @@ class MemberController extends Controller
     public function store(Request $request)
     {
       // validate email
-//        $memberByEmail = Member::where('email', $request->email)->first();
-//        if ($memberByEmail) {
-//            return $this->errorResponse("The email ({$request->email}) already exists for a member.", $request);
-//        }
+        $memberByEmail = Member::where('email', $request->email)->first();
+        if ($memberByEmail) {
+            return $this->errorResponse("The email ({$request->email}) already exists for a member.", $request);
+        }
 
-//        $memberByPhone = Member::where('phone', $request->phone)->first();
-//        if ($memberByPhone) {
-//            return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
-//        }
+        $memberByPhone = Member::where('phone', $request->phone)->first();
+        if ($memberByPhone) {
+            return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
+        }
 
 
         $user = Auth::user();
