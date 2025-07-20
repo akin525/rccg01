@@ -82,12 +82,12 @@ class MemberController extends Controller
 
       // validate email
         $memberByEmail = Member::where('email', $request->email)->first();
-        if ($request->email !="" && !empty($memberByEmail->email)) {
+        if ($request->email !="" || !empty($memberByEmail->email)) {
             return $this->errorResponse("The email ({$request->email}) already exists for a member.", $request);
         }
 
         $memberByPhone = Member::where('phone', $request->phone)->first();
-        if ($request->phone != "" && $memberByPhone) {
+        if ($request->phone != "" || $memberByPhone) {
             return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
         }
 
