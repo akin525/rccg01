@@ -87,7 +87,7 @@ class MemberController extends Controller
         }
 
         $memberByPhone = Member::where('phone', $request->phone)->first();
-        if ($request->phone != "" || $memberByPhone) {
+        if ($request->phone != "" || !empty($memberByPhone)) {
             return $this->errorResponse("The phone ({$request->phone}) already exists for a member.", $request);
         }
 
