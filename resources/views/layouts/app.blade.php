@@ -310,6 +310,29 @@
                                         </ul>
                                     </li>
 
+                                     <li
+                                        class="{{ Route::currentRouteName() == 'empowerment.all' || Route::currentRouteName() == 'empowerment.register.form' ? 'active-sub active' : '' }}
+                  						{{ Route::currentRouteName() === 'empowerments.profile' ? 'active-sub' : '' }}">
+
+                                        <a href="{{ route('empowerment.all') }}">
+                                            <i class="fa fa-users"></i>
+                                            <span class="menu-title">Empowerment Members</span>
+                                            <i class="arrow"></i>
+                                        </a>
+                                        <ul class="collapse">
+                                            <li
+                                                class="{{ Route::currentRouteName() === 'empowerment.all' ? 'active-sub active' : '' }}">
+                                                <a href="{{ route('empowerment.all') }}"><i class="fa fa-list"></i> All
+                                                    Members</a>
+                                            </li>
+                                            <li
+                                                class="{{ Route::currentRouteName() === 'empowerment.register.form' ? 'active-sub active' : '' }}">
+                                                <a href="{{ route('empowerment.register.form') }}"><i
+                                                        class="fa fa-registered"></i> Registration</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
                                     <li
                                         class="{{ Route::currentRouteName() === 'member.getdepartment' || Route::currentRouteName() === 'member.getdepartment' ? 'active-sub' : '' }}">
                                         <a href="{{ route('member.getdepartment') }}">

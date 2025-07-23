@@ -43,9 +43,15 @@ Route::get('/home', function () {
 Route::get('/member/registration', 'MemberController@create1')->name('member.registration.form');
 Route::post('/member/registration', 'MemberController@store')->name('member.registration');
 
+Route::get('/empowerment/registration', 'EmpowermentController@create1')->name('empowerment.registration.form');
+Route::post('/empowerment/registration', 'EmpowermentController@store')->name('empowerment.registration');
+
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+  Route::get('/empowerment/register', 'EmpowermentController@create')->name('empowerment.register.form');
+  Route::post('/empowerment/register', 'EmpowermentController@store')->name('empowerment.register');
+  Route::post('/empowerment/all', 'EmpowermentController@all')->name('empowerment.all');
   Route::get('/member/register', 'MemberController@create')->name('member.register.form');
   Route::post('/member/register', 'MemberController@store')->name('member.register');
   Route::get('/members/all', 'MemberController@index')->name('members.all');
