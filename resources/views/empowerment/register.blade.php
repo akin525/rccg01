@@ -80,200 +80,198 @@
                                 @endforeach
                             @endif
                         </div>
-                        <div class="row panel-body" style="background-color: #e8ddd3;">
-                            <div class="" style="border:1pt solid #090c5e; border-radius:25px;">
-                                <form id="application-form" method="post" action="{{ Auth::user() != null ? route('empowerment.register') : route('empowerment.registration') }}"
-                                      class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="col-md-6">
-                                        <!--Static-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-readonly-input">Branch
-                                                Code</label>
-                                            <div class="col-md-9">
-                                                <input type="text" id="demo-readonly-input"
-                                                       value="{{ optional(\Auth::user())->branchname ?? $branchname  }}" class="form-control"
-                                                       placeholder="Readonly input here..." readonly>
-                                            </div>
-                                        </div>
-
-                                        <input type="text" id="referralId" name="referralId" value="{{ optional(\Auth::user())->branchname ?? $referrerId }}" readonly style="position:absolute; left:-9999px;">
-                                        <!--Text Input-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Title</label>
-                                            <div class="col-md-9">
-                                                <select name="title"
-                                                        class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
-                                                        style="padding-left:0px !important" data-style="btn-primary">
-                                                    <option value="Mr">Mr</option>
-                                                    <option value="Mrs">Mrs</option>
-                                                    <option value="Miss">Miss</option>
-                                                    <option value="Dr">Dr</option>
-                                                    <option value="Pastor">Pastor</option>
-                                                    <option value="Overseer">Overseer</option>
-                                                    <option value="Bishop">Bishop</option>
-                                                    <option value="Elder">Elder</option>
-                                                    <option value="Dr (Mrs)">Dr (Mrs)</option>
-                                                    <option value="Prof">Professor</option>
-                                                    <option value="Engr">Engineer</option>
-                                                    <option value="Surveyor">Surveyor</option>
-                                                    <option value="Snr Pastor">Snr Pastor</option>
-                                                    <option value="Evangelist">Evangelist</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!--Text Input-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">First Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" id="demo-text-input" name="firstname"
-                                                       value="{{ old('firstname') }}" class="form-control"
-                                                       placeholder="Firstname" required>
-
-                                            </div>
-                                        </div>
-                                        <!--Text Input-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Last Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" id="demo-text-input" name="lastname"
-                                                       class="form-control" placeholder="Lastname" required>
-
-                                            </div>
-                                        </div>
-
-
-
-                                        <!--Email Input-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-email-input">Email</label>
-                                            <div class="col-md-9">
-                                                <input type="email" id="demo-email-input" class="form-control"
-                                                       name="email" placeholder="Enter your email">
-                                                <!--small class="help-block">Please enter your email</small-->
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-email-input">Phone
-                                                Number/ WhatsApp</label>
-                                            <div class="col-md-9">
-                                                <input type="number" class="form-control" name="phone"
-                                                       placeholder="Enter your phone number">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-email-input">Age</label>
-                                            <div class="col-md-9">
-                                                <input type="number" class="form-control" name="age"
-                                                       placeholder="Enter your age">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-email-input">Religion</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="religion"
-                                                       placeholder="Enter your Religion">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label"
-                                                   for="demo-textarea-input">Address</label>
-                                            <div class="col-md-9">
-                                                <textarea id="demo-textarea-input" name="address" rows="5" class="form-control" placeholder=""
-                                                          required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <!--Text Input-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Employment Status</label>
-                                            <div class="col-md-9">
-                                                <select name="employment_status"
-                                                        class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
-                                                        data-style="btn-success" required>
-                                                    <option value="">Select</option>
-                                                    <option value="employed">Employed</option>
-                                                    <option value="unemployed">Unemployed</option>
-                                                    <option value="self-employed">Self-Employed</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-text-input">Course</label>
-                                            <div class="col-md-9">
-                                                <select name="course"
-                                                        class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
-                                                        data-style="btn-success" required>
-                                                    <option value="">Select</option>
-                                                    <option value="photography">Photography</option>
-                                                    <option value="sound-system-operation">Sound system operation</option>
-                                                    <option value="baking">Baking</option>
-                                                    <option value="fashion-design">Fashion design</option>
-                                                    <option value="content-creation">Content creation</option>
-                                                    <option value="car-ac-repair">CAR AC REPAIR</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label"
-                                                   for="demo-textarea-input">Brief intro about yourself</label>
-                                            <div class="col-md-9">
-                                                <textarea id="demo-textarea-input" name="intro" rows="5" class="form-control" placeholder=""
-                                                          required></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group pad-ve">
-                                            <label class="col-md-3 control-label">Sex</label>
-                                            <div class="col-md-9">
-
-                                                <!-- Radio Buttons -->
-                                                <div class="radio">
-                                                    <input id="demo-form-radio" class="magic-radio" value="male"
-                                                           type="radio" name="sex" checked>
-                                                    <label for="demo-form-radio">Male</label>
-                                                    <input id="demo-form-radio-2" class="magic-radio" value="female"
-                                                           type="radio" name="sex">
-                                                    <label for="demo-form-radio-2">Female</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group pad-ver">
-                                            <label class="col-md-3 control-label">Marital Status</label>
-                                            <div class="col-md-9">
-                                                <div class="radio">
-                                                    <!-- Inline radio buttons -->
-                                                    <input id="demo-inline-form-radio" class="magic-radio" value="single"
-                                                           type="radio" name="marital_status" checked>
-                                                    <label for="demo-inline-form-radio">Single</label>
-
-                                                    <input id="demo-inline-form-radio-2" class="magic-radio"
-                                                           value="married" type="radio" name="marital_status">
-                                                    <label for="demo-inline-form-radio-2">Married</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                            <div class="col-md-9">
-                                                <span class=" pull-right">
-                                                    <button id="submit" class="btn btn-info pull-center"
-                                                            type="submit">REGISTER</button>
-                                                </span>
-                                            </div>
-                                        @if(Auth::user() != null)
-                                            <div class="form-group" style="padding-top:50px">
+                        @php
+                            $selectBranch = 'hello boy';
+                            @endphp
+                            <div class="row panel-body" style="background-color: #e8ddd3;">
+                                <div class="" style="border:1pt solid #090c5e; border-radius:25px;">
+                                    <form id="application-form" method="post" action="{{ Auth::user() != null ? route('empowerment.register') : route('empowerment.registration') }}"
+                                          class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="referralId">Branch</label>
                                                 <div class="col-md-9">
-                                                <span class=" pull-right">
-                                                    @php
-                                                        $referralCode = encrypt(Auth::user()->branchcode);
-                                                        $referralLink = url('/empowerment/registration?ref=' . $referralCode);
+                                                    <select id="referralId" name="referralId" class="selectpicker form-control" data-style="btn-success" required>
+                                                        <option value="">Select</option>
+                                                        @foreach($branches as $branch)
+                                                            <option value="{{ $branch['id'] }}" {{ $branch['id'] == $selectBranch ? 'selected' : '' }}>
+                                                                {{ $branch['branchname'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!--Text Input-->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-text-input">Title</label>
+                                                <div class="col-md-9">
+                                                    <select name="title"
+                                                            class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
+                                                            style="padding-left:0px !important" data-style="btn-primary">
+                                                        <option value="Mr">Mr</option>
+                                                        <option value="Mrs">Mrs</option>
+                                                        <option value="Miss">Miss</option>
+                                                        <option value="Dr">Dr</option>
+                                                        <option value="Pastor">Pastor</option>
+                                                        <option value="Overseer">Overseer</option>
+                                                        <option value="Bishop">Bishop</option>
+                                                        <option value="Elder">Elder</option>
+                                                        <option value="Dr (Mrs)">Dr (Mrs)</option>
+                                                        <option value="Prof">Professor</option>
+                                                        <option value="Engr">Engineer</option>
+                                                        <option value="Surveyor">Surveyor</option>
+                                                        <option value="Snr Pastor">Snr Pastor</option>
+                                                        <option value="Evangelist">Evangelist</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!--Text Input-->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-text-input">First Name</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="demo-text-input" name="firstname"
+                                                           value="{{ old('firstname') }}" class="form-control"
+                                                           placeholder="Firstname" required>
+
+                                                </div>
+                                            </div>
+                                            <!--Text Input-->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-text-input">Last Name</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="demo-text-input" name="lastname"
+                                                           class="form-control" placeholder="Lastname" required>
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <!--Email Input-->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-email-input">Email</label>
+                                                <div class="col-md-9">
+                                                    <input type="email" id="demo-email-input" class="form-control"
+                                                           name="email" placeholder="Enter your email">
+                                                    <!--small class="help-block">Please enter your email</small-->
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-email-input">Phone
+                                                    Number/ WhatsApp</label>
+                                                <div class="col-md-9">
+                                                    <input type="number" class="form-control" name="phone"
+                                                           placeholder="Enter your phone number">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-email-input">Age</label>
+                                                <div class="col-md-9">
+                                                    <input type="number" class="form-control" name="age"
+                                                           placeholder="Enter your age">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-email-input">Religion</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="religion"
+                                                           placeholder="Enter your Religion">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"
+                                                       for="demo-textarea-input">Address</label>
+                                                <div class="col-md-9">
+                                                    <textarea id="demo-textarea-input" name="address" rows="5" class="form-control" placeholder=""
+                                                              required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!--Text Input-->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-text-input">Employment Status</label>
+                                                <div class="col-md-9">
+                                                    <select name="employment_status"
+                                                            class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9"
+                                                            data-style="btn-success" required>
+                                                        <option value="">Select</option>
+                                                        <option value="employed">Employed</option>
+                                                        <option value="unemployed">Unemployed</option>
+                                                        <option value="self-employed">Self-Employed</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            {{$selectBranch}}
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="course">Course</label>
+                                                <div class="col-md-9">
+                                                    <select id="course" name="course" class="selectpicker form-control" data-style="btn-success" required>
+                                                        <option value="">Select</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"
+                                                       for="demo-textarea-input">Brief intro about yourself</label>
+                                                <div class="col-md-9">
+                                                    <textarea id="demo-textarea-input" name="intro" rows="5" class="form-control" placeholder=""
+                                                              required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group pad-ve">
+                                                <label class="col-md-3 control-label">Sex</label>
+                                                <div class="col-md-9">
+
+                                                    <!-- Radio Buttons -->
+                                                    <div class="radio">
+                                                        <input id="demo-form-radio" class="magic-radio" value="male"
+                                                               type="radio" name="sex" checked>
+                                                        <label for="demo-form-radio">Male</label>
+                                                        <input id="demo-form-radio-2" class="magic-radio" value="female"
+                                                               type="radio" name="sex">
+                                                        <label for="demo-form-radio-2">Female</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-3 control-label">Marital Status</label>
+                                                <div class="col-md-9">
+                                                    <div class="radio">
+                                                        <!-- Inline radio buttons -->
+                                                        <input id="demo-inline-form-radio" class="magic-radio" value="single"
+                                                               type="radio" name="marital_status" checked>
+                                                        <label for="demo-inline-form-radio">Single</label>
+
+                                                        <input id="demo-inline-form-radio-2" class="magic-radio"
+                                                               value="married" type="radio" name="marital_status">
+                                                        <label for="demo-inline-form-radio-2">Married</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                <div class="col-md-9">
+                                                    <span class=" pull-right">
+                                                        <button id="submit" class="btn btn-info pull-center"
+                                                                type="submit">REGISTER</button>
+                                                    </span>
+                                                </div>
+                                            @if(Auth::user() != null)
+                                                <div class="form-group" style="padding-top:50px">
+                                                    <div class="col-md-9">
+                                                    <span class=" pull-right">
+                                                        @php
+                                                            $referralCode = encrypt(Auth::user()->branchcode);
+                                                            $referralLink = url('/empowerment/registration?ref=' . $referralCode);
                                                     @endphp
                                                     <input type="text" id="referralLink" value="{{ $referralLink }}" readonly style="position:absolute; left:-9999px;">
                                                     <button type="button" id="registerlink" class="btn btn-info pull-center"
@@ -402,16 +400,74 @@
     <div id="copyNotice" style="display: none; margin-top: 10px; color: green; font-weight: bold;">
         ✅ Referral link copied to clipboard!
     </div>
+    <!-- Bootstrap CSS (v3 or v4 depending on your layout) -->
+{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">--}}
+
+    <!-- jQuery -->
+{{--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--}}
+
+    <!-- Bootstrap JS -->
+{{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>--}}
+    <!-- Bootstrap Select CSS -->
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">--}}
+
+    <!-- Bootstrap Select JS -->
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>--}}
 
 @endsection
 
 @section('js')
+
+    <script>
+        const rawCoursesList = @json($courseslist);
+        const courseslist = {};
+
+        rawCoursesList.forEach(entry => {
+            courseslist[entry.branch] = entry.courses;
+        });
+
+        $(document).ready(function () {
+            const selectedBranch = "{{ $selectBranch ?? '' }}";
+            const selectedCourse = "{{ old('course') ?? '' }}";
+
+            function populateCourses(branchId, selectedCourse = '') {
+                const $courseSelect = $('#course');
+                $courseSelect.empty();
+
+                if (branchId && courseslist[branchId]) {
+                    $courseSelect.prop('disabled', false);
+                    $courseSelect.append('<option value="">Select Course</option>');
+                    courseslist[branchId].forEach(course => {
+                        const selected = (course === selectedCourse) ? 'selected' : '';
+                        $courseSelect.append(`<option value="${course}" ${selected}>${course}</option>`);
+                    });
+                } else {
+                    $courseSelect.prop('disabled', true);
+                    $courseSelect.append('<option value="">First select a branch</option>');
+                }
+
+                $courseSelect.selectpicker('refresh'); // Important for bootstrap-select
+            }
+
+            // Handle branch change
+            $('#referralId').on('change', function () {
+                const branchId = $(this).val();
+                populateCourses(branchId);
+            });
+
+            // Load default selection on page load
+            if (selectedBranch) {
+                populateCourses(selectedBranch, selectedCourse);
+            }
+        });
+    </script>
+
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--}}
 
     <!-- Bootstrap Datepicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>--}}
 
     <script src="{{ URL::asset('js/cam/DetectRTC.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/adapter.min.js') }}"></script>

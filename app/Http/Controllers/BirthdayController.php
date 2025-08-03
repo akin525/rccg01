@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class BirthdayController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $currentMonth = $request->input('month', date('m'));
         // Get the current month
-        $currentMonth = date('m');
+//        $currentMonth = date('m');
 
         // Fetch members with the same birth month
         $members = Member::whereMonth('dob', $currentMonth)->get();

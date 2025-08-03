@@ -35,6 +35,24 @@
 
         </div>
 
+        @php
+            $currentMonth = request('month', date('m'));
+
+            $todayWeek = now()->weekOfYear;
+            $todayYear = now()->year;
+
+            if ($currentMonth == 12){
+                $nextWeek = 1;
+            }else{
+            $nextWeek = $currentMonth + 1;
+            }
+            if ($currentMonth == 1){
+                $previousWeek = 12;
+            }else{
+            $previousWeek = $currentMonth - 1;
+            }
+//            $showNext = !($currentWeek == $todayWeek && $currentYear == $todayYear);
+        @endphp
 
         <!--Page content-->
         <!--===================================================-->
@@ -45,7 +63,17 @@
                 <div class="panel bg-warning rounded-top" style="overflow:scroll; background-color: #e8ddd3;">
                     <div class="panel-heading">
                         <h3 class="panel-title text-center"><strong>
-                                <i>Birthdays For the Current Month</i></strong></h3>
+                                <i>Birthdays For the Month of {{ date('F', mktime(0, 0, 0, $currentMonth, 10)) }}</i></strong></h3>
+                    </div>
+
+                    <div class="row text-center mb-3">
+                        <div class="form-group" style="margin-left: 20px;">
+                            <a href="{{ route('birthday', ['month' => $previousWeek]) }}" class="btn btn-warning">Previous</a>
+
+{{--                            @if($showNext)--}}
+                                <a href="{{ route('birthday', ['month' => $nextWeek]) }}" class="btn btn-success" style="margin-left: 10px;">Next</a>
+{{--                            @endif--}}
+                        </div>
                     </div>
 
                     @if (!count($members) > 0)
@@ -90,7 +118,7 @@
                                             <tr class="<?php echo $class[$num]; ?>" id="row,{{ $count }}">
                                                 <td><strong>{{ $count }}</strong></td>
                                                 <td>{{ $member->title }}
-                                                <td>{{ $member->firstname }}
+                                                <td>{{"" .$member->firstname ." " .$member->firstname }}
                                                     <td>
                                                         {{ \Carbon\Carbon::parse($member->dob)->format('jS \of M Y') }}
                                                         {{-- <br>

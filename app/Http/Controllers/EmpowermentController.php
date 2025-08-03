@@ -14,7 +14,29 @@ class EmpowermentController extends Controller
 
     public function create()
     {
-        return view('empowerment.register');
+        $courseslist = [
+            [
+                'branch' => '1',
+                'courses' => [
+                    'Photography',
+                    'Sound system operation',
+                    'baking',
+                    'fashion design',
+                    'content creation',
+                    'car ac repair'
+                ]
+            ],
+            [
+                'branch' => '4',
+                'courses' => [
+                    'Tailoring',
+                    'Beads making',
+                    'phone repair'
+                ]
+            ]
+        ];
+        $branches = User::distinct('branchname')->get(['branchname','id']);
+        return view('empowerment.register', compact('branches','courseslist'));
     }
 
     public function create1(Request $request)
@@ -30,10 +52,43 @@ class EmpowermentController extends Controller
                 // Handle invalid/modified referral codes
             }
         }
-
-        return view('empowerment.register', compact('referrerId','branchname'));
+        $courseslist = [
+            [
+                'branch' => '1',
+                'courses' => [
+                    'Photography',
+                    'Sound system operation',
+                    'baking',
+                    'fashion design',
+                    'content creation',
+                    'car ac repair'
+                ]
+            ],
+            [
+                'branch' => '4',
+                'courses' => [
+                    'Tailoring',
+                    'Beads making',
+                    'phone repair'
+                ]
+            ]
+        ];
+        $branches = User::distinct('branchname')->get(['branchname','id']);
+        return view('empowerment.register', compact('referrerId','branchname','branches','courseslist'));//, compact('classes', 'sections'));
     }
 
+    // In CourseController.php
+    public function getCourses(Request $request)
+    {
+        dd($request->input('branchId')); // Dump the branchId value
+        $branchId = $request->input('branchId');
+        dd($branchId); // Dump the branchId value again
+        $branchName = $branches[$branchId - 1]['branchname'];
+        dd($branchName); // Dump the branchName value
+        $courses = $courseslist[$branchName]['courses'];
+        dd($courses); // Dump the courses value
+        return response()->json($courses);
+    }
     public function store(Request $request)
     {
         // Validate the form data
