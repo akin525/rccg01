@@ -118,7 +118,7 @@
                                             <tr class="<?php echo $class[$num]; ?>" id="row,{{ $count }}">
                                                 <td><strong>{{ $count }}</strong></td>
                                                 <td>{{ $member->title }}
-                                                <td>{{"" .$member->firstname ." " .$member->firstname }}
+                                                <td>{{"" .$member->firstname ." " .$member->lastname }}
                                                     <td>
                                                         {{ \Carbon\Carbon::parse($member->dob)->format('jS \of M Y') }}
                                                         {{-- <br>
