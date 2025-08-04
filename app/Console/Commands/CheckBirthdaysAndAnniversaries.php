@@ -15,7 +15,7 @@ class CheckBirthdaysAndAnniversaries extends Command
      *
      * @var string
      */
-    protected $signature = 'command:reminders';
+    protected $signature = 'command:reminders {--message=Default cron test message}';
 
     /**
      * The console command description.
@@ -41,7 +41,11 @@ class CheckBirthdaysAndAnniversaries extends Command
      */
     public function handle()
     {
+        $message = $this->option('message');
+        $timestamp = Carbon::now()->format('Y-m-d H:i:s');
         $this -> checkanniversary();
+        // Log the execution
+        Log::info("Cron job executed at: {$timestamp} - Message: {$message}");
     }
 
     protected $smstype = "bc";

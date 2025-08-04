@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\AttendanceController;
 // use App\Http\Controllers\FinancialController;
+use App\Http\Controllers\BirthdayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,25 @@ use App\Http\Controllers\AttendanceController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+// Cron testing routes (protect these in production!)
+Route::prefix('admin/cron')->middleware(['auth'])->group(function () {
+    Route::get('/test', [BirthdayController::class, 'testCron']);
+    Route::get('/test-background', [BirthdayController::class, 'testCronBackground']);
+    Route::get('/test-scheduler', [BirthdayController::class, 'testScheduler']);
+    Route::get('/logs', [BirthdayController::class, 'getCronLogs']);
+    Route::get('/status', [BirthdayController::class, 'checkCronStatus']);
+    Route::delete('/logs', [BirthdayController::class, 'clearCronLogs']);
+});
+
+// API routes for testing
+// File: routes/api.php
+Route::prefix('cron')->group(function () {
+    Route::get('/test', [BirthdayController::class, 'testCron']);
+    Route::get('/status', [BirthdayController::class, 'checkCronStatus']);
+    Route::get('/logs', [BirthdayController::class, 'getCronLogs']);
+});
 
 Route::get('/', function () {
   //  return view('welcome');

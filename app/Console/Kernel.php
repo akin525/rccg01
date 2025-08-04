@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('command:reminders')->everyMinute();
+        $schedule->command('command:reminders --message="Scheduled execution"')
+            ->everyMinute()
+            ->appendOutputTo(storage_path('logs/cron-output.log'));
     }
 
     /**

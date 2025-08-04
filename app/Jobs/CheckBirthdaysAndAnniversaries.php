@@ -22,9 +22,9 @@ class CheckBirthdaysAndAnniversaries implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($message = 'Queue job test')
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -35,6 +35,13 @@ class CheckBirthdaysAndAnniversaries implements ShouldQueue
     public function handle()
     {
         checkanniversary();
+
+        $timestamp = Carbon::now()->format('Y-m-d H:i:s');
+        Log::info("Queue job executed at: {$timestamp} - Message: {$this->message}");
+
+        // Write to test file
+        $logContent = "[{$timestamp}] Queue job executed - {$this->message}" . PHP_EOL;
+        file_put_contents(storage_path('logs/queue-test.log'), $logContent, FILE_APPEND | LOCK_EX);
     }
 
     protected $smstype = "bc";

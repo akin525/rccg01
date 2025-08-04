@@ -209,7 +209,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{$selectBranch}}
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label" for="course">Course</label>
                                                 <div class="col-md-9">
