@@ -462,7 +462,7 @@
                         $courseSelect.append(`<option value="${course}" ${selected}>${course}</option>`);
                     });
                 } else {
-                    // $courseSelect.prop('disabled', true);
+                    $courseSelect.prop('disabled', true);
                     $courseSelect.append('<option value="">First select a branch</option>');
                 }
 
