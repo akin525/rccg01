@@ -96,7 +96,7 @@ class EmpowermentController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'title' => 'required|string',
-            'email' => 'required|string',
+            'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string',
             'age' => 'required|integer',
             'religion' => 'required|string',

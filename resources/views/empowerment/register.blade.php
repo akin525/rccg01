@@ -81,7 +81,7 @@
                             @endif
                         </div>
                         @php
-                            $selectBranch = 'hello boy';
+                            $selectBranch = "hello boys";
                             @endphp
                             <div class="row panel-body" style="background-color: #e8ddd3;">
                                 <div class="" style="border:1pt solid #090c5e; border-radius:25px;">
@@ -89,6 +89,7 @@
                                           class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-md-6">
+                                            <input type="text" id="referralId" name="referralId" value="{{ optional(\Auth::user())->branchname ?? $referrerId }}" readonly style="position:absolute; left:-9999px;">
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label" for="referralId">Branch</label>
                                                 <div class="col-md-9">
@@ -428,10 +429,13 @@
         $(document).ready(function () {
             const selectedBranch = "{{ $selectBranch ?? '' }}";
             const selectedCourse = "{{ old('course') ?? '' }}";
+            console.log("branchId selected Branch goes here " +selectedBranch);
 
             function populateCourses(branchId, selectedCourse = '') {
                 const $courseSelect = $('#course');
                 $courseSelect.empty();
+
+                console.log("branchId selected Branch Id goes here " +branchId);
 
                 if (branchId && courseslist[branchId]) {
                     $courseSelect.prop('disabled', false);
