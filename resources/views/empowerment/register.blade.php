@@ -92,7 +92,7 @@
                                           class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-md-6">
-                                            <input type="text" id="referralId" name="referralId" value="{{ optional(\Auth::user())->branchname ?? $referrerId }}" readonly style="position:absolute; left:-9999px;">
+{{--                                            <input type="text" id="referralId" name="referralId" value="{{ optional(\Auth::user())->branchname ?? $referrerId }}" readonly style="position:absolute; left:-9999px;">--}}
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label" for="referralId">Branch</label>
                                                 <div class="col-md-9">
@@ -429,15 +429,15 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
+{{--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--}}
+{{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>--}}
+{{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>--}}
 
     <script>
         $(document).ready(function () {
             // Bootstrap-select initializations
-            $('#referralId').selectpicker();
-            $('#course').selectpicker();
+            // $('#referralId').selectpicker();
+            // $('#course').selectpicker();
 
             const rawCoursesList = @json($courseslist);
             const courseslist = {};
@@ -451,6 +451,7 @@
             const selectedCourse = "{{ old('course') ?? '' }}";
 
             function populateCourses(branchId, selectedCourse = '') {
+                console.log('populateCourses called with branchId:', branchId);
                 const $courseSelect = $('#course');
                 $courseSelect.empty();
 
@@ -467,20 +468,49 @@
                     $courseSelect.append('<option value="">First select a branch</option>');
                 }
 
-                // Refresh for bootstrap-select to re-render options
-                $courseSelect.selectpicker('refresh');
+                // Refresh bootstrap-select to re-render options
+                // $courseSelect.selectpicker('refresh');
             }
 
-            // On branch change
-            $('#referralId').on('change', function () {
+            // SOLUTION 1: Use Bootstrap Select's specific events
+            $('#referralId').on('change', function (e, clickedIndex, isSelected, previousValue) {
+                console.log("Bootstrap Select changed event triggered");
                 const branchId = $(this).val();
+                console.log('Selected branch ID:', branchId);
                 populateCourses(branchId);
             });
+
+            // SOLUTION 2: Alternative - Use standard change event but ensure it runs after selectpicker initialization
+            // Comment out the above and uncomment this if you prefer standard change events
+/*
+            setTimeout(() => {
+                $('#referralId').on('change', function () {
+                    console.log("Standard change event triggered");
+                    const branchId = $(this).val();
+                    console.log('Selected branch ID:', branchId);
+                    populateCourses(branchId);
+                });
+            }, 100);
+*/
+
+            // SOLUTION 3: Alternative - Direct event binding (uncomment if needed)
+            /*
+            document.getElementById('referralId').addEventListener('change', function (e) {
+                console.log("Direct addEventListener triggered");
+                const branchId = e.target.value;
+                console.log('Selected branch ID:', branchId);
+                populateCourses(branchId);
+            });
+            */
 
             // Populate courses if a branch is already selected (on page load)
             if (selectedBranch) {
                 populateCourses(selectedBranch, selectedCourse);
             }
+
+            // Debug: Log available courses data
+            console.log('Available courses data:', courseslist);
+            console.log('Selected branch on load:', selectedBranch);
         });
     </script>
 
@@ -497,291 +527,4 @@
     <script src="{{ URL::asset('js/cam/screenfull.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/howler.core.min.js') }}"></script>
     <script src="{{ URL::asset('js/cam/main.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#anniversary').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-        $(document).ready(function () {
-            $('#dob').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-        document.querySelectorAll('input[name="marital_status"]').forEach((el) => {
-            el.addEventListener('change', function () {
-                if (this.value === 'married') {
-                    document.getElementById('wedding').style.display = 'block';
-                } else {
-                    document.getElementById('wedding').style.display = 'none';
-                }
-            });
-        });
-        document.getElementById('registerlink').addEventListener('click', function () {
-            const linkInput = document.getElementById('referralLink');
-            const linkText = linkInput.value;
-            const notice = document.getElementById('copyNotice');
-
-            // Try using the modern Clipboard API
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(linkText).then(() => {
-                    showNotice();
-                }).catch(err => {
-                    fallbackCopy(linkInput);
-                    showNotice();
-                });
-            } else {
-                // Fallback for older browsers
-                fallbackCopy(linkInput);
-                showNotice();
-            }
-
-            function fallbackCopy(input) {
-                input.select();
-                input.setSelectionRange(0, 99999); // For mobile
-                document.execCommand('copy');
-            }
-
-            function showNotice() {
-                notice.style.display = 'block';
-                setTimeout(() => {
-                    notice.style.display = 'none';
-                }, 3000);
-            }
-        });
-
-        // function uploadImg() {
-        //   var input = document.querySelector('input[type=file]');
-        //   var file = input.files[0];
-        //   var form = new FormData(),
-        //       xhr = new XMLHttpRequest();
-        // 	// form.append("filename", imageData);
-        // 	// console.log(file);
-        // 	console.log(blobs);
-        // 	form.append('photo', blobs);
-        //   // form.append('photo', file);
-        //   form.append('_token', "{{ csrf_token() }}");
-        //   xhr.open('post', "{{ route('member.upload.img') }}", true);
-        //   xhr.send(form);
-        // }
-        $(document).ready(function() {
-            // Upload file section
-            // $("i").click(function () {
-            //   $("input[type='file']").trigger('click');
-            // });
-
-            // $('input[type="file"]').on('change', function() {
-            //   var val = $(this).val();
-            //   $(this).siblings('span').text(val);
-            // })
-
-            //new
-            var input = document.querySelector('input[type=file]'); // see Example 4
-
-            input.onchange = function() {
-                var file = input.files[0];
-
-                // upload(file);
-                drawOnCanvas(file); // see Example 6
-                // displayAsImage(file); // see Example 7
-            };
-
-            // toggle member since date
-            $('#member_since').change(function() {
-                let today = new Date();
-                let member_date = this.value;
-                let lastWeek = Date.parse(new Date(today.getFullYear(), today.getMonth(), today.getDate() -
-                    7));
-                //check if date within 7 days
-                //If nextWeek is smaller (earlier) than the value of the input date, alert...
-                if (lastWeek > Date.parse(member_date)) {
-                    $('#member_status').val('old');
-                    $('#member_status').selectpicker('render');
-                    $('#member_status_div').show();
-                } else {
-                    $('#member_status').val('new');
-                    $('#member_status').selectpicker('render');
-                    $('#member_status_div').show();
-                }
-            });
-
-            // handle register form submission
-            // $('#register-form').on('submit', (e) => {
-            // 	e.preventDefault()
-            // 	toggleAble('#submit', true, 'registering member...')
-            // 	// let data = {}
-            // 	let input = document.querySelector('#img-input')
-            // 	data = $('#register-form').serializeArray()
-            // 	//send to db route
-            // 	$.ajax({url: "{{ route('member.register') }}", data, type: 'POST'})
-            // 	.done((res) => {
-            // 		if (res.status) {
-            // 			swal("Success!", res.text, "success");
-            // 			uploadImg()
-            // 			resetForm('#register-form')
-            // 			resetImgUpl()
-            // 			toggleAble('#submit', false)
-            // 		}else {
-            // 			swal("Oops", res.text, "error");
-            // 			toggleAble('#submit', false)
-            // 		}
-            // 	})
-            // 	.fail((e) => {
-            // 		swal("Oops", "Internal Server Error", "error");
-            // 		toggleAble('#submit', false)
-            // 		console.log(e);
-            // 	})
-            // })
-        });
-        let html = `<div class="form-group">
-					<label class="col-md-3 control-label">Relative</label>
-					<div class="col-md-9">
-					<button id="add-relative-btn"  class="btn btn-danger"type="button">Add Relative</button>
-					</div>
-				</div>`;
-        $('#add-relative-btn').on('click', function() {
-
-            $('#open-modal-btn').trigger('click');
-
-
-            //$('#add-relative-btn').parents('.form-group').after(html)
-        })
-
-        function remove_relative(id) {
-
-            $(`#container_relative_${id}`).remove()
-        }
-
-        function add_relative(id, name) {
-            $('#add-relative-btn').parents('.form-group').after(`<div class="form-group" id="container_relative_${id}">
-					<label class="col-md-3 control-label">Added Relative</label>
-					<div class="col-md-9">
-	        <input  value="${name}" readonly>
-	        <input name="relative_${id}" value="${id}" hidden=hidden>
-					<select name="relationship_${id}" class="selectpicker" style="border:1px solid #ccc;display:inline !important;outline:none" data-style="btn-success" required>
-					<option value="relative">Relationship</option>
-						<option value="husband">Husband</option>
-						<option value="wife">Wife</option>
-						<option value="brother">Brother</option>
-						<option value="sister">Sister</option>
-						<option value="father">Father</option>
-						<option value="mother">Mother</option>
-						<option value="son">Son</option>
-						<option value="daughter">Daughter</option>
-					</select>
-					<button  class="btn btn-xs btn-danger"type="button" onClick="remove_relative(${id})">Remove Relative</button>
-					</div>
-				</div>`)
-
-            $('#close-modal-btn').trigger('click');
-            $('#relatives-result-container').html('')
-            $('#search-relative-input').val('')
-
-        }
-        $('#search-relative-input').on('keyup', function() {
-            //alert('hello')
-            $('#relatives-result-container').html(
-                '<img class="center-block" width="50" height="50" src="../images/spinner.gif"/>')
-            let search_term = $('#search-relative-input').val()
-            $.ajax({
-                url: `../get-relative/${search_term}`,
-
-            }).done(function(data) {
-                console.log(data.result)
-                //console.log(typeof data)
-                $('#relatives-result-container').html('')
-
-                if (typeof data.result == 'string' || data.result.message) {
-                    $('#relatives-result-container').html(
-                        '<span style="height:50px" class="text-info">No result found</span>')
-                    return
-                }
-                console.log(typeof data.result)
-                for (let person in data.result) {
-                    console.log(data.result[person])
-                    let table = `<div class="col-md-12" style="margin-bottom:10px"><span class="text-info" style="margin-right:30px;width:100px !important">${data.result[person].firstname} ${data.result[person].lastname}</span> <button onClick="add_relative(${data.result[person].id},'${data.result[person].firstname} ${data.result[person].lastname}' )" type="button" class="btn-sm btn btn-info select-relativ
-	e">Select Relative</button></div>
-							`;
-                    $('#relatives-result-container').append(table)
-                }
-            }).fail(function() {
-                $('#relatives-result-container').html(
-                    '<span style="height:50px" class="text-info">No result found</span>')
-            })
-        })
-
-        $(document).ready(() => {
-            init()
-        })
-
-        //--------------------
-        // GET USER MEDIA CODE
-        //--------------------
-        navigator.getUserMedia = (navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia);
-
-        var video;
-        var webcamStream;
-
-        // function startWebcam() {
-        // 	if (navigator.getUserMedia) {
-        // 		 navigator.getUserMedia (
-        //
-        // 				// constraints
-        // 				{
-        // 					 video: true,
-        // 					 audio: false
-        // 				},
-        //
-        // 				// successCallback
-        // 				function(localMediaStream) {
-        // 						video = document.querySelector('video');
-        // 					 video.src = window.URL.createObjectURL(localMediaStream);
-        // 					 webcamStream = localMediaStream;
-        // 				},
-        //
-        // 				// errorCallback
-        // 				function(err) {
-        // 					 console.log("The following error occured: " + err);
-        // 				}
-        // 		 );
-        // 	} else {
-        // 		 console.log("getUserMedia not supported");
-        // 	}
-        // }
-
-        function stopWebcam() {
-            // if (webcamStream) {
-            //    webcamStream.getTracks().forEach(function (track) { track.stop(); });
-            // }
-            if (window.stream) {
-                window.stream.getTracks().forEach(function(track) {
-                    track.stop();
-                });
-            }
-            // webcamStream.stop();
-        }
-        //---------------------
-        // TAKE A SNAPSHOT CODE
-        //---------------------
-        var canvas, ctx;
-
-        function init() {
-            // Get the canvas and obtain a context for
-            // drawing in it
-            canvas = document.getElementById("myCanvas");
-            ctx = canvas.getContext('2d');
-        }
-
-        function snapshot() {
-            // Draws current image from the video element into the canvas
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        }
-    </script>
 @endsection
