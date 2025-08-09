@@ -5,6 +5,9 @@
 @endsection
 
 @section('link')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+
     <link href="{{ URL::asset('css/cam-style.css') }}" rel="stylesheet">
     <!-- inline style -->
     <style media="screen">
@@ -81,7 +84,7 @@
                             @endif
                         </div>
                         @php
-                            $selectBranch = "hello boys";
+                            $selectBranch = 'hello boy';
                             @endphp
                             <div class="row panel-body" style="background-color: #e8ddd3;">
                                 <div class="" style="border:1pt solid #090c5e; border-radius:25px;">
@@ -95,11 +98,20 @@
                                                 <div class="col-md-9">
                                                     <select id="referralId" name="referralId" class="selectpicker form-control" data-style="btn-success" required>
                                                         <option value="">Select</option>
-                                                        @foreach($branches as $branch)
-                                                            <option value="{{ $branch['id'] }}" {{ $branch['id'] == $selectBranch ? 'selected' : '' }}>
-                                                                {{ $branch['branchname'] }}
-                                                            </option>
-                                                        @endforeach
+                                                        <option value="1">
+                                                            RCCG Christ Chapel
+                                                        </option>
+                                                        <option value="">
+                                                            Rccg Calvary Worship Center
+                                                        </option>
+                                                        <option value="4">
+                                                            New Covenant Pavilion
+                                                        </option>
+{{--                                                        @foreach($branches as $branch)--}}
+{{--                                                            <option value="{{ $branch['id'] }}" {{ $branch['id'] == $selectBranch ? 'selected' : '' }}>--}}
+{{--                                                                {{ $branch['branchname'] }}--}}
+{{--                                                            </option>--}}
+{{--                                                        @endforeach--}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -417,30 +429,36 @@
 @endsection
 
 @section('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
 
     <script>
-        const rawCoursesList = @json($courseslist);
-        const courseslist = {};
-
-        rawCoursesList.forEach(entry => {
-            courseslist[entry.branch] = entry.courses;
-        });
-
         $(document).ready(function () {
+            // Bootstrap-select initializations
+            $('#referralId').selectpicker();
+            $('#course').selectpicker();
+
+            const rawCoursesList = @json($courseslist);
+            const courseslist = {};
+
+            // Build the courses list as a map: branchId => [courses]
+            rawCoursesList.forEach(entry => {
+                courseslist[entry.branch.toString()] = entry.courses;
+            });
+
             const selectedBranch = "{{ $selectBranch ?? '' }}";
             const selectedCourse = "{{ old('course') ?? '' }}";
-            console.log("branchId selected Branch goes here " +selectedBranch);
 
             function populateCourses(branchId, selectedCourse = '') {
                 const $courseSelect = $('#course');
                 $courseSelect.empty();
 
-                console.log("branchId selected Branch Id goes here " +branchId);
-
-                if (branchId && courseslist[branchId]) {
+                if (branchId && courseslist[branchId.toString()]) {
                     $courseSelect.prop('disabled', false);
                     $courseSelect.append('<option value="">Select Course</option>');
-                    courseslist[branchId].forEach(course => {
+
+                    courseslist[branchId.toString()].forEach(course => {
                         const selected = (course === selectedCourse) ? 'selected' : '';
                         $courseSelect.append(`<option value="${course}" ${selected}>${course}</option>`);
                     });
@@ -449,21 +467,23 @@
                     $courseSelect.append('<option value="">First select a branch</option>');
                 }
 
-                $courseSelect.selectpicker('refresh'); // Important for bootstrap-select
+                // Refresh for bootstrap-select to re-render options
+                $courseSelect.selectpicker('refresh');
             }
 
-            // Handle branch change
+            // On branch change
             $('#referralId').on('change', function () {
                 const branchId = $(this).val();
                 populateCourses(branchId);
             });
 
-            // Load default selection on page load
+            // Populate courses if a branch is already selected (on page load)
             if (selectedBranch) {
                 populateCourses(selectedBranch, selectedCourse);
             }
         });
     </script>
+
 
     <!-- jQuery -->
 {{--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--}}
