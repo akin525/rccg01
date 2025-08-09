@@ -111,7 +111,7 @@ class EmpowermentController extends Controller
         $user = Auth::user();
 
         if ($user == null){
-            $branchname = User::where('branchcode', $request->get('referralId'))->first();
+            $branchname = User::where('id', $request->get('referralId'))->first();
             $branch_id = $branchname["id"];
         }else{
             $branch_id = $user->id;
