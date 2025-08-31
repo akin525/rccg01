@@ -121,8 +121,10 @@ class MemberController extends Controller
             'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'dob' => 'required|string|max:255',
-            'email' => 'required|string|max:255|unique:members,email',
-            'phone' => 'required|string|max:255|unique:members,phone',
+//            'email' => 'required|string|max:255|unique:members,email',
+//            'phone' => 'required|string|max:255|unique:members,phone',
+            'email' => 'string|max:255|unique:members,email',
+            'phone' => 'string|max:255|unique:members,phone',
         ]);
 
         if ($user == null){

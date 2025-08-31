@@ -35,7 +35,7 @@ class EmpowermentController extends Controller
                 ]
             ]
         ];
-        $branches = User::select('branchname')->distinct()->get();
+        $branches = User::select('branchname','id')->distinct()->get();
         return view('empowerment.register', compact('branches','courseslist'));
     }
 
